@@ -5,8 +5,6 @@ Auto-Update to update Argentum Online client.
 
 # '* UpdateInteligente v4.0 *
 
-' Nuevo:
-
 * Código reescrito y simplificado, adaptandolo a las únicas necesidades del programa
 * Posibilidad de elegir que se creen los links automaticamente (EJ: http://host/Parche1.zip) o redirigir hacia un link elegido por ustedes, puede ser cualquiera (pero debe ubicarse en EJ: http://host/Link1.txt). Esto se cambia en Proyecto > Propiedades del proyecto > Generar > BuscarLinks = (0 o 1). Por defecto automático (0).
 * Nueva forma de descarga de archivos más efectiva y que nos permite informar, a medida que se realiza la descarga, el tamaño del archivo descargado, su ubicacion, host y nombre.
