@@ -6,15 +6,13 @@ Auto-Update to update Argentum Online client.
 # '* UpdateInteligente v4.0 *
 
 ' Nuevo:
-'   Código reescrito y simplificado, adaptandolo a las únicas necesidades del programa
-'   Posibilidad de elegir que se creen los links automaticamente (EJ: http://host/Parche1.zip) o _
-    redirigir hacia un link elegido por ustedes, puede ser cualquiera (pero debe ubicarse en EJ: http://host/Link1.txt) _
-    Esto se cambia llendo a Proyecto > Propiedades del proyecto > Generar > BuscarLinks = (0 o 1). Por defecto automático (0).
-'   Nueva forma de descarga de archivos más efectiva y que nos permite informar, a medida que se realiza la descarga, _
-    el tamaño del archivo descargado, su ubicacion, host y nombre.
-'   Nueva forma de escritura y lectura de archivos (destinado unicamente a la búsqueda del Integer del número de actualización)
-'   La progressbar nos indica un porcentaje preciso del tamaño del archivo
-'   Eliminación de elementos que quedaron en deshuso
+
+* Código reescrito y simplificado, adaptandolo a las únicas necesidades del programa
+* Posibilidad de elegir que se creen los links automaticamente (EJ: http://host/Parche1.zip) o redirigir hacia un link elegido por ustedes, puede ser cualquiera (pero debe ubicarse en EJ: http://host/Link1.txt). Esto se cambia en Proyecto > Propiedades del proyecto > Generar > BuscarLinks = (0 o 1). Por defecto automático (0).
+* Nueva forma de descarga de archivos más efectiva y que nos permite informar, a medida que se realiza la descarga, el tamaño del archivo descargado, su ubicacion, host y nombre.
+* Nueva forma de escritura y lectura de archivos (destinado unicamente a la búsqueda del Integer del número de actualización)
+* La progressbar nos indica un porcentaje preciso del tamaño del archivo
+* Eliminación de elementos que quedaron en deshuso
 
 # * CONFIGURACION *
 
@@ -33,5 +31,4 @@ Auto-Update to update Argentum Online client.
 
 Para colocar un parche seguir los siguientes pasos:
 1) Modificar en el host el archivo http://suhost.com\VEREXE.txt incrementandole en 1 el número por cada actualización nueva
-2) Subir al host los parches (Parche1.zip, Parche2.zip, etc) con los archivos a agregar al cliente (se sobreescriben y se pueden poner en carpetas)
-	Los parches tienen que subirse con el siguiente nombre: "Parche" Numero de parche ".zip". Ejemp
+2) Subir al host los parches (Parche1.zip, Parche2.zip, etc) con los archivos a agregar al cliente (se sobreescriben y se pueden poner en carpetas). Los parches tienen que subirse con el siguiente nombre: "Parche" Numero de parche ".zip". Ejemplo "Parche2.zip"
