@@ -57,6 +57,7 @@ Begin VB.Form frmMain
       _Version        =   393217
       BackColor       =   0
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       TextRTF         =   $"frmMain.frx":669A
    End
@@ -131,7 +132,7 @@ Private Sub Analizar()
     Call addConsole("Buscando Actualizaciones...", 255, 255, 255, True, False)
     Call Reproducir_WAV(App.Path & "\Wav\Revision.wav", SND_FILENAME)
     
-    iX = Inet1.OpenURL("https://raw.githubusercontent.com/ao-oficial/ao-website/master/argentum-online-client-current-version.txt") 'Host
+    iX = Inet1.OpenURL("https://raw.githubusercontent.com/ao-oficial/ao-website/master/parches.txt") 'Host
     tX = LeerInt(App.Path & "\INIT\Update.ini")
     
     DifX = iX - tX
