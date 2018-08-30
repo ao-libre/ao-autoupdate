@@ -57,7 +57,6 @@ Begin VB.Form frmMain
       _Version        =   393217
       BackColor       =   0
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       TextRTF         =   $"frmMain.frx":669A
    End
@@ -149,7 +148,7 @@ Private Sub Analizar()
             #If BuscarLinks Then 'Buscamos el link en el host (1)
                 Inet1.URL = Inet1.OpenURL("https://raw.githubusercontent.com/ao-oficial/ao-website/master/Link" & dNum & ".txt") 'Host
             #Else                'Generamos Link por defecto (0)
-                Inet1.URL = "https://raw.githubusercontent.com/ao-oficial/ao-website/master/Parche" & dNum & ".zip" 'Host
+                Inet1.URL = "https://raw.githubusercontent.com/ao-oficial/ao-website/master/parches/Parche" & dNum & ".zip" 'Host
             #End If
             
             Directory = App.Path & "\INIT\Parche" & dNum & ".zip"
