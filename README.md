@@ -1,6 +1,6 @@
 # ao-autoupdate
 Auto-Update to update Argentum Online client.
-
+![imagen](https://github.com/ao-libre/ao-autoupdate/blob/master/LEEME%20-%20Instrucciones/screenshot.PNG)
 ---
 
 # '* UpdateInteligente v4.0 *
