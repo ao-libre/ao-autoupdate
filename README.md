@@ -1,5 +1,5 @@
 # ao-autoupdate
-Auto-Update to update Argentum Online client.
+Auto-Update to update Argentum Online client and server
 
 ![imagen](https://github.com/ao-libre/ao-autoupdate/blob/master/LEEME%20-%20Instrucciones/screenshot.jpg)
 
