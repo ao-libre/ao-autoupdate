@@ -57,6 +57,7 @@ Begin VB.Form frmMain
       _Version        =   393217
       BackColor       =   0
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       TextRTF         =   $"frmMain.frx":669A
    End
@@ -74,7 +75,7 @@ Begin VB.Form frmMain
       Height          =   255
       Left            =   240
       TabIndex        =   3
-      Top             =   1800
+      Top             =   1920
       Visible         =   0   'False
       Width           =   2895
    End
@@ -92,7 +93,7 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00000000&
       Height          =   375
-      Left            =   120
+      Left            =   240
       TabIndex        =   0
       Top             =   1440
       Width           =   6495
@@ -125,47 +126,63 @@ Rem Programado por Shedark
 
 Private Sub Analizar()
 
-    Dim i As Integer, versionNumberLocal As Integer, versionNumberMaster As Integer
+    Dim i As Integer, versionNumberLocal As String, versionNumberMaster As String
+    Dim applicationToUpdate As String
     
     'lEstado.Caption = "Obteniendo datos..."
     Call addConsole("Buscando Actualizaciones...", 255, 255, 255, True, False)
     Call Reproducir_WAV(App.Path & "\Wav\Revision.wav", SND_FILENAME)
     
-    versionNumberMaster = Inet1.OpenURL("https://raw.githubusercontent.com/ao-libre/ao-cliente/master/updates.txt") 'Host
-    versionNumberLocal = LeerInt(App.Path & "\INIT\Update.ini")
+    applicationToUpdate = GetVar(App.Path & "\ConfigAutoupdate.ini", "ConfigAutoupdate", "application")
+    Call addConsole("Estoy configurado para actualizar tu " & applicationToUpdate & "¯\_(O.O)_/¯", 100, 200, 40, True, False)   '>> Informacion
     
-    If Not (versionNumberMaster = versionNumberLocal) Then
-    If MsgBox("Se descargará la nueva version del cliente, ¿Continuar?", vbYesNo) = vbYes Then
-        ProgressBar1.Visible = True
-
-        Call addConsole("Iniciando, se descargarán actualizaciones.", 200, 200, 200, True, False)   '>> Informacion
-        
-        Inet1.AccessType = icUseDefault
-
-        Inet1.URL = "https://github.com/ao-libre/ao-website/blob/master/parches/Parche1.zip"
-        Directory = App.Path & "\INIT\master.zip"
-        bDone = False
-        dError = False
+    If (applicationToUpdate = "server") Then
+        versionNumberMaster = Inet1.OpenURL("https://raw.githubusercontent.com/ao-libre/ao-server/master/version.info")
+    ElseIf (applicationToUpdate = "cliente") Then
+        versionNumberMaster = Inet1.OpenURL("https://raw.githubusercontent.com/ao-libre/ao-cliente/master/version.info")
+    Else
+        Call addConsole("No se pudo encontrar la ultima version en la configuracion del servidor, intenta mas tarde.", 255, 0, 0, True, False)
+    End If
+    
+    versionNumberLocal = GetVar(App.Path & "\ConfigAutoupdate.ini", "ConfigAutoupdate", "version")
+    
+    If StrComp(versionNumberMaster, versionNumberLocal) Then
+        Call addConsole("Tu version de Argentum Online Libre esta actualizada, no hace falta actualizar, entra y juga =D.", 149, 100, 210, True, False)
+    ElseIf Not (versionNumberMaster = versionNumberLocal) Then
+        If MsgBox("Se descargará la nueva version del cliente, ¿Continuar?", vbYesNo) = vbYes Then
+            ProgressBar1.Visible = True
+    
+            Call addConsole("Iniciando, se descargarán actualizaciones.", 200, 200, 200, True, False)   '>> Informacion
             
-        frmMain.Inet1.Execute , "GET"
-        
-        Do While bDone = False
-        DoEvents
-        Loop
+            Inet1.AccessType = icUseDefault
+    
+            Inet1.URL = "https://github.com/webtorrent/webtorrent/archive/v0.102.4.zip"
             
-        If dError Then Exit Sub
+            'Inet1.URL = "https://github.com/ao-libre/ao-" & applicationToUpdate & "/archive/v " & versionNumberMaster & ".zip"
+            Directory = App.Path & "\updates\update.zip"
+            bDone = False
+            dError = False
+                
+            frmMain.Inet1.Execute , "GET"
             
-            UnZip Directory, App.Path & "\"
-            Kill Directory
-        End If
-        
-        Call GuardarInt(App.Path & "\INIT\Update.ini", versionNumberMaster)
-        
-        Call addConsole("Cliente actualizado correctamente.", 255, 255, 0, True, False)
-        Call Reproducir_WAV(App.Path & "\Wav\Actualizado.wav", SND_FILENAME)
-        ProgressBar1.value = 0
+            Do While bDone = False
+            DoEvents
+            Loop
+                
+            If dError Then Exit Sub
+                
+                UnZip Directory, App.Path & "\"
+                Kill Directory
+            End If
+            
+            'Call GuardarInt(App.Path & "\INIT\Update.ini", versionNumberMaster)
+            Call WriteVar(App.Path & "\ConfigAutoupdate.ini", "ConfigAutoupdate", "version", CStr(versionNumberMaster))
+            
+            Call addConsole(applicationToUpdate & " actualizado correctamente.", 66, 255, 30, True, False)
+            Call Reproducir_WAV(App.Path & "\Wav\Actualizado.wav", SND_FILENAME)
+            ProgressBar1.value = 0
     ElseIf vbNo Then
-        Call addConsole("Se cancelo la actualizacion.", 255, 0, 0, True, False)
+            Call addConsole("Se cancelo la actualizacion.", 255, 0, 0, True, False)
     End If
 
     If MsgBox("¿Deseas Jugar?", vbYesNo) = vbYes Then
@@ -231,8 +248,10 @@ Private Sub Inet1_StateChanged(ByVal State As Integer)
             Dim tempArray() As Byte
             Dim FileSize As Long
             
-            'FileSize = Inet1.GetHeader("Content-length")
-            FileSize = 1000
+            'When I tried to get the content-lenght from github, that header is not here.
+            'FileSize = Inet1.GetHeader("Content-lenght")
+            FileSize = 200000
+            
             ProgressBar1.Max = FileSize
             
             Call addConsole("Descarga iniciada.", 0, 255, 0, True, False)
@@ -246,7 +265,7 @@ Private Sub Inet1_StateChanged(ByVal State As Integer)
                     tempArray = vtData
                     Put #1, , tempArray
                     
-                vtData = Inet1.GetChunk(1024, icByteArray)
+                    vtData = Inet1.GetChunk(1024, icByteArray)
                     
                     ProgressBar1.value = ProgressBar1.value + Len(vtData) * 2
                     LSize.Caption = (ProgressBar1.value + Len(vtData) * 2) / 1000000 & "MBs de " & (FileSize / 1000000) & "MBs"
@@ -270,7 +289,7 @@ Private Sub Inet1_StateChanged(ByVal State As Integer)
         Case icRequestSent
             Call addConsole("Seguimos resolviendo host..", 110, 230, 20, True, False)
         Case icReceivingResponse
-            Call addConsole("Escuchamos una señal, vamos a bajar algo :)", 100, 190, 200, True, False)
+            Call addConsole("Escuchamos una señal, vamos a comprobar que tengas la ultima version.", 100, 190, 200, True, False)
         Case icConnected
             Call addConsole("Nos conectamos, ya vamos a empezar a bajar... paciencia =P ", 200, 90, 220, True, False)
         Case icResponseReceived
@@ -301,6 +320,3 @@ Private Sub GuardarInt(ByVal Ruta As String, ByVal data As Integer)
 End Sub
 
 
-Private Sub RichTextBox1_Change()
-
-End Sub
