@@ -146,7 +146,7 @@ Private Sub Analizar()
     
     versionNumberLocal = GetVar(App.Path & "\ConfigAutoupdate.ini", "ConfigAutoupdate", "version")
     
-    If StrComp(versionNumberMaster, versionNumberLocal) Then
+    If StrComp(versionNumberMaster, versionNumberLocal) = 1 Then
         Call addConsole("Tu version de Argentum Online Libre esta actualizada, no hace falta actualizar, entra y juga =D.", 149, 100, 210, True, False)
     ElseIf Not (versionNumberMaster = versionNumberLocal) Then
         If MsgBox("Se descargará la nueva version del cliente, ¿Continuar?", vbYesNo) = vbYes Then
@@ -155,10 +155,8 @@ Private Sub Analizar()
             Call addConsole("Iniciando, se descargarán actualizaciones.", 200, 200, 200, True, False)   '>> Informacion
             
             Inet1.AccessType = icUseDefault
-    
-            Inet1.URL = "https://github.com/webtorrent/webtorrent/archive/v0.102.4.zip"
             
-            'Inet1.URL = "https://github.com/ao-libre/ao-" & applicationToUpdate & "/archive/v " & versionNumberMaster & ".zip"
+            Inet1.URL = "https://github.com/ao-libre/ao-" & applicationToUpdate & "/archive/v " & versionNumberMaster & ".zip"
             Directory = App.Path & "\updates\update.zip"
             bDone = False
             dError = False
@@ -175,9 +173,7 @@ Private Sub Analizar()
                 Kill Directory
             End If
             
-            'Call GuardarInt(App.Path & "\INIT\Update.ini", versionNumberMaster)
             Call WriteVar(App.Path & "\ConfigAutoupdate.ini", "ConfigAutoupdate", "version", CStr(versionNumberMaster))
-            
             Call addConsole(applicationToUpdate & " actualizado correctamente.", 66, 255, 30, True, False)
             Call Reproducir_WAV(App.Path & "\Wav\Actualizado.wav", SND_FILENAME)
             ProgressBar1.value = 0
@@ -320,3 +316,6 @@ Private Sub GuardarInt(ByVal Ruta As String, ByVal data As Integer)
 End Sub
 
 
+Private Sub RichTextBox1_Change()
+
+End Sub
