@@ -314,8 +314,3 @@ Private Sub GuardarInt(ByVal Ruta As String, ByVal data As Integer)
     Print #F, data
     Close #F
 End Sub
-
-
-Private Sub RichTextBox1_Change()
-
-End Sub
