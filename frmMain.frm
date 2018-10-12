@@ -23,7 +23,7 @@ Begin VB.Form frmMain
       Height          =   450
       Left            =   240
       TabIndex        =   2
-      Top             =   2130
+      Top             =   2160
       Width           =   6345
       _ExtentX        =   11192
       _ExtentY        =   794
@@ -46,21 +46,6 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin RichTextLib.RichTextBox RichTextBox1 
-      Height          =   1095
-      Left            =   240
-      TabIndex        =   1
-      Top             =   240
-      Width           =   6255
-      _ExtentX        =   11033
-      _ExtentY        =   1931
-      _Version        =   393217
-      BackColor       =   0
-      BorderStyle     =   0
-      Enabled         =   -1  'True
-      ReadOnly        =   -1  'True
-      TextRTF         =   $"frmMain.frx":669A
-   End
    Begin InetCtlsObjects.Inet Inet1 
       Left            =   6120
       Top             =   120
@@ -68,16 +53,19 @@ Begin VB.Form frmMain
       _ExtentY        =   1005
       _Version        =   393216
    End
-   Begin VB.Label LSize 
-      BackStyle       =   0  'Transparent
-      Caption         =   "0 MBs de 0 MBs"
-      ForeColor       =   &H0000FFFF&
-      Height          =   255
-      Left            =   240
-      TabIndex        =   3
-      Top             =   1920
-      Visible         =   0   'False
-      Width           =   2895
+   Begin RichTextLib.RichTextBox RichTextBox1 
+      Height          =   1095
+      Left            =   120
+      TabIndex        =   1
+      Top             =   240
+      Width           =   6630
+      _ExtentX        =   11695
+      _ExtentY        =   1931
+      _Version        =   393217
+      BackColor       =   0
+      BorderStyle     =   0
+      ReadOnly        =   -1  'True
+      TextRTF         =   $"frmMain.frx":669A
    End
    Begin VB.Label Label1 
       BackStyle       =   0  'Transparent
@@ -126,8 +114,10 @@ Rem Programado por Shedark
 
 Private Sub Analizar()
 
-    Dim i As Integer, versionNumberLocal As String, versionNumberMaster As String
+    Dim versionNumberLocal As String, versionNumberMaster As String
     Dim applicationToUpdate As String
+    Dim responseGithub As String
+    Dim JsonObject As Object
     
     'lEstado.Caption = "Obteniendo datos..."
     Call addConsole("Buscando Actualizaciones...", 255, 255, 255, True, False)
@@ -136,19 +126,21 @@ Private Sub Analizar()
     applicationToUpdate = GetVar(App.Path & "\ConfigAutoupdate.ini", "ConfigAutoupdate", "application")
     Call addConsole("Estoy configurado para actualizar tu " & applicationToUpdate & "¯\_(O.O)_/¯", 100, 200, 40, True, False)   '>> Informacion
     
-    If (applicationToUpdate = "server") Then
-        versionNumberMaster = Inet1.OpenURL("https://raw.githubusercontent.com/ao-libre/ao-server/master/version.info")
-    ElseIf (applicationToUpdate = "cliente") Then
-        versionNumberMaster = Inet1.OpenURL("https://raw.githubusercontent.com/ao-libre/ao-cliente/master/version.info")
+    If applicationToUpdate = "server" Then
+        responseGithub = Inet1.OpenURL("https://api.github.com/repos/ao-libre/ao-cliente/releases/latest")
+    ElseIf applicationToUpdate = "cliente" Then
+        responseGithub = Inet1.OpenURL("https://api.github.com/repos/ao-libre/ao-cliente/releases/latest")
     Else
-        Call addConsole("No se pudo encontrar la ultima version en la configuracion del servidor, intenta mas tarde.", 255, 0, 0, True, False)
+        Call addConsole("No se pudo encontrar que aplicacion actualizar en ConfigAutoupdate.ini.", 255, 0, 0, True, False)
     End If
     
+    Set JsonObject = JSON.parse(responseGithub)
+    versionNumberMaster = JsonObject.Item("tag_name")
     versionNumberLocal = GetVar(App.Path & "\ConfigAutoupdate.ini", "ConfigAutoupdate", "version")
     
-    If StrComp(versionNumberMaster, versionNumberLocal) = 1 Then
+    If versionNumberMaster = versionNumberLocal Then
         Call addConsole("Tu version de Argentum Online Libre esta actualizada, no hace falta actualizar, entra y juga =D.", 149, 100, 210, True, False)
-    ElseIf Not (versionNumberMaster = versionNumberLocal) Then
+    ElseIf Not versionNumberMaster = versionNumberLocal Then
         If MsgBox("Se descargará la nueva version del cliente, ¿Continuar?", vbYesNo) = vbYes Then
             ProgressBar1.Visible = True
     
@@ -156,7 +148,9 @@ Private Sub Analizar()
             
             Inet1.AccessType = icUseDefault
             
-            Inet1.URL = "https://github.com/ao-libre/ao-" & applicationToUpdate & "/archive/v " & versionNumberMaster & ".zip"
+            Inet1.URL = "https://github.com/ao-libre/ao-" & applicationToUpdate & "/archive/" & versionNumberMaster & ".zip"
+            'Inet1.URL = "https://api.github.com/repos/ao-libre/ao-cliente/zipball/" & versionNumberMaster
+            
             Directory = App.Path & "\updates\update.zip"
             bDone = False
             dError = False
@@ -168,16 +162,17 @@ Private Sub Analizar()
             Loop
                 
             If dError Then Exit Sub
-                
                 UnZip Directory, App.Path & "\"
                 Kill Directory
             End If
             
             Call WriteVar(App.Path & "\ConfigAutoupdate.ini", "ConfigAutoupdate", "version", CStr(versionNumberMaster))
             Call addConsole(applicationToUpdate & " actualizado correctamente.", 66, 255, 30, True, False)
+            Call addConsole("Comentarios de la actualizacion: " & JsonObject.Item("body") & ".", 200, 200, 200, True, False)
             Call Reproducir_WAV(App.Path & "\Wav\Actualizado.wav", SND_FILENAME)
-            ProgressBar1.value = 0
-    ElseIf vbNo Then
+            ProgressBar1.Value = 0
+            
+        ElseIf vbNo Then
             Call addConsole("Se cancelo la actualizacion.", 255, 0, 0, True, False)
     End If
 
@@ -195,11 +190,11 @@ Private Sub Form_Load()
     Image2.Picture = LoadPicture(App.Path & "\Graficos\AU_Buscar_N.jpg")
     Image1.Picture = LoadPicture(App.Path & "\Graficos\AU_Salir_N.jpg")
     frmMain.Picture = LoadPicture(App.Path & "\Graficos\AU_Main.jpg")
-    ProgressBar1.value = 0
+    ProgressBar1.Value = 0
     'ProgressBar1.Height = 0
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
     Image2.Picture = LoadPicture(App.Path & "\Graficos\AU_Buscar_N.jpg")
     Image1.Picture = LoadPicture(App.Path & "\Graficos\AU_Salir_N.jpg")
 End Sub
@@ -209,27 +204,24 @@ Private Sub Image1_Click()
 End
 End Sub
 
-Private Sub Image1_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Image1_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
     Image1.Picture = LoadPicture(App.Path & "\Graficos\AU_Salir_A.jpg")
 End Sub
 
-Private Sub Image1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Image1_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
     Image1.Picture = LoadPicture(App.Path & "\Graficos\AU_Salir_I.jpg")
 End Sub
 Private Sub Image2_Click()
     Image2.Enabled = False
     Image2.Picture = LoadPicture(App.Path & "\Graficos\AU_Buscar_A.jpg")
-Call Analizar
-
-'Call addConsole("Buscando Actualizaciones...", 255, 255, 255, True, False)
-
+    Call Analizar
 End Sub
 
-Private Sub Image2_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Image2_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
     Image2.Picture = LoadPicture(App.Path & "\Graficos\AU_Buscar_A.jpg")
 End Sub
 
-Private Sub Image2_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Image2_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
     Image2.Picture = LoadPicture(App.Path & "\Graficos\AU_Buscar_I.jpg")
 End Sub
 
@@ -246,7 +238,7 @@ Private Sub Inet1_StateChanged(ByVal State As Integer)
             
             'When I tried to get the content-lenght from github, that header is not here.
             'FileSize = Inet1.GetHeader("Content-lenght")
-            FileSize = 200000
+            FileSize = 21476352
             
             ProgressBar1.Max = FileSize
             
@@ -262,34 +254,35 @@ Private Sub Inet1_StateChanged(ByVal State As Integer)
                     Put #1, , tempArray
                     
                     vtData = Inet1.GetChunk(1024, icByteArray)
-                    
-                    ProgressBar1.value = ProgressBar1.value + Len(vtData) * 2
-                    LSize.Caption = (ProgressBar1.value + Len(vtData) * 2) / 1000000 & "MBs de " & (FileSize / 1000000) & "MBs"
-                    ProgressBar1.Text = "[" & CLng((ProgressBar1.value * 100) / ProgressBar1.Max) & "% Completado.]"
+
+                    ProgressBar1.Value = ProgressBar1.Value + Len(vtData) * 2
+                    'LSize1.Caption = (ProgressBar1.Value + Len(vtData) * 2) / 1000000 & "MBs de " & (FileSize / 1000000) & "MBs"
+                    ProgressBar1.Text = "[" & (ProgressBar1.Value + Len(vtData) * 2) / 1000000 & "% MBs descargados.]"
+                    'ProgressBar1.Text = "[" & (ProgressBar1.Value + Len(vtData) * 2) / 1000000 & "MBs de " & (FileSize / 1000000) & "MBs"
 
                     DoEvents
                 Loop
             Close #1
             
             Call addConsole("Descarga finalizada", 0, 255, 0, True, False)
-            LSize.Caption = FileSize & "bytes"
-            ProgressBar1.value = 0
+
+            ProgressBar1.Value = 0
             
             bDone = True
         Case icRequesting
             Call addConsole("Buscando ultima version disponible", 0, 76, 0, True, False)
         Case icConnecting
-            Call addConsole("Obteniendo numero de la ultima actualizacion obtenida", 0, 255, 0, True, False)
+            Call addConsole("Obteniendo numero de la ultima actualizacion", 0, 255, 0, True, False)
         Case 1 'icHostResolvingHost
             Call addConsole("Resolviendo host... por favor espere", 0, 130, 0, True, False)
         Case icRequestSent
             Call addConsole("Seguimos resolviendo host..", 110, 230, 20, True, False)
         Case icReceivingResponse
-            Call addConsole("Escuchamos una señal, vamos a comprobar que tengas la ultima version.", 100, 190, 200, True, False)
+            'Call addConsole("Escuchamos una señal, vamos a comprobar que tengas la ultima version.", 100, 190, 200, True, False)
         Case icConnected
             Call addConsole("Nos conectamos, ya vamos a empezar a bajar... paciencia =P ", 200, 90, 220, True, False)
         Case icResponseReceived
-            Call addConsole("Recibimos respuesta", 250, 140, 10, True, False)
+            'Call addConsole("Recibimos respuesta", 250, 140, 10, True, False)
         Case icHostResolved
             Call addConsole("Lo hicimos resolvimos el host.", 110, 30, 20, True, False)
         Case Else
@@ -314,3 +307,8 @@ Private Sub GuardarInt(ByVal Ruta As String, ByVal data As Integer)
     Print #F, data
     Close #F
 End Sub
+
+Private Sub LSize1_Click()
+
+End Sub
+
