@@ -69,7 +69,7 @@ Begin VB.Form frmMain
    End
    Begin VB.Label Label1 
       BackStyle       =   0  'Transparent
-      Caption         =   "Este programa actualizará tu cliente a la nueva versión. Para empezar clickea en buscar actualizaciones"
+      Caption         =   "Este programa actualizará tu aplicacion a la nueva versión. Para empezar clickea en buscar actualizaciones"
       BeginProperty Font 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -109,48 +109,45 @@ Option Explicit
 Private Const GWL_EXSTYLE = -20
 Private Const WS_EX_LAYERED = &H80000
 Private Const WS_EX_TRANSPARENT As Long = &H20&
+Private Declare Sub Sleep Lib "kernel32.dll" (ByVal dwMilliseconds As Long)
 Dim Directory As String, bDone As Boolean, dError As Boolean, F As Integer
 Rem Programado por Shedark
 
 Private Sub Analizar()
-
     Dim versionNumberLocal As String, versionNumberMaster As String
-    Dim applicationToUpdate As String
-    Dim responseGithub As String
+    Dim applicationToUpdate As String, repository As String, githubAccount As String
+    Dim responseGithub As String, urlEndpointUpdate As String, fileToExecuteAfterUpdated As String
     Dim JsonObject As Object
     
-    'lEstado.Caption = "Obteniendo datos..."
+    githubAccount = GetVar(App.Path & "\ConfigAutoupdate.ini", "ApplicationToUpdate", "githubAccount")
+    Call CheckIfRunningLastVersionAutoupdate(githubAccount)
+    
     Call addConsole("Buscando Actualizaciones...", 255, 255, 255, True, False)
     Call Reproducir_WAV(App.Path & "\Wav\Revision.wav", SND_FILENAME)
     
-    applicationToUpdate = GetVar(App.Path & "\ConfigAutoupdate.ini", "ConfigAutoupdate", "application")
-    Call addConsole("Estoy configurado para actualizar tu " & applicationToUpdate & "¯\_(O.O)_/¯", 100, 200, 40, True, False)   '>> Informacion
-    
-    If applicationToUpdate = "server" Then
-        responseGithub = Inet1.OpenURL("https://api.github.com/repos/ao-libre/ao-cliente/releases/latest")
-    ElseIf applicationToUpdate = "cliente" Then
-        responseGithub = Inet1.OpenURL("https://api.github.com/repos/ao-libre/ao-cliente/releases/latest")
-    Else
-        Call addConsole("No se pudo encontrar que aplicacion actualizar en ConfigAutoupdate.ini.", 255, 0, 0, True, False)
-    End If
-    
+    applicationToUpdate = GetVar(App.Path & "\ConfigAutoupdate.ini", "ApplicationToUpdate", "application")
+    repository = GetVar(App.Path & "\ConfigAutoupdate.ini", "ApplicationToUpdate", "repository")
+    urlEndpointUpdate = "https://api.github.com/repos/" & githubAccount & "/" & repository & "/releases/latest"
+    responseGithub = Inet1.OpenURL(urlEndpointUpdate)
+
     Set JsonObject = JSON.parse(responseGithub)
     versionNumberMaster = JsonObject.Item("tag_name")
-    versionNumberLocal = GetVar(App.Path & "\ConfigAutoupdate.ini", "ConfigAutoupdate", "version")
+    versionNumberLocal = GetVar(App.Path & "\ConfigAutoupdate.ini", "ApplicationToUpdate", "version")
+    
+    Call addConsole("Estoy configurado para actualizar tu " & applicationToUpdate, 100, 200, 40, True, False)   '>> Informacion
     
     If versionNumberMaster = versionNumberLocal Then
         Call addConsole("Tu version de Argentum Online Libre esta actualizada, no hace falta actualizar, entra y juga =D.", 149, 100, 210, True, False)
     ElseIf Not versionNumberMaster = versionNumberLocal Then
         If MsgBox("Se descargará la nueva version del cliente, ¿Continuar?", vbYesNo) = vbYes Then
             ProgressBar1.Visible = True
-    
+            
             Call addConsole("Iniciando, se descargarán actualizaciones.", 200, 200, 200, True, False)   '>> Informacion
             
+            ProgressBar1.Max = JsonObject.Item("assets").Item(1).Item("size")
+            
             Inet1.AccessType = icUseDefault
-            
-            Inet1.URL = "https://github.com/ao-libre/ao-" & applicationToUpdate & "/archive/" & versionNumberMaster & ".zip"
-            'Inet1.URL = "https://api.github.com/repos/ao-libre/ao-cliente/zipball/" & versionNumberMaster
-            
+            Inet1.URL = JsonObject.Item("assets").Item(1).Item("browser_download_url")
             Directory = App.Path & "\updates\update.zip"
             bDone = False
             dError = False
@@ -162,11 +159,11 @@ Private Sub Analizar()
             Loop
                 
             If dError Then Exit Sub
-                UnZip Directory, App.Path & "\"
-                Kill Directory
-            End If
+            Call addConsole("Instalando actualizacion... unos momentos mas por favor ", 50, 90, 220, True, False)
+            UnZip Directory, App.Path & "\"
+            Kill Directory
             
-            Call WriteVar(App.Path & "\ConfigAutoupdate.ini", "ConfigAutoupdate", "version", CStr(versionNumberMaster))
+            Call WriteVar(App.Path & "\ConfigAutoupdate.ini", "ApplicationToUpdate", "version", CStr(versionNumberMaster))
             Call addConsole(applicationToUpdate & " actualizado correctamente.", 66, 255, 30, True, False)
             Call addConsole("Comentarios de la actualizacion: " & JsonObject.Item("body") & ".", 200, 200, 200, True, False)
             Call Reproducir_WAV(App.Path & "\Wav\Actualizado.wav", SND_FILENAME)
@@ -174,15 +171,35 @@ Private Sub Analizar()
             
         ElseIf vbNo Then
             Call addConsole("Se cancelo la actualizacion.", 255, 0, 0, True, False)
+        End If
     End If
 
     If MsgBox("¿Deseas Jugar?", vbYesNo) = vbYes Then
-        Call ShellExecute(Me.hWnd, "open", App.Path & "/Argentum.exe", "", "", 1)
+        fileToExecuteAfterUpdated = GetVar(App.Path & "\ConfigAutoupdate.ini", "ApplicationToUpdate", "fileToExecuteAfterUpdated")
+        Call ShellExecute(Me.hWnd, "open", App.Path & fileToExecuteAfterUpdated, "", "", 1)
         End
      Else
         End
     End If
 
+End Sub
+
+Private Sub CheckIfRunningLastVersionAutoupdate(githubAccount)
+    Dim responseGithub As String, versionNumberMaster As String, versionNumberLocal As String
+    Dim JsonObject As Object
+
+    responseGithub = Inet1.OpenURL("https://api.github.com/repos/" & githubAccount & "/ao-autoupdate/releases/latest")
+    Set JsonObject = JSON.parse(responseGithub)
+    
+    versionNumberMaster = JsonObject.Item("tag_name")
+    versionNumberLocal = GetVar(App.Path & "\ConfigAutoupdate.ini", "ConfigAutoupdate", "version")
+    
+    If Not versionNumberMaster = versionNumberLocal Then
+        Call addConsole("El actualizador esta desactualizado, por favor descarga la ultima version desde http://www.ArgentumOnline.org. Este programa se cerrara en 10 segundos", 200, 200, 200, True, False)   '>> Informacion
+        Call addConsole("Tu version: " & versionNumberLocal & " - Version Actual:" & versionNumberMaster, 200, 200, 26, True, False)   '>> Informacion
+        Sleep 10000
+        End
+    End If
 End Sub
 
 Private Sub Form_Load()
@@ -191,7 +208,6 @@ Private Sub Form_Load()
     Image1.Picture = LoadPicture(App.Path & "\Graficos\AU_Salir_N.jpg")
     frmMain.Picture = LoadPicture(App.Path & "\Graficos\AU_Main.jpg")
     ProgressBar1.Value = 0
-    'ProgressBar1.Height = 0
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
@@ -234,15 +250,8 @@ Private Sub Inet1_StateChanged(ByVal State As Integer)
         Case icResponseCompleted
             Dim vtData As Variant
             Dim tempArray() As Byte
-            Dim FileSize As Long
             
-            'When I tried to get the content-lenght from github, that header is not here.
-            'FileSize = Inet1.GetHeader("Content-lenght")
-            FileSize = 21476352
-            
-            ProgressBar1.Max = FileSize
-            
-            Call addConsole("Descarga iniciada.", 0, 255, 0, True, False)
+            Call addConsole("Descarga iniciada.", 100, 255, 130, True, False)
             
             Open Directory For Binary Access Write As #1
                 vtData = Inet1.GetChunk(1024, icByteArray)
@@ -256,10 +265,8 @@ Private Sub Inet1_StateChanged(ByVal State As Integer)
                     vtData = Inet1.GetChunk(1024, icByteArray)
 
                     ProgressBar1.Value = ProgressBar1.Value + Len(vtData) * 2
-                    'LSize1.Caption = (ProgressBar1.Value + Len(vtData) * 2) / 1000000 & "MBs de " & (FileSize / 1000000) & "MBs"
-                    ProgressBar1.Text = "[" & (ProgressBar1.Value + Len(vtData) * 2) / 1000000 & "% MBs descargados.]"
-                    'ProgressBar1.Text = "[" & (ProgressBar1.Value + Len(vtData) * 2) / 1000000 & "MBs de " & (FileSize / 1000000) & "MBs"
-
+                    ProgressBar1.Text = "[" & CInt((ProgressBar1.Value + Len(vtData) * 2) / 1000000) & "% MBs descargados.]"
+                    
                     DoEvents
                 Loop
             Close #1
@@ -270,13 +277,13 @@ Private Sub Inet1_StateChanged(ByVal State As Integer)
             
             bDone = True
         Case icRequesting
-            Call addConsole("Buscando ultima version disponible", 0, 76, 0, True, False)
+            'Call addConsole("Buscando ultima version disponible", 0, 76, 0, True, False)
         Case icConnecting
-            Call addConsole("Obteniendo numero de la ultima actualizacion", 0, 255, 0, True, False)
+            Call addConsole("Obteniendo numero de la ultima actualizacion ¯\_(O.O)_/¯", 0, 255, 0, True, False)
         Case 1 'icHostResolvingHost
-            Call addConsole("Resolviendo host... por favor espere", 0, 130, 0, True, False)
+            'Call addConsole("Resolviendo host... por favor espere", 0, 130, 0, True, False)
         Case icRequestSent
-            Call addConsole("Seguimos resolviendo host..", 110, 230, 20, True, False)
+            'Call addConsole("Seguimos resolviendo host..", 110, 230, 20, True, False)
         Case icReceivingResponse
             'Call addConsole("Escuchamos una señal, vamos a comprobar que tengas la ultima version.", 100, 190, 200, True, False)
         Case icConnected
@@ -284,7 +291,7 @@ Private Sub Inet1_StateChanged(ByVal State As Integer)
         Case icResponseReceived
             'Call addConsole("Recibimos respuesta", 250, 140, 10, True, False)
         Case icHostResolved
-            Call addConsole("Lo hicimos resolvimos el host.", 110, 30, 20, True, False)
+            'Call addConsole("Lo hicimos resolvimos el host.", 110, 30, 20, True, False)
         Case Else
             Call addConsole("Error al querer buscar la actualizacion, por favor intente mas tarde o contactanos http://www.argentumonline.org", 255, 0, 0, True, False)
     End Select
@@ -307,8 +314,3 @@ Private Sub GuardarInt(ByVal Ruta As String, ByVal data As Integer)
     Print #F, data
     Close #F
 End Sub
-
-Private Sub LSize1_Click()
-
-End Sub
-
