@@ -1,12 +1,9 @@
-# ao-autoupdate
-Auto-Update to update Argentum Online client and server
+# Argentum Online - Autoupdate
+Auto-Update to update any application in the ecosystem of Argentum Online
 
 ![imagen](https://github.com/ao-libre/ao-autoupdate/blob/master/LEEME%20-%20Instrucciones/screenshot.jpg)
 
 ---
-
-# '* UpdateInteligente v4.1 *
-Autoupdate for any application that uses the releases system in github.
 
 # * CONFIGURACION *
 
