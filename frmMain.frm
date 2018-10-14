@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.OCX"
+Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "msinet.ocx"
 Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Object = "{55473EAC-7715-4257-B5EF-6E14EBD6A5DD}#1.0#0"; "VBALPROGBAR6.OCX"
 Begin VB.Form frmMain 
@@ -23,7 +23,7 @@ Begin VB.Form frmMain
       Height          =   450
       Left            =   240
       TabIndex        =   2
-      Top             =   2130
+      Top             =   2160
       Width           =   6345
       _ExtentX        =   11192
       _ExtentY        =   794
@@ -46,21 +46,6 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin RichTextLib.RichTextBox RichTextBox1 
-      Height          =   1095
-      Left            =   240
-      TabIndex        =   1
-      Top             =   240
-      Width           =   6255
-      _ExtentX        =   11033
-      _ExtentY        =   1931
-      _Version        =   393217
-      BackColor       =   0
-      BorderStyle     =   0
-      Enabled         =   -1  'True
-      ReadOnly        =   -1  'True
-      TextRTF         =   $"frmMain.frx":669A
-   End
    Begin InetCtlsObjects.Inet Inet1 
       Left            =   6120
       Top             =   120
@@ -68,20 +53,23 @@ Begin VB.Form frmMain
       _ExtentY        =   1005
       _Version        =   393216
    End
-   Begin VB.Label LSize 
-      BackStyle       =   0  'Transparent
-      Caption         =   "0 MBs de 0 MBs"
-      ForeColor       =   &H0000FFFF&
-      Height          =   255
-      Left            =   240
-      TabIndex        =   3
-      Top             =   1800
-      Visible         =   0   'False
-      Width           =   2895
+   Begin RichTextLib.RichTextBox RichTextBox1 
+      Height          =   1095
+      Left            =   120
+      TabIndex        =   1
+      Top             =   240
+      Width           =   6630
+      _ExtentX        =   11695
+      _ExtentY        =   1931
+      _Version        =   393217
+      BackColor       =   0
+      BorderStyle     =   0
+      ReadOnly        =   -1  'True
+      TextRTF         =   $"frmMain.frx":669A
    End
    Begin VB.Label Label1 
       BackStyle       =   0  'Transparent
-      Caption         =   "Este programa actualizará tu cliente a la nueva versión. Para empezar clickea en buscar actualizaciones"
+      Caption         =   "Este programa actualizará tu aplicacion a la nueva versión. Para empezar clickea en buscar actualizaciones"
       BeginProperty Font 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -93,7 +81,7 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00000000&
       Height          =   375
-      Left            =   120
+      Left            =   240
       TabIndex        =   0
       Top             =   1440
       Width           =   6495
@@ -121,115 +109,136 @@ Option Explicit
 Private Const GWL_EXSTYLE = -20
 Private Const WS_EX_LAYERED = &H80000
 Private Const WS_EX_TRANSPARENT As Long = &H20&
+Private Declare Sub Sleep Lib "kernel32.dll" (ByVal dwMilliseconds As Long)
 Dim Directory As String, bDone As Boolean, dError As Boolean, F As Integer
 Rem Programado por Shedark
 
 Private Sub Analizar()
-
-    Dim i As Integer, iX As Integer, tX As Integer, DifX As Integer, dNum As String
+    Dim versionNumberLocal As String, versionNumberMaster As String
+    Dim applicationToUpdate As String, repository As String, githubAccount As String
+    Dim responseGithub As String, urlEndpointUpdate As String, fileToExecuteAfterUpdated As String
+    Dim JsonObject As Object
     
-    'lEstado.Caption = "Obteniendo datos..."
+    githubAccount = GetVar(App.Path & "\ConfigAutoupdate.ini", "ApplicationToUpdate", "githubAccount")
+    Call CheckIfRunningLastVersionAutoupdate(githubAccount)
+    
     Call addConsole("Buscando Actualizaciones...", 255, 255, 255, True, False)
     Call Reproducir_WAV(App.Path & "\Wav\Revision.wav", SND_FILENAME)
     
-    iX = Inet1.OpenURL("https://raw.githubusercontent.com/ao-oficial/ao-website/master/parches.txt") 'Host
-    tX = LeerInt(App.Path & "\INIT\Update.ini")
-    
-    DifX = iX - tX
-    
-    If Not (DifX = 0) Then
-    If MsgBox("Se descargarán " & DifX & "actualizaciones, ¿Continuar?", vbYesNo) = vbYes Then
-    ProgressBar1.Visible = True
+    applicationToUpdate = GetVar(App.Path & "\ConfigAutoupdate.ini", "ApplicationToUpdate", "application")
+    repository = GetVar(App.Path & "\ConfigAutoupdate.ini", "ApplicationToUpdate", "repository")
+    urlEndpointUpdate = "https://api.github.com/repos/" & githubAccount & "/" & repository & "/releases/latest"
+    responseGithub = Inet1.OpenURL(urlEndpointUpdate)
 
-        Call addConsole("Iniciando, se descargarán " & DifX & " actualizaciones.", 200, 200, 200, True, False)   '>> Informacion
-        For i = 1 To DifX
+    Set JsonObject = JSON.parse(responseGithub)
+    versionNumberMaster = JsonObject.Item("tag_name")
+    versionNumberLocal = GetVar(App.Path & "\ConfigAutoupdate.ini", "ApplicationToUpdate", "version")
+    
+    Call addConsole("Estoy configurado para actualizar tu " & applicationToUpdate, 100, 200, 40, True, False)   '>> Informacion
+    
+    If versionNumberMaster = versionNumberLocal Then
+        Call addConsole("Tu version de Argentum Online Libre esta actualizada, no hace falta actualizar, entra y juga =D.", 149, 100, 210, True, False)
+    ElseIf Not versionNumberMaster = versionNumberLocal Then
+        If MsgBox("Se descargará la nueva version del cliente, ¿Continuar?", vbYesNo) = vbYes Then
+            ProgressBar1.Visible = True
+            
+            Call addConsole("Iniciando, se descargarán actualizaciones.", 200, 200, 200, True, False)   '>> Informacion
+            
+            ProgressBar1.Max = JsonObject.Item("assets").Item(1).Item("size")
+            
             Inet1.AccessType = icUseDefault
-            dNum = i + tX
-            
-            #If BuscarLinks Then 'Buscamos el link en el host (1)
-                Inet1.URL = Inet1.OpenURL("https://raw.githubusercontent.com/ao-oficial/ao-website/master/Link" & dNum & ".txt") 'Host
-            #Else                'Generamos Link por defecto (0)
-                Inet1.URL = "https://raw.githubusercontent.com/ao-oficial/ao-website/master/parches/Parche" & dNum & ".zip" 'Host
-            #End If
-            
-            Directory = App.Path & "\INIT\Parche" & dNum & ".zip"
+            Inet1.URL = JsonObject.Item("assets").Item(1).Item("browser_download_url")
+            Directory = App.Path & "\updates\update.zip"
             bDone = False
             dError = False
-            
-            'lURL.Caption = Inet1.URL
-            'lName.Caption = "Parche" & dNum & ".zip"
-            'lDirectorio.Caption = App.Path & "\"
                 
             frmMain.Inet1.Execute , "GET"
             
             Do While bDone = False
             DoEvents
             Loop
-            
+                
             If dError Then Exit Sub
-            
+            Call addConsole("Instalando actualizacion... unos momentos mas por favor ", 50, 90, 220, True, False)
             UnZip Directory, App.Path & "\"
             Kill Directory
-        Next i
+            
+            Call WriteVar(App.Path & "\ConfigAutoupdate.ini", "ApplicationToUpdate", "version", CStr(versionNumberMaster))
+            Call addConsole(applicationToUpdate & " actualizado correctamente.", 66, 255, 30, True, False)
+            Call addConsole("Comentarios de la actualizacion: " & JsonObject.Item("body") & ".", 200, 200, 200, True, False)
+            Call Reproducir_WAV(App.Path & "\Wav\Actualizado.wav", SND_FILENAME)
+            ProgressBar1.Value = 0
+            
+        ElseIf vbNo Then
+            Call addConsole("Se cancelo la actualizacion.", 255, 0, 0, True, False)
+        End If
     End If
-     End If
-    Call GuardarInt(App.Path & "\INIT\Update.ini", iX)
+
+    If MsgBox("¿Deseas Jugar?", vbYesNo) = vbYes Then
+        fileToExecuteAfterUpdated = GetVar(App.Path & "\ConfigAutoupdate.ini", "ApplicationToUpdate", "fileToExecuteAfterUpdated")
+        Call ShellExecute(Me.hWnd, "open", App.Path & fileToExecuteAfterUpdated, "", "", 1)
+        End
+     Else
+        End
+    End If
+
+End Sub
+
+Private Sub CheckIfRunningLastVersionAutoupdate(githubAccount)
+    Dim responseGithub As String, versionNumberMaster As String, versionNumberLocal As String
+    Dim JsonObject As Object
+
+    responseGithub = Inet1.OpenURL("https://api.github.com/repos/" & githubAccount & "/ao-autoupdate/releases/latest")
+    Set JsonObject = JSON.parse(responseGithub)
     
-    Image2.Enabled = True
-    Call addConsole("Cliente actualizado correctamente.", 255, 255, 0, True, False)
-    Call Reproducir_WAV(App.Path & "\Wav\Actualizado.wav", SND_FILENAME)
-    ProgressBar1.value = 0
-
-If MsgBox("¿Deseas Jugar?", vbYesNo) = vbYes Then
-    Call ShellExecute(Me.hWnd, "open", App.Path & "/Argentum.exe", "", "", 1)
-    End
- Else
-    End
-End If
-
+    versionNumberMaster = JsonObject.Item("tag_name")
+    versionNumberLocal = GetVar(App.Path & "\ConfigAutoupdate.ini", "ConfigAutoupdate", "version")
+    
+    If Not versionNumberMaster = versionNumberLocal Then
+        Call addConsole("El actualizador esta desactualizado, por favor descarga la ultima version desde http://www.ArgentumOnline.org. Este programa se cerrara en 10 segundos", 200, 200, 200, True, False)   '>> Informacion
+        Call addConsole("Tu version: " & versionNumberLocal & " - Version Actual:" & versionNumberMaster, 200, 200, 26, True, False)   '>> Informacion
+        Sleep 10000
+        End
+    End If
 End Sub
 
 Private Sub Form_Load()
-ProgressBar1.Picture = LoadPicture(App.Path & "\Graficos\AU_BarraVacia.jpg")
-Image2.Picture = LoadPicture(App.Path & "\Graficos\AU_Buscar_N.jpg")
-Image1.Picture = LoadPicture(App.Path & "\Graficos\AU_Salir_N.jpg")
-frmMain.Picture = LoadPicture(App.Path & "\Graficos\AU_Main.jpg")
-ProgressBar1.value = 0
-'ProgressBar1.Height = 0
+    ProgressBar1.Picture = LoadPicture(App.Path & "\Graficos\AU_BarraVacia.jpg")
+    Image2.Picture = LoadPicture(App.Path & "\Graficos\AU_Buscar_N.jpg")
+    Image1.Picture = LoadPicture(App.Path & "\Graficos\AU_Salir_N.jpg")
+    frmMain.Picture = LoadPicture(App.Path & "\Graficos\AU_Main.jpg")
+    ProgressBar1.Value = 0
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-Image2.Picture = LoadPicture(App.Path & "\Graficos\AU_Buscar_N.jpg")
-Image1.Picture = LoadPicture(App.Path & "\Graficos\AU_Salir_N.jpg")
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
+    Image2.Picture = LoadPicture(App.Path & "\Graficos\AU_Buscar_N.jpg")
+    Image1.Picture = LoadPicture(App.Path & "\Graficos\AU_Salir_N.jpg")
 End Sub
 
 Private Sub Image1_Click()
-Image1.Picture = LoadPicture(App.Path & "\Graficos\AU_Salir_A.jpg")
+    Image1.Picture = LoadPicture(App.Path & "\Graficos\AU_Salir_A.jpg")
 End
 End Sub
 
-Private Sub Image1_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
-Image1.Picture = LoadPicture(App.Path & "\Graficos\AU_Salir_A.jpg")
+Private Sub Image1_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
+    Image1.Picture = LoadPicture(App.Path & "\Graficos\AU_Salir_A.jpg")
 End Sub
 
-Private Sub Image1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-Image1.Picture = LoadPicture(App.Path & "\Graficos\AU_Salir_I.jpg")
+Private Sub Image1_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
+    Image1.Picture = LoadPicture(App.Path & "\Graficos\AU_Salir_I.jpg")
 End Sub
 Private Sub Image2_Click()
-Image2.Enabled = False
-Image2.Picture = LoadPicture(App.Path & "\Graficos\AU_Buscar_A.jpg")
-Call Analizar
-
-'Call addConsole("Buscando Actualizaciones...", 255, 255, 255, True, False)
-
+    Image2.Enabled = False
+    Image2.Picture = LoadPicture(App.Path & "\Graficos\AU_Buscar_A.jpg")
+    Call Analizar
 End Sub
 
-Private Sub Image2_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
-Image2.Picture = LoadPicture(App.Path & "\Graficos\AU_Buscar_A.jpg")
+Private Sub Image2_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
+    Image2.Picture = LoadPicture(App.Path & "\Graficos\AU_Buscar_A.jpg")
 End Sub
 
-Private Sub Image2_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-Image2.Picture = LoadPicture(App.Path & "\Graficos\AU_Buscar_I.jpg")
+Private Sub Image2_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
+    Image2.Picture = LoadPicture(App.Path & "\Graficos\AU_Buscar_I.jpg")
 End Sub
 
 Private Sub Inet1_StateChanged(ByVal State As Integer)
@@ -241,12 +250,8 @@ Private Sub Inet1_StateChanged(ByVal State As Integer)
         Case icResponseCompleted
             Dim vtData As Variant
             Dim tempArray() As Byte
-            Dim FileSize As Long
             
-            FileSize = Inet1.GetHeader("Content-length")
-            ProgressBar1.Max = FileSize
-            
-            Call addConsole("Descarga iniciada.", 0, 255, 0, True, False)
+            Call addConsole("Descarga iniciada.", 100, 255, 130, True, False)
             
             Open Directory For Binary Access Write As #1
                 vtData = Inet1.GetChunk(1024, icByteArray)
@@ -257,21 +262,38 @@ Private Sub Inet1_StateChanged(ByVal State As Integer)
                     tempArray = vtData
                     Put #1, , tempArray
                     
-                vtData = Inet1.GetChunk(1024, icByteArray)
-                    
-                    ProgressBar1.value = ProgressBar1.value + Len(vtData) * 2
-                    LSize.Caption = (ProgressBar1.value + Len(vtData) * 2) / 1000000 & "MBs de " & (FileSize / 1000000) & "MBs"
-                    ProgressBar1.Text = "[" & CLng((ProgressBar1.value * 100) / ProgressBar1.Max) & "% Completado.]"
+                    vtData = Inet1.GetChunk(1024, icByteArray)
 
+                    ProgressBar1.Value = ProgressBar1.Value + Len(vtData) * 2
+                    ProgressBar1.Text = "[" & CInt((ProgressBar1.Value + Len(vtData) * 2) / 1000000) & "% MBs descargados.]"
+                    
                     DoEvents
                 Loop
             Close #1
             
             Call addConsole("Descarga finalizada", 0, 255, 0, True, False)
-            LSize.Caption = FileSize & "bytes"
-            ProgressBar1.value = 0
+
+            ProgressBar1.Value = 0
             
             bDone = True
+        Case icRequesting
+            'Call addConsole("Buscando ultima version disponible", 0, 76, 0, True, False)
+        Case icConnecting
+            Call addConsole("Obteniendo numero de la ultima actualizacion ¯\_(O.O)_/¯", 0, 255, 0, True, False)
+        Case 1 'icHostResolvingHost
+            'Call addConsole("Resolviendo host... por favor espere", 0, 130, 0, True, False)
+        Case icRequestSent
+            'Call addConsole("Seguimos resolviendo host..", 110, 230, 20, True, False)
+        Case icReceivingResponse
+            'Call addConsole("Escuchamos una señal, vamos a comprobar que tengas la ultima version.", 100, 190, 200, True, False)
+        Case icConnected
+            Call addConsole("Nos conectamos, ya vamos a empezar a bajar... paciencia =P ", 200, 90, 220, True, False)
+        Case icResponseReceived
+            'Call addConsole("Recibimos respuesta", 250, 140, 10, True, False)
+        Case icHostResolved
+            'Call addConsole("Lo hicimos resolvimos el host.", 110, 30, 20, True, False)
+        Case Else
+            Call addConsole("Error al querer buscar la actualizacion, por favor intente mas tarde o contactanos http://www.argentumonline.org", 255, 0, 0, True, False)
     End Select
 End Sub
 
@@ -292,5 +314,3 @@ Private Sub GuardarInt(ByVal Ruta As String, ByVal data As Integer)
     Print #F, data
     Close #F
 End Sub
-
-
