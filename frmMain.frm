@@ -64,6 +64,7 @@ Begin VB.Form frmMain
       _Version        =   393217
       BackColor       =   0
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       TextRTF         =   $"frmMain.frx":669A
    End
@@ -139,7 +140,7 @@ Private Sub Analizar()
     If versionNumberMaster = versionNumberLocal Then
         Call addConsole("Tu version de Argentum Online Libre esta actualizada, no hace falta actualizar, entra y juga =D.", 149, 100, 210, True, False)
     ElseIf Not versionNumberMaster = versionNumberLocal Then
-        If MsgBox("Se descargará la nueva version del cliente, ¿Continuar?", vbYesNo) = vbYes Then
+        If MsgBox("Se descargará la nueva version, ¿Continuar?", vbYesNo) = vbYes Then
             ProgressBar1.Visible = True
             
             Call addConsole("Iniciando, se descargarán actualizaciones.", 200, 200, 200, True, False)   '>> Informacion
@@ -148,7 +149,7 @@ Private Sub Analizar()
             
             Inet1.AccessType = icUseDefault
             Inet1.URL = JsonObject.Item("assets").Item(1).Item("browser_download_url")
-            Directory = App.Path & "\updates\update.zip"
+            Directory = App.Path & "\Updates\" & JsonObject.Item("assets").Item(1).Item("name")
             bDone = False
             dError = False
                 
@@ -176,7 +177,7 @@ Private Sub Analizar()
 
     If MsgBox("¿Deseas Jugar?", vbYesNo) = vbYes Then
         fileToExecuteAfterUpdated = GetVar(App.Path & "\ConfigAutoupdate.ini", "ApplicationToUpdate", "fileToExecuteAfterUpdated")
-        Call ShellExecute(Me.hWnd, "open", App.Path & fileToExecuteAfterUpdated, "", "", 1)
+        Call ShellExecute(Me.hWnd, "open", App.Path & "\" & fileToExecuteAfterUpdated, "", "", 1)
         End
      Else
         End
