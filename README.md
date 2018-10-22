@@ -5,7 +5,7 @@ Auto-Update to update any application in the ecosystem of Argentum Online
 
 ---
 
-# * CONFIGURACION *
+# * CONFIGURATION *
 
 The file `ConfigAutoupdate.ini` contains the following properties
 
@@ -28,15 +28,14 @@ ApplicationToUpdate
 - fileToExecuteAfterUpdated: nombre del archivo que se ejecutara al finalizar la actualizacion
 
 ConfigAutoupdate
-- version: es la version del programa, para que se chequee si estamos corriendo sobre la ultima version
+- version: es la version del programa `ao-autoupdate`, para que se auto-chequee si estamos corriendo sobre la ultima version
 
+---------
 
-Errors:
-En caso de tirar error en el archivo Unzip32.dll porque no se encuentra:
-	Colocarla en C:/Windows/System32/ (viene adjunta al codigo)
-	Ir a Inicio > Ejecutar, poner lo siguiente
-	Regsvr32 Unzip32.dll
-	y dar enter
+## Errors:
+En caso de tirar error en el archivo `Unzip32.dll` porque no se encuentra:
+1- Colocarla en `C:/Windows/System32/` (viene adjunta al codigo)
+2- Ir a Inicio > Ejecutar, poner lo siguiente `Regsvr32 Unzip32.dll` y dar enter
 
 -------- 
 
