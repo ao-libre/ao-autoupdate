@@ -34,8 +34,9 @@ ConfigAutoupdate
 
 ## Errors:
 En caso de tirar error en el archivo `Unzip32.dll` porque no se encuentra:
-1- Colocarla en `C:/Windows/System32/` (viene adjunta al codigo)
-2- Ir a Inicio > Ejecutar, poner lo siguiente `Regsvr32 Unzip32.dll` y dar enter
+
+1. Colocarla en `C:/Windows/System32/` (viene adjunta al codigo)
+2. Ir a Inicio > Ejecutar, poner lo siguiente `Regsvr32 Unzip32.dll` y dar enter
 
 -------- 
 
