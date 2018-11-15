@@ -64,6 +64,7 @@ Begin VB.Form frmMain
       _Version        =   393217
       BackColor       =   0
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       TextRTF         =   $"frmMain.frx":669A
    End
@@ -123,7 +124,7 @@ Private Sub Analizar()
     githubAccount = GetVar(App.Path & "\ConfigAutoupdate.ini", "ApplicationToUpdate", "githubAccount")
     Call CheckIfRunningLastVersionAutoupdate(githubAccount)
     
-    Call addConsole("Buscando Actualizaciones...", 255, 255, 255, True, False)
+    Call addConsole("Buscando Actualizaciones ¯\_(O.O)_/¯", 255, 255, 255, True, False)
     Call Reproducir_WAV(App.Path & "\Wav\Revision.wav", SND_FILENAME)
     
     applicationToUpdate = GetVar(App.Path & "\ConfigAutoupdate.ini", "ApplicationToUpdate", "application")
@@ -280,7 +281,7 @@ Private Sub Inet1_StateChanged(ByVal State As Integer)
         Case icRequesting
             'Call addConsole("Buscando ultima version disponible", 0, 76, 0, True, False)
         Case icConnecting
-            Call addConsole("Obteniendo numero de la ultima actualizacion ¯\_(O.O)_/¯", 0, 255, 0, True, False)
+            'Call addConsole("Obteniendo numero de la ultima actualizacion ¯\_(O.O)_/¯", 0, 255, 0, True, False)
         Case 1 'icHostResolvingHost
             'Call addConsole("Resolviendo host... por favor espere", 0, 130, 0, True, False)
         Case icRequestSent
