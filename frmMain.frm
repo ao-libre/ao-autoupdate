@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "msinet.ocx"
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
-Object = "{55473EAC-7715-4257-B5EF-6E14EBD6A5DD}#1.0#0"; "VBALPROGBAR6.OCX"
+Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
+Object = "{55473EAC-7715-4257-B5EF-6E14EBD6A5DD}#1.0#0"; "VBALPROGBAR6.ocx"
 Begin VB.Form frmMain 
    BackColor       =   &H00C00000&
    BorderStyle     =   0  'None
@@ -64,7 +64,6 @@ Begin VB.Form frmMain
       _Version        =   393217
       BackColor       =   0
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       TextRTF         =   $"frmMain.frx":669A
    End
@@ -112,6 +111,7 @@ Private Const WS_EX_LAYERED = &H80000
 Private Const WS_EX_TRANSPARENT As Long = &H20&
 Private Declare Sub Sleep Lib "kernel32.dll" (ByVal dwMilliseconds As Long)
 Dim Directory As String, bDone As Boolean, dError As Boolean, F As Integer
+Dim SizeInMb As Long
 Rem Programado por Shedark
 
 Private Sub Analizar()
@@ -146,6 +146,7 @@ Private Sub Analizar()
             Call addConsole("Iniciando, se descargarán actualizaciones.", 200, 200, 200, True, False)   '>> Informacion
             
             ProgressBar1.Max = JsonObject.Item("assets").Item(1).Item("size")
+            SizeInMb = ProgressBar1.Max / 1048576#
             
             Inet1.AccessType = icUseDefault
             Inet1.URL = JsonObject.Item("assets").Item(1).Item("browser_download_url")
@@ -258,7 +259,6 @@ Private Sub Inet1_StateChanged(ByVal State As Integer)
                 vtData = Inet1.GetChunk(1024, icByteArray)
                 DoEvents
                 
-                
                 Do While Not Len(vtData) = 0
                     tempArray = vtData
                     Put #1, , tempArray
@@ -266,7 +266,7 @@ Private Sub Inet1_StateChanged(ByVal State As Integer)
                     vtData = Inet1.GetChunk(1024, icByteArray)
 
                     ProgressBar1.Value = ProgressBar1.Value + Len(vtData) * 2
-                    ProgressBar1.Text = "[" & CInt((ProgressBar1.Value + Len(vtData) * 2) / 1000000) & "% MBs descargados.]"
+                    ProgressBar1.Text = "[" & CInt((ProgressBar1.Value + Len(vtData) * 2) / 1000000) & "% de " & SizeInMb & " MBs descargados.]"
                     
                     DoEvents
                 Loop
@@ -288,7 +288,7 @@ Private Sub Inet1_StateChanged(ByVal State As Integer)
         Case icReceivingResponse
             'Call addConsole("Escuchamos una señal, vamos a comprobar que tengas la ultima version.", 100, 190, 200, True, False)
         Case icConnected
-            Call addConsole("Nos conectamos, ya vamos a empezar a bajar... paciencia =P ", 200, 90, 220, True, False)
+            'Call addConsole("Nos conectamos, ya vamos a empezar a bajar... paciencia =P ", 200, 90, 220, True, False)
         Case icResponseReceived
             'Call addConsole("Recibimos respuesta", 250, 140, 10, True, False)
         Case icHostResolved
