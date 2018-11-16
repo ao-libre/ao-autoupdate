@@ -112,7 +112,7 @@ Private Const WS_EX_LAYERED = &H80000
 Private Const WS_EX_TRANSPARENT As Long = &H20&
 Private Declare Sub Sleep Lib "kernel32.dll" (ByVal dwMilliseconds As Long)
 Dim Directory As String, bDone As Boolean, dError As Boolean, F As Integer
-Dim SizeInMb As Long
+Dim SizeInMb As Double
 Rem Programado por Shedark
 
 Private Sub Analizar()
@@ -147,7 +147,7 @@ Private Sub Analizar()
             Call addConsole("Iniciando, se descargarán actualizaciones.", 200, 200, 200, True, False)   '>> Informacion
             
             ProgressBar1.Max = JsonObject.Item("assets").Item(1).Item("size")
-            SizeInMb = ProgressBar1.Max / 1048576#
+            SizeInMb = BytesToMegabytes(JsonObject.Item("assets").Item(1).Item("size"))
             
             Inet1.AccessType = icUseDefault
             Inet1.URL = JsonObject.Item("assets").Item(1).Item("browser_download_url")
@@ -186,6 +186,17 @@ Private Sub Analizar()
     End If
 
 End Sub
+
+Public Function BytesToMegabytes(Bytes As Double) As Double
+   'This function gives an estimate to two decimal
+   'places.  For a more precise answer, format to
+   'more decimal places or just return dblAns
+ 
+  Dim dblAns As Double
+  dblAns = (Bytes / 1024) / 1024
+  BytesToMegabytes = Format(dblAns, "###,###,##0.00")
+  
+End Function
 
 Private Sub CheckIfRunningLastVersionAutoupdate(githubAccount)
     Dim responseGithub As String, versionNumberMaster As String, versionNumberLocal As String
@@ -245,6 +256,7 @@ Private Sub Image2_MouseMove(Button As Integer, Shift As Integer, x As Single, Y
 End Sub
 
 Private Sub Inet1_StateChanged(ByVal State As Integer)
+    Dim Percentage As Long
     Select Case State
         Case icError
             Call addConsole("Error en la conexión, descarga abortada.", 255, 0, 0, True, False)
@@ -267,7 +279,9 @@ Private Sub Inet1_StateChanged(ByVal State As Integer)
                     vtData = Inet1.GetChunk(1024, icByteArray)
 
                     ProgressBar1.Value = ProgressBar1.Value + Len(vtData) * 2
-                    ProgressBar1.Text = "[" & CInt((ProgressBar1.Value + Len(vtData) * 2) / 1000000) & "% de " & SizeInMb & " MBs descargados.]"
+                    
+                    Percentage = (ProgressBar1.Value / ProgressBar1.Max) * 100
+                    ProgressBar1.Text = "[" & Percentage & "% de " & SizeInMb & " MBs descargados.]"
                     
                     DoEvents
                 Loop
