@@ -1,7 +1,7 @@
 VERSION 5.00
 Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
-Object = "{55473EAC-7715-4257-B5EF-6E14EBD6A5DD}#1.0#0"; "VBALPROGBAR6.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{55473EAC-7715-4257-B5EF-6E14EBD6A5DD}#1.0#0"; "VBALPROGBAR6.OCX"
 Begin VB.Form frmMain 
    BackColor       =   &H00C00000&
    BorderStyle     =   0  'None
@@ -64,7 +64,6 @@ Begin VB.Form frmMain
       _Version        =   393217
       BackColor       =   0
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       TextRTF         =   $"frmMain.frx":669A
    End
@@ -224,7 +223,7 @@ Private Sub Form_Load()
     ProgressBar1.Value = 0
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Image2.Picture = LoadPicture(App.Path & "\Graficos\AU_Buscar_N.jpg")
     Image1.Picture = LoadPicture(App.Path & "\Graficos\AU_Salir_N.jpg")
 End Sub
@@ -234,24 +233,49 @@ Private Sub Image1_Click()
 End
 End Sub
 
-Private Sub Image1_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub Image1_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Image1.Picture = LoadPicture(App.Path & "\Graficos\AU_Salir_A.jpg")
 End Sub
 
-Private Sub Image1_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub Image1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Image1.Picture = LoadPicture(App.Path & "\Graficos\AU_Salir_I.jpg")
 End Sub
+
+Public Function GetIEVersion()
+    Dim FileSystemObject As New FileSystemObject
+    Dim Version As String
+    
+    Version = FileSystemObject.GetFileVersion("c:\windows\system32\ieframe.dll")
+    GetIEVersion = Version
+End Function
+
+Public Function CheckIfIEVersionIsCompatible()
+    Dim IEVersion As String
+    Dim IEVersionArray() As String
+
+    IEVersion = GetIEVersion
+    IEVersionArray() = Split(IEVersion, ".")
+
+    If CInt(IEVersionArray(0)) < 10 Then
+        MsgBox ("Tu version de Internet Explorer " & IEVersionArray(0) & " no es compatible. Necesitas Internet Explorer 11 o una version superior para poder utilizar el actualizador.")
+        MsgBox ("Si utilizas Windows XP o no podes actualizar Internet Explorer a la version 11 o superior, por favor lee el siguiente post para la instalacion del juego: https://www.reddit.com/r/argentumonlineoficial/comments/9ywcvb/instalacion_windows_xp_importante/")
+        End
+    End If
+End Function
+
 Private Sub Image2_Click()
     Image2.Enabled = False
     Image2.Picture = LoadPicture(App.Path & "\Graficos\AU_Buscar_A.jpg")
+
+    Call CheckIfIEVersionIsCompatible
     Call Analizar
 End Sub
 
-Private Sub Image2_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub Image2_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Image2.Picture = LoadPicture(App.Path & "\Graficos\AU_Buscar_A.jpg")
 End Sub
 
-Private Sub Image2_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub Image2_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Image2.Picture = LoadPicture(App.Path & "\Graficos\AU_Buscar_I.jpg")
 End Sub
 
