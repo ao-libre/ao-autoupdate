@@ -1,9 +1,9 @@
 # Argentum Online - Autoupdate
 Auto-Update to update any application in the ecosystem of Argentum Online
 
-![imagen](https://github.com/ao-libre/ao-autoupdate/blob/master/LEEME%20-%20Instrucciones/screenshot.jpg)
+![imagen](https://i.ibb.co/d643LSK/screenshot.png)
 
----
+----
 
 # * CONFIGURATION *
 
