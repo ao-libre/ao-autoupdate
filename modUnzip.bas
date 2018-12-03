@@ -1,6 +1,6 @@
 Attribute VB_Name = "modUnzip"
 Public Declare Function SetWindowPos Lib "USER32" (ByVal hWnd As Long, _
-ByVal hWndInsertAfter As Long, ByVal X As Long, ByVal Y As Long, ByVal _
+ByVal hWndInsertAfter As Long, ByVal x As Long, ByVal Y As Long, ByVal _
 cx As Long, ByVal cy As Long, ByVal wFlags As Long) As Long
 Public Const HWND_TOPMOST = -1
 Public Const SWP_NOSIZE = &H1
@@ -92,7 +92,7 @@ err_Unzip:
     Err.Clear
 End Sub
 
-Private Function UNFuncionParaProcesarMensajes(ByRef fname As CBChar, ByVal X As Long) As Long
+Private Function UNFuncionParaProcesarMensajes(ByRef fname As CBChar, ByVal x As Long) As Long
 On Error GoTo err_UNFuncionParaProcesarMensajes
 
     UNFuncionParaProcesarMensajes = 0
@@ -126,8 +126,8 @@ End Function
 'end
 
 'subs generales
-Sub WriteVar(File As String, Main As String, Var As String, value As String)
-writeprivateprofilestring Main, Var, value, File
+Sub WriteVar(File As String, Main As String, Var As String, Value As String)
+writeprivateprofilestring Main, Var, Value, File
 End Sub
 
 Function GetVar(File As String, Main As String, Var As String) As String
@@ -143,7 +143,7 @@ GetVar = Left$(GetVar, Len(GetVar) - 1)
 End Function
 
 Public Sub addConsole(Texto As String, Rojo As Byte, Verde As Byte, Azul As Byte, Bold As Boolean, Italic As Boolean, Optional ByVal Enter As Boolean = False)
-    With frmMain.RichTextBox1
+    With frmLauncher.RichTextBoxLog
         If (Len(.Text)) > 700 Then .Text = ""
         
         .SelStart = Len(.Text)
@@ -158,7 +158,7 @@ Public Sub addConsole(Texto As String, Rojo As Byte, Verde As Byte, Azul As Byte
         
         .Refresh
     End With
-frmMain.Caption = "Aut" & "oup" & "date" & " Winter" & "AO, v" & App.Major & "." & App.Minor
+'frmMain.Caption = "Aut" & "oup" & "date" & " Winter" & "AO, v" & App.Major & "." & App.Minor
 End Sub
 'end
 
