@@ -12,12 +12,20 @@ Begin VB.Form frmLauncher
    LinkTopic       =   "Form1"
    ScaleHeight     =   6555
    ScaleWidth      =   7215
+   Begin VB.CommandButton BtnAoSetup 
+      Caption         =   "Configurar (AO-SETUP)"
+      Height          =   735
+      Left            =   240
+      TabIndex        =   8
+      Top             =   3000
+      Width           =   1455
+   End
    Begin VB.CommandButton BtnClose 
       Caption         =   "Cerrar"
       Height          =   495
       Left            =   5760
       TabIndex        =   7
-      Top             =   480
+      Top             =   360
       Width           =   1095
    End
    Begin InetCtlsObjects.Inet InetGithubReleases 
@@ -72,7 +80,7 @@ Begin VB.Form frmLauncher
    Begin VB.CommandButton BtnGame 
       Caption         =   "JUEGO"
       Height          =   615
-      Left            =   2880
+      Left            =   3000
       TabIndex        =   0
       Top             =   5040
       Width           =   1335
@@ -210,6 +218,10 @@ Private Sub BtnServer_Click()
     BtnServer.Enabled = True
 End Sub
 
+Private Sub BtnAoSetup_Click()
+    Call Analizar("AOSetup")
+End Sub
+
 Private Sub LblEnglish_Click()
     Call WriteVar(App.Path & "\ConfigAutoupdate.ini", "ConfigAutoupdate", "language", "english")
     Call LaunchPopUpBeforeClose
@@ -313,11 +325,13 @@ Private Function CheckIfApplicationIsUpdated(ApplicationToUpdate As String) As B
     Dim versionNumberLocal As String, versionNumberMaster As String
     Dim repository As String, githubAccount As String
     Dim responseGithub As String, urlEndpointUpdate As String, fileToExecuteAfterUpdated As String
+    Dim applicationName As String
     
     githubAccount = GetVar(App.Path & "\ConfigAutoupdate.ini", ApplicationToUpdate, "githubAccount")
-
+    applicationName = GetVar(App.Path & "\ConfigAutoupdate.ini", ApplicationToUpdate, "application")
+    
     Call addConsole(JsonLanguage.Item("looking_for_upgrades"), 255, 255, 255, True, False)
-    Call addConsole(JsonLanguage.Item("configured_to") & ApplicationToUpdate, 100, 200, 40, True, False)   '>> Informacion
+    Call addConsole(JsonLanguage.Item("configured_to") & applicationName, 100, 200, 40, True, False)   '>> Informacion
     
     Call Reproducir_WAV(App.Path & "\Wav\Revision.wav", SND_FILENAME)
     

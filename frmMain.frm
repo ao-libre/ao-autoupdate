@@ -6,8 +6,8 @@ Begin VB.Form frmMain
    BackColor       =   &H00C00000&
    BorderStyle     =   0  'None
    ClientHeight    =   3600
-   ClientLeft      =   -60
-   ClientTop       =   -165
+   ClientLeft      =   17190
+   ClientTop       =   450
    ClientWidth     =   6780
    ClipControls    =   0   'False
    ControlBox      =   0   'False
@@ -18,7 +18,6 @@ Begin VB.Form frmMain
    ScaleHeight     =   3600
    ScaleWidth      =   6780
    ShowInTaskbar   =   0   'False
-   StartUpPosition =   2  'CenterScreen
    Begin vbalProgBarLib6.vbalProgressBar ProgressBar1 
       Height          =   450
       Left            =   240
@@ -47,7 +46,7 @@ Begin VB.Form frmMain
       EndProperty
    End
    Begin InetCtlsObjects.Inet Inet1 
-      Left            =   6120
+      Left            =   5880
       Top             =   120
       _ExtentX        =   1005
       _ExtentY        =   1005
@@ -64,6 +63,7 @@ Begin VB.Form frmMain
       _Version        =   393217
       BackColor       =   0
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       TextRTF         =   $"frmMain.frx":669A
    End
@@ -116,7 +116,7 @@ Rem Programado por Shedark
 
 Private Sub Analizar()
     Dim versionNumberLocal As String, versionNumberMaster As String
-    Dim applicationToUpdate As String, repository As String, githubAccount As String
+    Dim ApplicationToUpdate As String, repository As String, githubAccount As String
     Dim responseGithub As String, urlEndpointUpdate As String, fileToExecuteAfterUpdated As String
     Dim JsonObject As Object
     
@@ -126,7 +126,7 @@ Private Sub Analizar()
     Call addConsole("Buscando Actualizaciones ¯\_(O.O)_/¯", 255, 255, 255, True, False)
     Call Reproducir_WAV(App.Path & "\Wav\Revision.wav", SND_FILENAME)
     
-    applicationToUpdate = GetVar(App.Path & "\ConfigAutoupdate.ini", "ApplicationToUpdate", "application")
+    ApplicationToUpdate = GetVar(App.Path & "\ConfigAutoupdate.ini", "ApplicationToUpdate", "application")
     repository = GetVar(App.Path & "\ConfigAutoupdate.ini", "ApplicationToUpdate", "repository")
     urlEndpointUpdate = "https://api.github.com/repos/" & githubAccount & "/" & repository & "/releases/latest"
     responseGithub = Inet1.OpenURL(urlEndpointUpdate)
@@ -135,7 +135,7 @@ Private Sub Analizar()
     versionNumberMaster = JsonObject.Item("tag_name")
     versionNumberLocal = GetVar(App.Path & "\ConfigAutoupdate.ini", "ApplicationToUpdate", "version")
     
-    Call addConsole("Estoy configurado para actualizar tu " & applicationToUpdate, 100, 200, 40, True, False)   '>> Informacion
+    Call addConsole("Estoy configurado para actualizar tu " & ApplicationToUpdate, 100, 200, 40, True, False)   '>> Informacion
     
     If versionNumberMaster = versionNumberLocal Then
         Call addConsole("Tu version de Argentum Online Libre esta actualizada, no hace falta actualizar, entra y juga =D.", 149, 100, 210, True, False)
@@ -166,7 +166,7 @@ Private Sub Analizar()
             Kill Directory
             
             Call WriteVar(App.Path & "\ConfigAutoupdate.ini", "ApplicationToUpdate", "version", CStr(versionNumberMaster))
-            Call addConsole(applicationToUpdate & " actualizado correctamente.", 66, 255, 30, True, False)
+            Call addConsole(ApplicationToUpdate & " actualizado correctamente.", 66, 255, 30, True, False)
             Call addConsole("Comentarios de la actualizacion: " & JsonObject.Item("body") & ".", 200, 200, 200, True, False)
             Call Reproducir_WAV(App.Path & "\Wav\Actualizado.wav", SND_FILENAME)
             ProgressBar1.Value = 0
