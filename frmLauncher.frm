@@ -4,59 +4,45 @@ Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Object = "{55473EAC-7715-4257-B5EF-6E14EBD6A5DD}#1.0#0"; "VBALPROGBAR6.OCX"
 Begin VB.Form frmLauncher 
    BackColor       =   &H80000010&
+   BorderStyle     =   0  'None
    Caption         =   "Form1"
-   ClientHeight    =   6555
-   ClientLeft      =   8610
-   ClientTop       =   4665
-   ClientWidth     =   7215
+   ClientHeight    =   6000
+   ClientLeft      =   8550
+   ClientTop       =   4260
+   ClientWidth     =   7500
    LinkTopic       =   "Form1"
-   ScaleHeight     =   6555
-   ScaleWidth      =   7215
-   Begin VB.CommandButton BtnAoSetup 
-      Caption         =   "Configurar (AO-SETUP)"
-      Height          =   735
-      Left            =   240
-      TabIndex        =   8
-      Top             =   3000
-      Width           =   1455
-   End
-   Begin VB.CommandButton BtnClose 
-      Caption         =   "Cerrar"
-      Height          =   495
-      Left            =   5760
-      TabIndex        =   7
-      Top             =   360
-      Width           =   1095
-   End
+   Picture         =   "frmLauncher.frx":0000
+   ScaleHeight     =   6000
+   ScaleWidth      =   7500
+   ShowInTaskbar   =   0   'False
    Begin InetCtlsObjects.Inet InetGithubReleases 
-      Left            =   720
-      Top             =   5880
+      Left            =   240
+      Top             =   5400
       _ExtentX        =   1005
       _ExtentY        =   1005
       _Version        =   393216
    End
    Begin InetCtlsObjects.Inet InetGithubAutoupdate 
-      Left            =   120
-      Top             =   5880
+      Left            =   0
+      Top             =   5160
       _ExtentX        =   1005
       _ExtentY        =   1005
       _Version        =   393216
    End
    Begin RichTextLib.RichTextBox RichTextBoxLog 
-      Height          =   1215
-      Left            =   1920
-      TabIndex        =   2
-      Top             =   3000
-      Width           =   3375
-      _ExtentX        =   5953
-      _ExtentY        =   2143
+      Height          =   1190
+      Left            =   1945
+      TabIndex        =   0
+      Top             =   2970
+      Width           =   3600
+      _ExtentX        =   6350
+      _ExtentY        =   2090
       _Version        =   393217
       BackColor       =   0
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       Appearance      =   0
-      TextRTF         =   $"frmLauncher.frx":0000
+      TextRTF         =   $"frmLauncher.frx":33117
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Terminal"
          Size            =   6
@@ -67,40 +53,22 @@ Begin VB.Form frmLauncher
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin VB.CommandButton BtnWorldEditor 
-      Appearance      =   0  'Flat
-      BackColor       =   &H80000011&
-      Caption         =   "WORLDEDITOR"
-      Height          =   615
-      Left            =   5040
-      TabIndex        =   1
-      Top             =   5040
-      Width           =   1455
-   End
-   Begin VB.CommandButton BtnGame 
-      Caption         =   "JUEGO"
-      Height          =   615
-      Left            =   3000
-      TabIndex        =   0
-      Top             =   5040
-      Width           =   1335
-   End
    Begin vbalProgBarLib6.vbalProgressBar ProgressBar1 
-      Height          =   210
-      Left            =   1320
-      TabIndex        =   4
-      Top             =   4560
-      Width           =   4785
-      _ExtentX        =   8440
-      _ExtentY        =   370
-      Picture         =   "frmLauncher.frx":007F
+      Height          =   300
+      Left            =   1260
+      TabIndex        =   2
+      Top             =   4440
+      Width           =   5025
+      _ExtentX        =   8864
+      _ExtentY        =   529
+      Picture         =   "frmLauncher.frx":33198
       BackColor       =   0
       ForeColor       =   16777152
       Appearance      =   0
       BorderStyle     =   0
       BarColor        =   16777215
       BarForeColor    =   16744703
-      BarPicture      =   "frmLauncher.frx":009B
+      BarPicture      =   "frmLauncher.frx":331B4
       BarPictureMode  =   0
       BackPictureMode =   0
       ShowText        =   -1  'True
@@ -115,52 +83,53 @@ Begin VB.Form frmLauncher
          Strikethrough   =   0   'False
       EndProperty
    End
+   Begin VB.Image BtnClose 
+      Height          =   255
+      Left            =   6870
+      Top             =   360
+      Width           =   255
+   End
+   Begin VB.Image BtnAoSetup 
+      Height          =   375
+      Left            =   450
+      Picture         =   "frmLauncher.frx":38B68
+      Top             =   3360
+      Width           =   1335
+   End
+   Begin VB.Image LblEnglish 
+      Height          =   375
+      Left            =   3950
+      Top             =   2310
+      Width           =   1335
+   End
+   Begin VB.Image LblSpanish 
+      Height          =   375
+      Left            =   2200
+      Top             =   2310
+      Width           =   1335
+   End
+   Begin VB.Image BtnWorldEditor 
+      Height          =   375
+      Left            =   5190
+      Top             =   5040
+      Width           =   1335
+   End
+   Begin VB.Image BtnGame 
+      Height          =   375
+      Left            =   3090
+      Top             =   5040
+      Width           =   1335
+   End
    Begin VB.Image BtnServer 
-      Height          =   630
-      Left            =   720
-      Top             =   4920
-      Width           =   2385
+      Height          =   375
+      Left            =   980
+      Top             =   5040
+      Width           =   1330
    End
    Begin VB.Shape Shape1 
       Height          =   495
       Left            =   3240
       Top             =   3120
-      Width           =   1215
-   End
-   Begin VB.Label LblSpanish 
-      Alignment       =   2  'Center
-      BackColor       =   &H8000000B&
-      Caption         =   "Spanish"
-      BeginProperty Font 
-         Name            =   "Segoe Script"
-         Size            =   15.75
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   495
-      Left            =   4320
-      TabIndex        =   6
-      Top             =   2160
-      Width           =   1455
-   End
-   Begin VB.Label LblEnglish 
-      Caption         =   "English"
-      BeginProperty Font 
-         Name            =   "Segoe Script"
-         Size            =   15.75
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   495
-      Left            =   2040
-      TabIndex        =   5
-      Top             =   2160
       Width           =   1215
    End
    Begin VB.Label LblVersion 
@@ -178,8 +147,8 @@ Begin VB.Form frmLauncher
       EndProperty
       ForeColor       =   &H000000C0&
       Height          =   375
-      Left            =   480
-      TabIndex        =   3
+      Left            =   360
+      TabIndex        =   1
       Top             =   360
       Width           =   975
    End
@@ -190,7 +159,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Declare Sub Sleep Lib "kernel32.dll" (ByVal dwMilliseconds As Long)
-Dim Directory As String, bDone As Boolean, dError As Boolean, F As Integer
+Dim Directory As String, bDone As Boolean, dError As Boolean, f As Integer
 
 Dim SizeInMb As Double
 Dim JsonObject As Object
@@ -199,7 +168,11 @@ Private Language As String
 Private JsonLanguage As Object
 
 Private Sub BtnGame_Click()
+    BtnGame.Picture = LoadPicture(App.Path & "\Graficos\BotonJuegoClick_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
+    BtnGame.Enabled = False
+    
     Call Analizar("Client")
+    BtnGame.Enabled = True
 End Sub
 
 Private Sub BtnWorldeditor_Click()
@@ -253,8 +226,8 @@ Private Sub Form_Load()
     'BtnGame.Caption = JsonLanguage.Item("es")
     'BtnServer.Caption = JsonLanguage.Item("server")
     'BtnWorldEditor.Caption = JsonLanguage.Item("worldeditor")
-    LblSpanish.Caption = JsonLanguage.Item("spanish_label")
-    LblEnglish.Caption = JsonLanguage.Item("english_label")
+    'LblSpanish.Caption = JsonLanguage.Item("spanish_label")
+    'LblEnglish.Caption = JsonLanguage.Item("english_label")
     ProgressBar1.Text = JsonLanguage.Item("completed")
 End Sub
 
