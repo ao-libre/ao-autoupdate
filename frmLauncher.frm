@@ -3,46 +3,57 @@ Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
 Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Object = "{55473EAC-7715-4257-B5EF-6E14EBD6A5DD}#1.0#0"; "VBALPROGBAR6.OCX"
 Begin VB.Form frmLauncher 
+   BackColor       =   &H80000010&
    Caption         =   "Form1"
-   ClientHeight    =   7485
-   ClientLeft      =   120
-   ClientTop       =   450
-   ClientWidth     =   13665
+   ClientHeight    =   6555
+   ClientLeft      =   8610
+   ClientTop       =   4665
+   ClientWidth     =   7215
    LinkTopic       =   "Form1"
-   ScaleHeight     =   7485
-   ScaleWidth      =   13665
-   StartUpPosition =   3  'Windows Default
+   ScaleHeight     =   6555
+   ScaleWidth      =   7215
+   Begin VB.CommandButton BtnClose 
+      Caption         =   "Cerrar"
+      Height          =   495
+      Left            =   5760
+      TabIndex        =   7
+      Top             =   480
+      Width           =   1095
+   End
    Begin InetCtlsObjects.Inet InetGithubReleases 
-      Left            =   1080
-      Top             =   240
+      Left            =   720
+      Top             =   5880
       _ExtentX        =   1005
       _ExtentY        =   1005
       _Version        =   393216
    End
    Begin InetCtlsObjects.Inet InetGithubAutoupdate 
-      Left            =   360
-      Top             =   240
+      Left            =   120
+      Top             =   5880
       _ExtentX        =   1005
       _ExtentY        =   1005
       _Version        =   393216
    End
    Begin RichTextLib.RichTextBox RichTextBoxLog 
-      Height          =   2775
-      Left            =   2520
-      TabIndex        =   3
-      Top             =   1920
-      Width           =   7335
-      _ExtentX        =   12938
-      _ExtentY        =   4895
+      Height          =   1215
+      Left            =   1920
+      TabIndex        =   2
+      Top             =   3000
+      Width           =   3375
+      _ExtentX        =   5953
+      _ExtentY        =   2143
       _Version        =   393217
-      BackColor       =   64
+      BackColor       =   0
+      BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
+      Appearance      =   0
       TextRTF         =   $"frmLauncher.frx":0000
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Constantia"
-         Size            =   11.25
-         Charset         =   0
-         Weight          =   400
+         Name            =   "Terminal"
+         Size            =   6
+         Charset         =   255
+         Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
@@ -52,49 +63,35 @@ Begin VB.Form frmLauncher
       Appearance      =   0  'Flat
       BackColor       =   &H80000011&
       Caption         =   "WORLDEDITOR"
-      Height          =   975
-      Left            =   9120
-      TabIndex        =   2
-      Top             =   6240
-      Width           =   1935
-   End
-   Begin VB.CommandButton BtnServer 
-      Caption         =   "SERVER"
-      BeginProperty Font 
-         Name            =   "Modern"
-         Size            =   14.25
-         Charset         =   255
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   975
-      Left            =   1800
+      Height          =   615
+      Left            =   5040
       TabIndex        =   1
-      Top             =   6240
-      Width           =   1815
+      Top             =   5040
+      Width           =   1455
    End
    Begin VB.CommandButton BtnGame 
       Caption         =   "JUEGO"
-      Height          =   975
-      Left            =   5640
+      Height          =   615
+      Left            =   2880
       TabIndex        =   0
-      Top             =   6240
-      Width           =   1815
+      Top             =   5040
+      Width           =   1335
    End
    Begin vbalProgBarLib6.vbalProgressBar ProgressBar1 
-      Height          =   450
-      Left            =   3000
-      TabIndex        =   5
-      Top             =   5040
-      Width           =   6345
-      _ExtentX        =   11192
-      _ExtentY        =   794
+      Height          =   210
+      Left            =   1320
+      TabIndex        =   4
+      Top             =   4560
+      Width           =   4785
+      _ExtentX        =   8440
+      _ExtentY        =   370
       Picture         =   "frmLauncher.frx":007F
-      BackColor       =   4194368
-      ForeColor       =   0
+      BackColor       =   0
+      ForeColor       =   16777152
+      Appearance      =   0
       BorderStyle     =   0
+      BarColor        =   16777215
+      BarForeColor    =   16744703
       BarPicture      =   "frmLauncher.frx":009B
       BarPictureMode  =   0
       BackPictureMode =   0
@@ -110,7 +107,21 @@ Begin VB.Form frmLauncher
          Strikethrough   =   0   'False
       EndProperty
    End
+   Begin VB.Image BtnServer 
+      Height          =   630
+      Left            =   720
+      Top             =   4920
+      Width           =   2385
+   End
+   Begin VB.Shape Shape1 
+      Height          =   495
+      Left            =   3240
+      Top             =   3120
+      Width           =   1215
+   End
    Begin VB.Label LblSpanish 
+      Alignment       =   2  'Center
+      BackColor       =   &H8000000B&
       Caption         =   "Spanish"
       BeginProperty Font 
          Name            =   "Segoe Script"
@@ -121,11 +132,11 @@ Begin VB.Form frmLauncher
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   855
-      Left            =   6480
-      TabIndex        =   7
-      Top             =   720
-      Width           =   2415
+      Height          =   495
+      Left            =   4320
+      TabIndex        =   6
+      Top             =   2160
+      Width           =   1455
    End
    Begin VB.Label LblEnglish 
       Caption         =   "English"
@@ -138,19 +149,31 @@ Begin VB.Form frmLauncher
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   855
-      Left            =   2880
-      TabIndex        =   6
-      Top             =   720
-      Width           =   2415
+      Height          =   495
+      Left            =   2040
+      TabIndex        =   5
+      Top             =   2160
+      Width           =   1215
    End
    Begin VB.Label LblVersion 
+      BackColor       =   &H80000013&
+      BackStyle       =   0  'Transparent
       Caption         =   "Version"
+      BeginProperty Font 
+         Name            =   "Palatino Linotype"
+         Size            =   12
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H000000C0&
       Height          =   375
-      Left            =   12480
-      TabIndex        =   4
-      Top             =   120
-      Width           =   1095
+      Left            =   480
+      TabIndex        =   3
+      Top             =   360
+      Width           =   975
    End
 End
 Attribute VB_Name = "frmLauncher"
@@ -171,12 +194,20 @@ Private Sub BtnGame_Click()
     Call Analizar("Client")
 End Sub
 
-Private Sub BtnServer_Click()
-    Call Analizar("Server")
-End Sub
-
 Private Sub BtnWorldeditor_Click()
     Call Analizar("Worldeditor")
+End Sub
+
+Private Sub BtnClose_Click()
+    End
+End Sub
+
+Private Sub BtnServer_Click()
+    BtnServer.Picture = LoadPicture(App.Path & "\Graficos\BotonServidorClick_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
+    BtnServer.Enabled = False
+    
+    Call Analizar("Server")
+    BtnServer.Enabled = True
 End Sub
 
 Private Sub LblEnglish_Click()
@@ -201,9 +232,15 @@ Private Sub Form_Load()
     Call CheckIfIEVersionIsCompatible
     Call CheckIfRunningLastVersionAutoupdate
 
-    BtnGame.Caption = JsonLanguage.Item("game")
-    BtnServer.Caption = JsonLanguage.Item("server")
-    BtnWorldEditor.Caption = JsonLanguage.Item("worldeditor")
+    'ProgressBar1.Picture = LoadPicture(App.Path & "\Graficos\AU_BarraVacia.jpg")
+    'BtnWorldEditor.Picture = LoadPicture(App.Path & "\Graficos\AU_Buscar_N.jpg")
+    BtnServer.Picture = LoadPicture(App.Path & "\Graficos\BotonServidor_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
+    frmLauncher.Picture = LoadPicture(App.Path & "\Graficos\AU_Main.jpg")
+    ProgressBar1.Value = 0
+
+    'BtnGame.Caption = JsonLanguage.Item("es")
+    'BtnServer.Caption = JsonLanguage.Item("server")
+    'BtnWorldEditor.Caption = JsonLanguage.Item("worldeditor")
     LblSpanish.Caption = JsonLanguage.Item("spanish_label")
     LblEnglish.Caption = JsonLanguage.Item("english_label")
     ProgressBar1.Text = JsonLanguage.Item("completed")
@@ -307,11 +344,13 @@ End Function
 
 Private Sub Analizar(ApplicationToUpdate As String)
     Dim SubDirectoryApp As String
-    Dim isApplicationUpdated As Boolean
+    Dim IsApplicationUpdated As Boolean
+    Dim CancelUpdate As Boolean
     
-    isApplicationUpdated = CheckIfApplicationIsUpdated(ApplicationToUpdate)
+    IsApplicationUpdated = CheckIfApplicationIsUpdated(ApplicationToUpdate)
+    SubDirectoryApp = GetVar(App.Path & "\ConfigAutoupdate.ini", ApplicationToUpdate, "folderToExtract")
     
-    If isApplicationUpdated = True Then
+    If IsApplicationUpdated = True Then
         Call addConsole(JsonLanguage.Item("up_to_date"), 149, 100, 210, True, False)
     Else
         If MsgBox(JsonLanguage.Item("download_continue"), vbYesNo) = vbYes Then
@@ -335,8 +374,6 @@ Private Sub Analizar(ApplicationToUpdate As String)
             Loop
                 
             If dError Then Exit Sub
-        
-            SubDirectoryApp = GetVar(App.Path & "\ConfigAutoupdate.ini", ApplicationToUpdate, "folderToExtract")
             
             Call addConsole(JsonLanguage.Item("one_more_moment"), 50, 90, 220, True, False)
             UnZip Directory, App.Path & "\" & SubDirectoryApp
@@ -351,34 +388,25 @@ Private Sub Analizar(ApplicationToUpdate As String)
             
         ElseIf vbNo Then
             Call addConsole(JsonLanguage.Item("download_canceled"), 255, 0, 0, True, False)
+            CancelUpdate = True
+        End If
+    End If
+    
+    If CancelUpdate = False Then
+        If MsgBox(Replace(JsonLanguage.Item("open_app"), "VAR_Program", ApplicationToUpdate), vbYesNo) = vbYes Then
+            fileToExecuteAfterUpdated = GetVar(App.Path & "\ConfigAutoupdate.ini", ApplicationToUpdate, "fileToExecuteAfterUpdated")
+            
+            If LenB(SubDirectoryApp) > 0 Then
+                Call ShellExecute(Me.hWnd, "open", App.Path & "\" & SubDirectoryApp & "\" & fileToExecuteAfterUpdated, "", "", 1)
+            Else
+                Call ShellExecute(Me.hWnd, "open", App.Path & "\" & fileToExecuteAfterUpdated, "", "", 1)
+            End If
+            
+            End
         End If
     End If
 
-    If MsgBox(Replace(JsonLanguage.Item("open_app"), "VAR_Program", ApplicationToUpdate), vbYesNo) = vbYes Then
-        fileToExecuteAfterUpdated = GetVar(App.Path & "\ConfigAutoupdate.ini", ApplicationToUpdate, "fileToExecuteAfterUpdated")
-        
-        If LenB(SubDirectoryApp) < 0 Then
-        
-            Call ShellExecute(Me.hWnd, "open", App.Path & "\" & SubDirectoryApp & fileToExecuteAfterUpdated, "", "", 1)
-        Else
-            Call ShellExecute(Me.hWnd, "open", App.Path & "\" & fileToExecuteAfterUpdated, "", "", 1)
-        End
-     Else
-        End
-    End If
-
 End Sub
-
-Public Function BytesToMegabytes(Bytes As Double) As Double
-   'This function gives an estimate to two decimal
-   'places.  For a more precise answer, format to
-   'more decimal places or just return dblAns
- 
-  Dim dblAns As Double
-  dblAns = (Bytes / 1024) / 1024
-  BytesToMegabytes = Format(dblAns, "###,###,##0.00")
-  
-End Function
 
 
 Private Sub InetGithubAutoupdate_StateChanged(ByVal State As Integer)
@@ -439,3 +467,4 @@ Private Sub InetGithubAutoupdate_StateChanged(ByVal State As Integer)
             Call addConsole(JsonLanguage.Item("error_connection") & WebpageAolibre, 255, 0, 0, True, False)
     End Select
 End Sub
+

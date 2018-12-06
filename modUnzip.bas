@@ -1,6 +1,6 @@
 Attribute VB_Name = "modUnzip"
 Public Declare Function SetWindowPos Lib "USER32" (ByVal hWnd As Long, _
-ByVal hWndInsertAfter As Long, ByVal x As Long, ByVal Y As Long, ByVal _
+ByVal hWndInsertAfter As Long, ByVal X As Long, ByVal Y As Long, ByVal _
 cx As Long, ByVal cy As Long, ByVal wFlags As Long) As Long
 Public Const HWND_TOPMOST = -1
 Public Const SWP_NOSIZE = &H1
@@ -61,30 +61,30 @@ Public Declare Function Wiz_SingleEntryUnzip Lib "unzip32.dll" (ByVal ifnc As Lo
 Public Sub UnZip(Zip As String, extractdir As String)
 On Error GoTo err_Unzip
 
-Dim Resultado As Long
-Dim intContadorFicheros As Integer
-
-Dim FuncionesUnZip As UNZIPUSERFUNCTION
-Dim OpcionesUnZip As UNZIPOPTIONS
-
-Dim NombresFicherosZip As ZIPnames, NombresFicheros2Zip As ZIPnames
-
-NombresFicherosZip.s(0) = vbNullChar
-NombresFicheros2Zip.s(0) = vbNullChar
-FuncionesUnZip.UNZIPMessage = 0&
-FuncionesUnZip.UNZIPPassword = 0&
-FuncionesUnZip.UNZIPPrntFunction = DevolverDireccionMemoria(AddressOf UNFuncionParaProcesarMensajes)
-FuncionesUnZip.UNZIPReplaceFunction = DevolverDireccionMemoria(AddressOf UNFuncionReplaceOptions)
-FuncionesUnZip.UNZIPService = 0&
-FuncionesUnZip.UNZIPSndFunction = 0&
-OpcionesUnZip.ndflag = 1 'Carpetas incluidas >> [Bug Fixed]
-OpcionesUnZip.C_flag = 1
-OpcionesUnZip.fQuiet = 2
-OpcionesUnZip.noflag = 1
-OpcionesUnZip.Zip = Zip
-OpcionesUnZip.extractdir = extractdir
-
-Resultado = Wiz_SingleEntryUnzip(0, NombresFicherosZip, 0, NombresFicheros2Zip, OpcionesUnZip, FuncionesUnZip)
+    Dim Resultado As Long
+    Dim intContadorFicheros As Integer
+    
+    Dim FuncionesUnZip As UNZIPUSERFUNCTION
+    Dim OpcionesUnZip As UNZIPOPTIONS
+    
+    Dim NombresFicherosZip As ZIPnames, NombresFicheros2Zip As ZIPnames
+    
+    NombresFicherosZip.s(0) = vbNullChar
+    NombresFicheros2Zip.s(0) = vbNullChar
+    FuncionesUnZip.UNZIPMessage = 0&
+    FuncionesUnZip.UNZIPPassword = 0&
+    FuncionesUnZip.UNZIPPrntFunction = DevolverDireccionMemoria(AddressOf UNFuncionParaProcesarMensajes)
+    FuncionesUnZip.UNZIPReplaceFunction = DevolverDireccionMemoria(AddressOf UNFuncionReplaceOptions)
+    FuncionesUnZip.UNZIPService = 0&
+    FuncionesUnZip.UNZIPSndFunction = 0&
+    OpcionesUnZip.ndflag = 1 'Carpetas incluidas >> [Bug Fixed]
+    OpcionesUnZip.C_flag = 1
+    OpcionesUnZip.fQuiet = 2
+    OpcionesUnZip.noflag = 1
+    OpcionesUnZip.Zip = Zip
+    OpcionesUnZip.extractdir = extractdir
+    
+    Resultado = Wiz_SingleEntryUnzip(0, NombresFicherosZip, 0, NombresFicheros2Zip, OpcionesUnZip, FuncionesUnZip)
 
 Exit Sub
 err_Unzip:
@@ -92,7 +92,7 @@ err_Unzip:
     Err.Clear
 End Sub
 
-Private Function UNFuncionParaProcesarMensajes(ByRef fname As CBChar, ByVal x As Long) As Long
+Private Function UNFuncionParaProcesarMensajes(ByRef fname As CBChar, ByVal X As Long) As Long
 On Error GoTo err_UNFuncionParaProcesarMensajes
 
     UNFuncionParaProcesarMensajes = 0
@@ -127,19 +127,29 @@ End Function
 
 'subs generales
 Sub WriteVar(File As String, Main As String, Var As String, Value As String)
-writeprivateprofilestring Main, Var, Value, File
+    writeprivateprofilestring Main, Var, Value, File
 End Sub
 
 Function GetVar(File As String, Main As String, Var As String) As String
-Dim L As Integer
-Dim Char As String
-Dim sSpaces As String
-Dim szReturn As String
-szReturn = ""
-sSpaces = Space(5000)
-getprivateprofilestring Main, Var, szReturn, sSpaces, Len(sSpaces), File
-GetVar = RTrim(sSpaces)
-GetVar = Left$(GetVar, Len(GetVar) - 1)
+    Dim L As Integer
+    Dim Char As String
+    Dim sSpaces As String
+    Dim szReturn As String
+    szReturn = ""
+    sSpaces = Space(5000)
+    getprivateprofilestring Main, Var, szReturn, sSpaces, Len(sSpaces), File
+    GetVar = RTrim(sSpaces)
+    GetVar = Left$(GetVar, Len(GetVar) - 1)
+End Function
+
+Public Function BytesToMegabytes(Bytes As Double) As Double
+    'This function gives an estimate to two decimal
+    'places.  For a more precise answer, format to
+    'more decimal places or just return dblAns
+    
+    Dim dblAns As Double
+    dblAns = (Bytes / 1024) / 1024
+    BytesToMegabytes = Format(dblAns, "###,###,##0.00")
 End Function
 
 Public Sub addConsole(Texto As String, Rojo As Byte, Verde As Byte, Azul As Byte, Bold As Boolean, Italic As Boolean, Optional ByVal Enter As Boolean = False)
@@ -158,7 +168,6 @@ Public Sub addConsole(Texto As String, Rojo As Byte, Verde As Byte, Azul As Byte
         
         .Refresh
     End With
-'frmMain.Caption = "Aut" & "oup" & "date" & " Winter" & "AO, v" & App.Major & "." & App.Minor
 End Sub
 'end
 

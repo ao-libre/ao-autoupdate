@@ -1,10 +1,5 @@
 {
-  "game": "Game",
-  "forum": "Forum",
-  "update": "Update",
-  "download": "Download"
-  "server": "Server",
-  "worldeditor": "World Editor",
+  "lang_abbreviation": "en",
   "launcher_outdated": "This application is outdated, please download the last one from http://www.ArgentumOnline.org.",
   "your_version": "Your version",
   "last_version": "Last version",
