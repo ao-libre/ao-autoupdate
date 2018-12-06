@@ -5,7 +5,7 @@
   "download": "Descargar"
   "server": "Servidor",
   "worldeditor": "Editor de Mapas"
-  "launcher_outdated": "El actualizador esta desactualizado, por favor descarga la ultima version desde http://www.ArgentumOnline.org. Este programa se cerrara en 10 segundos",
+  "launcher_outdated": "El actualizador esta desactualizado, por favor descarga la ultima version desde http://www.ArgentumOnline.org.",
   "your_version": "Tu version",
   "last_version": "Ultima version",
   "close_before_change_language": "Debe reiniciar la aplicacion para realizar los cambios"
@@ -15,9 +15,17 @@
   "error_searching_updates": "Error al querer buscar la actualizacion por favor intente mas tarde o contactanos ",
   "looking_for_upgrades" : "Buscando Actualizaciones",
   "configured_to" : "Estoy verificando tu  ",
-  "upToDate" : "Tu version esta actualizada, no hace falta actualizar =D",
-  "starting" : "Iniciando, se descargarán actualizaciones.",
+  "up_to_date" : "Tu version esta actualizada, no hace falta actualizar =D",
+  "starting" : "Iniciando, se descargaran actualizaciones.",
   "one_more_moment" : "Instalando actualizacion... unos momentos mas por favor ",
   "comments_update" : "Comentarios de la actualizacion: ",
   "download_started" : "Descarga iniciada.",
+  "download_canceled" : "Se cancelo la actualizacion",
+  "download_finished" : "Descarga finalizada",
+  "spanish_label" : "Castellano",
+  "english_label" : "Ingles",
+  "completed" : "[0% Completado]",
+  "open_app" : "¿ Deseas ejecutar VAR_Program ?",
+  "download_continue" : "Se descargara la nueva version, ¿Continuar?",
+  "update_succesful" : " actualizado correctamente",
 }

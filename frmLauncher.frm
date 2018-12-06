@@ -36,7 +36,6 @@ Begin VB.Form frmLauncher
       _ExtentY        =   4895
       _Version        =   393217
       BackColor       =   64
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       TextRTF         =   $"frmLauncher.frx":0000
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -163,6 +162,7 @@ Private Declare Sub Sleep Lib "kernel32.dll" (ByVal dwMilliseconds As Long)
 Dim Directory As String, bDone As Boolean, dError As Boolean, F As Integer
 
 Dim SizeInMb As Double
+Dim JsonObject As Object
 
 Private Language As String
 Private JsonLanguage As Object
@@ -204,6 +204,9 @@ Private Sub Form_Load()
     BtnGame.Caption = JsonLanguage.Item("game")
     BtnServer.Caption = JsonLanguage.Item("server")
     BtnWorldEditor.Caption = JsonLanguage.Item("worldeditor")
+    LblSpanish.Caption = JsonLanguage.Item("spanish_label")
+    LblEnglish.Caption = JsonLanguage.Item("english_label")
+    ProgressBar1.Text = JsonLanguage.Item("completed")
 End Sub
 
 Private Sub SetLanguageApplication(Optional LanguageSelection As String)
@@ -253,7 +256,6 @@ End Function
 Private Sub CheckIfRunningLastVersionAutoupdate()
     Dim responseGithub As String, versionNumberMaster As String, versionNumberLocal As String
     Dim githubAccount As String
-    Dim JsonObject As Object
     
     githubAccount = GetVar(App.Path & "\ConfigAutoupdate.ini", "ConfigAutoupdate", "githubAccount")
 
@@ -264,10 +266,9 @@ Private Sub CheckIfRunningLastVersionAutoupdate()
     versionNumberLocal = GetVar(App.Path & "\ConfigAutoupdate.ini", "ConfigAutoupdate", "version")
     
     If Not versionNumberMaster = versionNumberLocal Then
-        Call addConsole(JsonLanguage.Item("launcher_outdated"), 200, 200, 200, True, False)   '>> Informacion
-        Call addConsole(JsonLanguage.Item("your_version") & " " & versionNumberLocal & " " & JsonLanguage.Item("last_version") & " " & versionNumberMaster, 200, 200, 26, True, False)   '>> Informacion
-        'Sleep 10000
-        'End
+        MsgBox (JsonLanguage.Item("launcher_outdated"))
+        MsgBox (JsonLanguage.Item("your_version") & " " & versionNumberLocal & " " & JsonLanguage.Item("last_version") & " " & versionNumberMaster)
+        End
     End If
 End Sub
 
@@ -275,7 +276,6 @@ Private Function CheckIfApplicationIsUpdated(ApplicationToUpdate As String) As B
     Dim versionNumberLocal As String, versionNumberMaster As String
     Dim repository As String, githubAccount As String
     Dim responseGithub As String, urlEndpointUpdate As String, fileToExecuteAfterUpdated As String
-    Dim JsonObject As Object
     
     githubAccount = GetVar(App.Path & "\ConfigAutoupdate.ini", ApplicationToUpdate, "githubAccount")
 
@@ -301,14 +301,20 @@ Private Function CheckIfApplicationIsUpdated(ApplicationToUpdate As String) As B
     
 End Function
 
+Private Function GetGithubReleaseData() As Object
+
+End Function
+
 Private Sub Analizar(ApplicationToUpdate As String)
+    Dim SubDirectoryApp As String
     Dim isApplicationUpdated As Boolean
+    
     isApplicationUpdated = CheckIfApplicationIsUpdated(ApplicationToUpdate)
     
     If isApplicationUpdated = True Then
-        Call addConsole(JsonLanguage.Item("upToDate"), 149, 100, 210, True, False)
-    ElseIf Not versionNumberMaster = versionNumberLocal Then
-        If MsgBox("Se descargará la nueva version, ¿Continuar?", vbYesNo) = vbYes Then
+        Call addConsole(JsonLanguage.Item("up_to_date"), 149, 100, 210, True, False)
+    Else
+        If MsgBox(JsonLanguage.Item("download_continue"), vbYesNo) = vbYes Then
             ProgressBar1.Visible = True
             
             Call addConsole(JsonLanguage.Item("starting"), 200, 200, 200, True, False)   '>> Informacion
@@ -317,7 +323,7 @@ Private Sub Analizar(ApplicationToUpdate As String)
             SizeInMb = BytesToMegabytes(JsonObject.Item("assets").Item(1).Item("size"))
             
             InetGithubAutoupdate.AccessType = icUseDefault
-            InetGithubAutoupdate.Url = JsonObject.Item("assets").Item(1).Item("browser_download_url")
+            InetGithubAutoupdate.URL = JsonObject.Item("assets").Item(1).Item("browser_download_url")
             Directory = App.Path & "\Updates\" & JsonObject.Item("assets").Item(1).Item("name")
             bDone = False
             dError = False
@@ -329,24 +335,33 @@ Private Sub Analizar(ApplicationToUpdate As String)
             Loop
                 
             If dError Then Exit Sub
+        
+            SubDirectoryApp = GetVar(App.Path & "\ConfigAutoupdate.ini", ApplicationToUpdate, "folderToExtract")
+            
             Call addConsole(JsonLanguage.Item("one_more_moment"), 50, 90, 220, True, False)
-            UnZip Directory, App.Path & "\"
+            UnZip Directory, App.Path & "\" & SubDirectoryApp
             Kill Directory
             
-            Call WriteVar(App.Path & "\ConfigAutoupdate.ini", ApplicationToUpdate, "version", CStr(versionNumberMaster))
-            Call addConsole(ApplicationToUpdate & " actualizado correctamente.", 66, 255, 30, True, False)
+            Call WriteVar(App.Path & "\ConfigAutoupdate.ini", ApplicationToUpdate, "version", CStr(JsonObject.Item("tag_name")))
+            
+            Call addConsole(ApplicationToUpdate & JsonLanguage.Item("update_succesful"), 66, 255, 30, True, False)
             Call addConsole(JsonLanguage.Item("comments_update") & JsonObject.Item("body") & ".", 200, 200, 200, True, False)
             Call Reproducir_WAV(App.Path & "\Wav\Actualizado.wav", SND_FILENAME)
             ProgressBar1.Value = 0
             
         ElseIf vbNo Then
-            Call addConsole("Se cancelo la actualizacion.", 255, 0, 0, True, False)
+            Call addConsole(JsonLanguage.Item("download_canceled"), 255, 0, 0, True, False)
         End If
     End If
 
-    If MsgBox("¿Deseas Jugar?", vbYesNo) = vbYes Then
+    If MsgBox(Replace(JsonLanguage.Item("open_app"), "VAR_Program", ApplicationToUpdate), vbYesNo) = vbYes Then
         fileToExecuteAfterUpdated = GetVar(App.Path & "\ConfigAutoupdate.ini", ApplicationToUpdate, "fileToExecuteAfterUpdated")
-        Call ShellExecute(Me.hWnd, "open", App.Path & "\" & fileToExecuteAfterUpdated, "", "", 1)
+        
+        If LenB(SubDirectoryApp) < 0 Then
+        
+            Call ShellExecute(Me.hWnd, "open", App.Path & "\" & SubDirectoryApp & fileToExecuteAfterUpdated, "", "", 1)
+        Else
+            Call ShellExecute(Me.hWnd, "open", App.Path & "\" & fileToExecuteAfterUpdated, "", "", 1)
         End
      Else
         End
@@ -397,7 +412,7 @@ Private Sub InetGithubAutoupdate_StateChanged(ByVal State As Integer)
                 Loop
             Close #1
             
-            Call addConsole("Descarga finalizada", 0, 255, 0, True, False)
+            Call addConsole(JsonLanguage.Item("download_finished"), 0, 255, 0, True, False)
 
             ProgressBar1.Value = 0
             
