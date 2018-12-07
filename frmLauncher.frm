@@ -1,17 +1,16 @@
 VERSION 5.00
 Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
 Object = "{55473EAC-7715-4257-B5EF-6E14EBD6A5DD}#1.0#0"; "VBALPROGBAR6.OCX"
 Begin VB.Form frmLauncher 
    BackColor       =   &H80000010&
    BorderStyle     =   0  'None
    Caption         =   "Form1"
    ClientHeight    =   6000
-   ClientLeft      =   8550
-   ClientTop       =   4260
+   ClientLeft      =   3840
+   ClientTop       =   2610
    ClientWidth     =   7500
    LinkTopic       =   "Form1"
-   Picture         =   "frmLauncher.frx":0000
    ScaleHeight     =   6000
    ScaleWidth      =   7500
    ShowInTaskbar   =   0   'False
@@ -40,9 +39,10 @@ Begin VB.Form frmLauncher
       _Version        =   393217
       BackColor       =   0
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       Appearance      =   0
-      TextRTF         =   $"frmLauncher.frx":33117
+      TextRTF         =   $"frmLauncher.frx":0000
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Terminal"
          Size            =   6
@@ -61,14 +61,14 @@ Begin VB.Form frmLauncher
       Width           =   5025
       _ExtentX        =   8864
       _ExtentY        =   529
-      Picture         =   "frmLauncher.frx":33198
+      Picture         =   "frmLauncher.frx":0081
       BackColor       =   0
       ForeColor       =   16777152
       Appearance      =   0
       BorderStyle     =   0
       BarColor        =   16777215
       BarForeColor    =   16744703
-      BarPicture      =   "frmLauncher.frx":331B4
+      BarPicture      =   "frmLauncher.frx":009D
       BarPictureMode  =   0
       BackPictureMode =   0
       ShowText        =   -1  'True
@@ -91,9 +91,9 @@ Begin VB.Form frmLauncher
    End
    Begin VB.Image BtnAoSetup 
       Height          =   375
-      Left            =   450
-      Picture         =   "frmLauncher.frx":38B68
-      Top             =   3360
+      Left            =   6000
+      Top             =   3960
+      Visible         =   0   'False
       Width           =   1335
    End
    Begin VB.Image LblEnglish 
@@ -212,13 +212,12 @@ Private Sub LaunchPopUpBeforeClose()
 End Sub
 
 Private Sub Form_Load()
+    Me.Picture = LoadPicture(App.Path & "\Graficos\AU_Main.jpg")
     LblVersion.Caption = "v" & App.Major & "." & App.Minor
     Call SetLanguageApplication
     Call CheckIfIEVersionIsCompatible
     Call CheckIfRunningLastVersionAutoupdate
 
-    'ProgressBar1.Picture = LoadPicture(App.Path & "\Graficos\AU_BarraVacia.jpg")
-    'BtnWorldEditor.Picture = LoadPicture(App.Path & "\Graficos\AU_Buscar_N.jpg")
     BtnServer.Picture = LoadPicture(App.Path & "\Graficos\BotonServidor_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
     frmLauncher.Picture = LoadPicture(App.Path & "\Graficos\AU_Main.jpg")
     ProgressBar1.Value = 0
