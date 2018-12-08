@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Object = "{55473EAC-7715-4257-B5EF-6E14EBD6A5DD}#1.0#0"; "VBALPROGBAR6.OCX"
 Begin VB.Form frmLauncher 
    BackColor       =   &H80000010&
@@ -39,7 +39,6 @@ Begin VB.Form frmLauncher
       _Version        =   393217
       BackColor       =   0
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       Appearance      =   0
       TextRTF         =   $"frmLauncher.frx":0000
@@ -219,14 +218,12 @@ Private Sub Form_Load()
     Call CheckIfRunningLastVersionAutoupdate
 
     BtnServer.Picture = LoadPicture(App.Path & "\Graficos\BotonServidor_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
+    BtnGame.Picture = LoadPicture(App.Path & "\Graficos\BotonJuego_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
+    BtnWorldEditor.LoadPicture (App.Path & "\Graficos\BotonServidor_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
+    
     frmLauncher.Picture = LoadPicture(App.Path & "\Graficos\AU_Main.jpg")
+    
     ProgressBar1.Value = 0
-
-    'BtnGame.Caption = JsonLanguage.Item("es")
-    'BtnServer.Caption = JsonLanguage.Item("server")
-    'BtnWorldEditor.Caption = JsonLanguage.Item("worldeditor")
-    'LblSpanish.Caption = JsonLanguage.Item("spanish_label")
-    'LblEnglish.Caption = JsonLanguage.Item("english_label")
     ProgressBar1.Text = JsonLanguage.Item("completed")
 End Sub
 
