@@ -7,8 +7,8 @@ Begin VB.Form frmLauncher
    BorderStyle     =   0  'None
    Caption         =   "Form1"
    ClientHeight    =   6000
-   ClientLeft      =   3840
-   ClientTop       =   2610
+   ClientLeft      =   10350
+   ClientTop       =   5400
    ClientWidth     =   7500
    LinkTopic       =   "Form1"
    ScaleHeight     =   6000
@@ -39,6 +39,7 @@ Begin VB.Form frmLauncher
       _Version        =   393217
       BackColor       =   0
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       Appearance      =   0
       TextRTF         =   $"frmLauncher.frx":0000
@@ -82,18 +83,23 @@ Begin VB.Form frmLauncher
          Strikethrough   =   0   'False
       EndProperty
    End
+   Begin VB.Image BtnWorldEditor 
+      Height          =   375
+      Left            =   5160
+      Top             =   5040
+      Width           =   1335
+   End
+   Begin VB.Image BtnAoSetup 
+      Height          =   375
+      Left            =   5760
+      Top             =   3480
+      Width           =   1335
+   End
    Begin VB.Image BtnClose 
       Height          =   255
       Left            =   6870
       Top             =   360
       Width           =   255
-   End
-   Begin VB.Image BtnAoSetup 
-      Height          =   375
-      Left            =   6000
-      Top             =   3960
-      Visible         =   0   'False
-      Width           =   1335
    End
    Begin VB.Image LblEnglish 
       Height          =   375
@@ -107,12 +113,6 @@ Begin VB.Form frmLauncher
       Top             =   2310
       Width           =   1335
    End
-   Begin VB.Image BtnWorldEditor 
-      Height          =   375
-      Left            =   5190
-      Top             =   5040
-      Width           =   1335
-   End
    Begin VB.Image BtnGame 
       Height          =   375
       Left            =   3090
@@ -124,12 +124,6 @@ Begin VB.Form frmLauncher
       Left            =   980
       Top             =   5040
       Width           =   1330
-   End
-   Begin VB.Shape Shape1 
-      Height          =   495
-      Left            =   3240
-      Top             =   3120
-      Width           =   1215
    End
    Begin VB.Label LblVersion 
       BackColor       =   &H80000013&
@@ -158,7 +152,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Declare Sub Sleep Lib "kernel32.dll" (ByVal dwMilliseconds As Long)
-Dim Directory As String, bDone As Boolean, dError As Boolean, f As Integer
+Dim Directory As String, bDone As Boolean, dError As Boolean, F As Integer
 
 Dim SizeInMb As Double
 Dim JsonObject As Object
@@ -211,7 +205,6 @@ Private Sub LaunchPopUpBeforeClose()
 End Sub
 
 Private Sub Form_Load()
-    Me.Picture = LoadPicture(App.Path & "\Graficos\AU_Main.jpg")
     LblVersion.Caption = "v" & App.Major & "." & App.Minor
     Call SetLanguageApplication
     Call CheckIfIEVersionIsCompatible
@@ -219,7 +212,8 @@ Private Sub Form_Load()
 
     BtnServer.Picture = LoadPicture(App.Path & "\Graficos\BotonServidor_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
     BtnGame.Picture = LoadPicture(App.Path & "\Graficos\BotonJuego_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
-    BtnWorldEditor.LoadPicture (App.Path & "\Graficos\BotonServidor_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
+    'BtnWorldEditor.Picture = LoadPicture(App.Path & "\Graficos\BotonWorldeditor_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
+    BtnAoSetup.Picture = LoadPicture(App.Path & "\Graficos\BotonSetup_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
     
     frmLauncher.Picture = LoadPicture(App.Path & "\Graficos\AU_Main.jpg")
     
