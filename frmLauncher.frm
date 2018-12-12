@@ -67,7 +67,7 @@ Begin VB.Form frmLauncher
       Appearance      =   0
       BorderStyle     =   0
       BarColor        =   16777215
-      BarForeColor    =   16744703
+      BarForeColor    =   12648384
       BarPicture      =   "frmLauncher.frx":009D
       BarPictureMode  =   0
       BackPictureMode =   0
@@ -215,7 +215,7 @@ Private Sub Form_Load()
     'BtnWorldEditor.Picture = LoadPicture(App.Path & "\Graficos\BotonWorldeditor_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
     BtnAoSetup.Picture = LoadPicture(App.Path & "\Graficos\BotonSetup_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
     
-    frmLauncher.Picture = LoadPicture(App.Path & "\Graficos\AU_Main.jpg")
+    frmLauncher.Picture = LoadPicture(App.Path & "\Graficos\AU_Main_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
     
     ProgressBar1.Value = 0
     ProgressBar1.Text = JsonLanguage.Item("completed")
@@ -296,7 +296,7 @@ Private Function CheckIfApplicationIsUpdated(ApplicationToUpdate As String) As B
     Call addConsole(JsonLanguage.Item("looking_for_upgrades"), 255, 255, 255, True, False)
     Call addConsole(JsonLanguage.Item("configured_to") & applicationName, 100, 200, 40, True, False)   '>> Informacion
     
-    Call Reproducir_WAV(App.Path & "\Wav\Revision.wav", SND_FILENAME)
+    Call Reproducir_WAV(App.Path & "\Wav\Revision_" & JsonLanguage.Item("lang_abbreviation") & ".wav", SND_FILENAME)
     
     repository = GetVar(App.Path & "\ConfigAutoupdate.ini", ApplicationToUpdate, "repository")
     urlEndpointUpdate = "https://api.github.com/repos/" & githubAccount & "/" & repository & "/releases/latest"
@@ -360,7 +360,7 @@ Private Sub Analizar(ApplicationToUpdate As String)
             
             Call addConsole(ApplicationToUpdate & JsonLanguage.Item("update_succesful"), 66, 255, 30, True, False)
             Call addConsole(JsonLanguage.Item("comments_update") & JsonObject.Item("body") & ".", 200, 200, 200, True, False)
-            Call Reproducir_WAV(App.Path & "\Wav\Actualizado.wav", SND_FILENAME)
+            Call Reproducir_WAV(App.Path & "\Wav\Actualizado_" & JsonLanguage.Item("lang_abbreviation") & ".wav", SND_FILENAME)
             ProgressBar1.Value = 0
             
         ElseIf vbNo Then
@@ -444,4 +444,3 @@ Private Sub InetGithubAutoupdate_StateChanged(ByVal State As Integer)
             Call addConsole(JsonLanguage.Item("error_connection") & WebpageAolibre, 255, 0, 0, True, False)
     End Select
 End Sub
-
