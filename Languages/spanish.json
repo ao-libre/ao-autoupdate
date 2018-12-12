@@ -1,0 +1,26 @@
+{
+  "lang_abbreviation": "es",
+  "launcher_outdated": "El actualizador esta desactualizado, por favor descarga la ultima version desde http://www.ArgentumOnline.org.",
+  "your_version": "Tu version",
+  "last_version": "Ultima version",
+  "close_before_change_language": "Debe reiniciar la aplicacion para realizar los cambios"
+  "error_ie": "Tu version de Internet Explorer VAR_IEVersion no es compatible. Necesitas Internet Explorer 11 o una version superior para poder utilizar el actualizador.",
+  "error_windows_xp": "Si utilizas Windows XP o no podes actualizar Internet Explorer a la version 11 o superior, por favor lee el siguiente post para la instalacion del juego: "
+  "error_connection" : "Error en la conexión, descarga abortada."
+  "error_searching_updates": "Error al querer buscar la actualizacion por favor intente mas tarde o contactanos ",
+  "looking_for_upgrades" : "Buscando Actualizaciones",
+  "configured_to" : "Estoy verificando tu ",
+  "up_to_date" : "Tu version esta actualizada, no hace falta actualizar =D",
+  "starting" : "Iniciando, se descargaran actualizaciones.",
+  "one_more_moment" : "Instalando actualizacion... unos momentos mas por favor ",
+  "comments_update" : "Comentarios de la actualizacion: ",
+  "download_started" : "Descarga iniciada.",
+  "download_canceled" : "Se cancelo la actualizacion",
+  "download_finished" : "Descarga finalizada",
+  "spanish_label" : "Castellano",
+  "english_label" : "Ingles",
+  "completed" : "[0% Completado]",
+  "open_app" : "Deseas ejecutar VAR_Program ?",
+  "download_continue" : "Se descargara la nueva version, Continuar?",
+  "update_succesful" : " actualizado correctamente",
+}
