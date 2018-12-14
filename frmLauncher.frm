@@ -10,6 +10,7 @@ Begin VB.Form frmLauncher
    ClientLeft      =   6585
    ClientTop       =   3720
    ClientWidth     =   7500
+   Icon            =   "frmLauncher.frx":0000
    LinkTopic       =   "Form1"
    ScaleHeight     =   6000
    ScaleWidth      =   7500
@@ -40,9 +41,10 @@ Begin VB.Form frmLauncher
       _Version        =   393217
       BackColor       =   0
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       Appearance      =   0
-      TextRTF         =   $"frmLauncher.frx":0000
+      TextRTF         =   $"frmLauncher.frx":C84A
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Terminal"
          Size            =   6
@@ -61,14 +63,14 @@ Begin VB.Form frmLauncher
       Width           =   5025
       _ExtentX        =   8864
       _ExtentY        =   529
-      Picture         =   "frmLauncher.frx":0081
+      Picture         =   "frmLauncher.frx":C8CB
       BackColor       =   0
       ForeColor       =   16777152
       Appearance      =   0
       BorderStyle     =   0
       BarColor        =   16777215
       BarForeColor    =   12648384
-      BarPicture      =   "frmLauncher.frx":009D
+      BarPicture      =   "frmLauncher.frx":C8E7
       BarPictureMode  =   0
       BackPictureMode =   0
       ShowText        =   -1  'True
