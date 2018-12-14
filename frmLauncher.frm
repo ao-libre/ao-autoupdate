@@ -7,13 +7,14 @@ Begin VB.Form frmLauncher
    BorderStyle     =   0  'None
    Caption         =   "Form1"
    ClientHeight    =   6000
-   ClientLeft      =   10350
-   ClientTop       =   5400
+   ClientLeft      =   6585
+   ClientTop       =   3720
    ClientWidth     =   7500
    LinkTopic       =   "Form1"
    ScaleHeight     =   6000
    ScaleWidth      =   7500
    ShowInTaskbar   =   0   'False
+   StartUpPosition =   2  'CenterScreen
    Begin InetCtlsObjects.Inet InetGithubReleases 
       Left            =   240
       Top             =   5400
@@ -39,7 +40,6 @@ Begin VB.Form frmLauncher
       _Version        =   393217
       BackColor       =   0
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       Appearance      =   0
       TextRTF         =   $"frmLauncher.frx":0000
