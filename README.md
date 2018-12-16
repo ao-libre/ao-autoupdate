@@ -1,7 +1,7 @@
 # Argentum Online - Autoupdate
 Auto-Update to update any application in the ecosystem of Argentum Online
 
-![imagen](https://i.ibb.co/d643LSK/screenshot.png)
+![imagen](https://media.discordapp.net/attachments/496022118341935127/519694229933654017/frmLauncher.jpg)
 
 ----
 
