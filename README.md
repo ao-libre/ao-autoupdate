@@ -40,5 +40,6 @@ En caso de tirar error en el archivo `Unzip32.dll` porque no se encuentra:
 
 -------- 
 
-Old version / based on this version:
+Old version / based on this version created by [@DylanUllua](https://github.com/DylanUllua) (Creator of Lhirius AO):
+
 https://www.gs-zone.org/temas/como-configurar-el-autoupdate-completo.78653/
