@@ -328,10 +328,6 @@ Private Function CheckIfApplicationIsUpdated(ApplicationToUpdate As String) As B
     
 End Function
 
-Private Function GetGithubReleaseData() As Object
-
-End Function
-
 Private Sub Analizar(ApplicationToUpdate As String)
     Dim SubDirectoryApp As String
     Dim IsApplicationUpdated As Boolean
@@ -392,7 +388,7 @@ Private Sub Analizar(ApplicationToUpdate As String)
                 Call ShellExecute(Me.hWnd, "open", App.Path & "\" & fileToExecuteAfterUpdated, "", "", 1)
             End If
             
-            End
+            'End
         End If
     End If
 
