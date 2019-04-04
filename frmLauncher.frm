@@ -85,6 +85,12 @@ Begin VB.Form frmLauncher
          Strikethrough   =   0   'False
       EndProperty
    End
+   Begin VB.Image BtnJugarBots 
+      Height          =   375
+      Left            =   5760
+      Top             =   3720
+      Width           =   1335
+   End
    Begin VB.Image BtnWorldEditor 
       Height          =   375
       Left            =   5160
@@ -94,7 +100,7 @@ Begin VB.Form frmLauncher
    Begin VB.Image BtnAoSetup 
       Height          =   375
       Left            =   5760
-      Top             =   3480
+      Top             =   3000
       Width           =   1335
    End
    Begin VB.Image BtnClose 
@@ -170,6 +176,10 @@ Private Sub BtnGame_Click()
     BtnGame.Enabled = True
 End Sub
 
+Private Sub BtnJugarBots_Click()
+    Call Analizar("FronBot")
+End Sub
+
 Private Sub BtnWorldeditor_Click()
     Call Analizar("Worldeditor")
 End Sub
@@ -207,7 +217,7 @@ Private Sub LaunchPopUpBeforeClose()
 End Sub
 
 Private Sub Form_Load()
-    LblVersion.Caption = "v" & App.Major & "." & App.Minor
+    LblVersion.Caption = GetVar(App.Path & "\ConfigAutoupdate.ini", "ConfigAutoupdate", "version")
     Call SetLanguageApplication
     Call CheckIfIEVersionIsCompatible
     Call CheckIfRunningLastVersionAutoupdate
@@ -216,6 +226,7 @@ Private Sub Form_Load()
     BtnGame.Picture = LoadPicture(App.Path & "\Graficos\BotonJuego_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
     'BtnWorldEditor.Picture = LoadPicture(App.Path & "\Graficos\BotonWorldeditor_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
     BtnAoSetup.Picture = LoadPicture(App.Path & "\Graficos\BotonSetup_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
+    BtnJugarBots.Picture = LoadPicture(App.Path & "\Graficos\BotonJugarBots_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
     
     frmLauncher.Picture = LoadPicture(App.Path & "\Graficos\AU_Main_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
     
@@ -427,13 +438,13 @@ Private Sub InetGithubAutoupdate_StateChanged(ByVal State As Integer)
         Case icRequesting
             'Call addConsole("Buscando ultima version disponible", 0, 76, 0, True, False)
         Case icConnecting
-            'Call addConsole("Obteniendo numero de la ultima actualizacion ¯\_(O.O)_/¯", 0, 255, 0, True, False)
+            'Call addConsole("Obteniendo numero de la ultima actualizacion Â¯\_(O.O)_/Â¯", 0, 255, 0, True, False)
         Case 1 'icHostResolvingHost
             'Call addConsole("Resolviendo host... por favor espere", 0, 130, 0, True, False)
         Case icRequestSent
             'Call addConsole("Seguimos resolviendo host..", 110, 230, 20, True, False)
         Case icReceivingResponse
-            'Call addConsole("Escuchamos una señal, vamos a comprobar que tengas la ultima version.", 100, 190, 200, True, False)
+            'Call addConsole("Escuchamos una seÃ±al, vamos a comprobar que tengas la ultima version.", 100, 190, 200, True, False)
         Case icConnected
             'Call addConsole("Nos conectamos, ya vamos a empezar a bajar... paciencia =P ", 200, 90, 220, True, False)
         Case icResponseReceived
