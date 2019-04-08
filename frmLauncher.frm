@@ -167,6 +167,8 @@ Dim JsonObject As Object
 Private Language As String
 Private JsonLanguage As Object
 
+Private NoInternetConnection As Boolean
+
 Private Sub BtnGame_Click()
     BtnGame.Picture = LoadPicture(App.Path & "\Graficos\BotonJuegoClick_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
     BtnGame.Enabled = False
@@ -216,6 +218,7 @@ Private Sub LaunchPopUpBeforeClose()
 End Sub
 
 Private Sub Form_Load()
+    NoInternetConnection = False
     LblVersion.Caption = GetVar(App.Path & "\ConfigAutoupdate.ini", "ConfigAutoupdate", "version")
     Call SetLanguageApplication
     Call CheckIfIEVersionIsCompatible
@@ -289,6 +292,7 @@ On Error Resume Next
 
     If responseGithub = "" Then
         MsgBox "No se pudo verificar la version del autoupdater, por favor revise su conexion a internet"
+        NoInternetConnection = True
         Exit Sub
     End If
 
@@ -325,6 +329,7 @@ On Error Resume Next
 
     If responseGithub = "" Then
         MsgBox "No se pudo verificar la version, por favor revise su conexion a internet"
+        NoInternetConnection = True
         Exit Function
     End If
 
@@ -348,6 +353,27 @@ On Error Resume Next
     
     IsApplicationUpdated = CheckIfApplicationIsUpdated(ApplicationToUpdate)
     SubDirectoryApp = GetVar(App.Path & "\ConfigAutoupdate.ini", ApplicationToUpdate, "folderToExtract")
+    
+    If NoInternetConnection = True Then
+        Call addConsole("No hay conexion a internet/No Internet Connection", 255, 0, 0, True, False)
+        Dim versionNumberLocal As String
+        versionNumberLocal = GetVar(App.Path & "\ConfigAutoupdate.ini", ApplicationToUpdate, "version")
+        
+        If versionNumberLocal <> "v0" Then
+            If MsgBox(Replace(JsonLanguage.Item("open_app"), "VAR_Program", ApplicationToUpdate), vbYesNo) = vbYes Then
+                fileToExecuteAfterUpdated = GetVar(App.Path & "\ConfigAutoupdate.ini", ApplicationToUpdate, "fileToExecuteAfterUpdated")
+                
+                If LenB(SubDirectoryApp) > 0 Then
+                    Call ShellExecute(Me.hWnd, "open", App.Path & "\" & SubDirectoryApp & "\" & fileToExecuteAfterUpdated, "", "", 1)
+                Else
+                    Call ShellExecute(Me.hWnd, "open", App.Path & "\" & fileToExecuteAfterUpdated, "", "", 1)
+                End If
+            End If
+        End If
+        
+        Exit Sub
+        
+    End If
     
     If IsApplicationUpdated = True Then
         Call addConsole(JsonLanguage.Item("up_to_date"), 149, 100, 210, True, False)
