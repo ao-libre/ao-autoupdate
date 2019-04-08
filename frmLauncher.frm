@@ -41,7 +41,6 @@ Begin VB.Form frmLauncher
       _Version        =   393217
       BackColor       =   0
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       Appearance      =   0
       TextRTF         =   $"frmLauncher.frx":C84A
@@ -279,6 +278,7 @@ Private Function FileToString(strFilename As String) As String
 End Function
 
 Private Sub CheckIfRunningLastVersionAutoupdate()
+On Error Resume Next
     Dim responseGithub As String, versionNumberMaster As String, versionNumberLocal As String
     Dim githubAccount As String
     
@@ -286,6 +286,12 @@ Private Sub CheckIfRunningLastVersionAutoupdate()
 
     responseGithub = InetGithubAutoupdate.OpenURL("https://api.github.com/repos/" & githubAccount & "/ao-autoupdate/releases/latest")
     Set JsonObject = JSON.parse(responseGithub)
+
+    If responseGithub = "" Then
+        MsgBox "No se pudo verificar la version del autoupdater, por favor revise su conexion a internet"
+        Exit Sub
+    End If
+
     
     versionNumberMaster = JsonObject.Item("tag_name")
     versionNumberLocal = GetVar(App.Path & "\ConfigAutoupdate.ini", "ConfigAutoupdate", "version")
@@ -298,6 +304,7 @@ Private Sub CheckIfRunningLastVersionAutoupdate()
 End Sub
 
 Private Function CheckIfApplicationIsUpdated(ApplicationToUpdate As String) As Boolean
+On Error Resume Next
     Dim versionNumberLocal As String, versionNumberMaster As String
     Dim repository As String, githubAccount As String
     Dim responseGithub As String, urlEndpointUpdate As String, fileToExecuteAfterUpdated As String
@@ -316,6 +323,11 @@ Private Function CheckIfApplicationIsUpdated(ApplicationToUpdate As String) As B
     
     responseGithub = InetGithubReleases.OpenURL(urlEndpointUpdate)
 
+    If responseGithub = "" Then
+        MsgBox "No se pudo verificar la version, por favor revise su conexion a internet"
+        Exit Function
+    End If
+
     Set JsonObject = JSON.parse(responseGithub)
     versionNumberMaster = JsonObject.Item("tag_name")
     versionNumberLocal = GetVar(App.Path & "\ConfigAutoupdate.ini", ApplicationToUpdate, "version")
@@ -329,6 +341,7 @@ Private Function CheckIfApplicationIsUpdated(ApplicationToUpdate As String) As B
 End Function
 
 Private Sub Analizar(ApplicationToUpdate As String)
+On Error Resume Next
     Dim SubDirectoryApp As String
     Dim IsApplicationUpdated As Boolean
     Dim CancelUpdate As Boolean
