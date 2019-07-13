@@ -1,5 +1,5 @@
 Attribute VB_Name = "modUnzip"
-Public Declare Function SetWindowPos Lib "USER32" (ByVal hWnd As Long, _
+Public Declare Function SetWindowPos Lib "user32" (ByVal hWnd As Long, _
 ByVal hWndInsertAfter As Long, ByVal X As Long, ByVal Y As Long, ByVal _
 cx As Long, ByVal cy As Long, ByVal wFlags As Long) As Long
 Public Const HWND_TOPMOST = -1
@@ -153,7 +153,7 @@ Public Function BytesToMegabytes(Bytes As Double) As Double
 End Function
 
 Public Sub addConsole(Texto As String, Rojo As Byte, Verde As Byte, Azul As Byte, Bold As Boolean, Italic As Boolean, Optional ByVal Enter As Boolean = False)
-    With frmLauncher.RichTextBoxLog
+    With frmLauncherDbz.RichTextBoxLog
         If (Len(.Text)) > 700 Then .Text = ""
         
         .SelStart = Len(.Text)

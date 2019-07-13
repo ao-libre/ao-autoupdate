@@ -19,6 +19,7 @@
   "download_finished" : "Download finished",
   "spanish_label" : "Spanish",
   "english_label" : "English",
+   "play_label" : "Play",
   "completed" : "[0% Completed]",
   "open_app" : "Open application VAR_Program ?",
   "download_continue" : "Download new version, Continue?",

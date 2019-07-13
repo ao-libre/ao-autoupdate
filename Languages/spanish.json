@@ -19,6 +19,7 @@
   "download_finished" : "Descarga finalizada",
   "spanish_label" : "Castellano",
   "english_label" : "Ingles",
+  "play_label" : "Jugar",
   "completed" : "[0% Completado]",
   "open_app" : "Deseas ejecutar VAR_Program ?",
   "download_continue" : "Se descargara la nueva version, Continuar?",

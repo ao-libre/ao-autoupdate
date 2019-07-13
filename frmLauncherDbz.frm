@@ -2,75 +2,99 @@ VERSION 5.00
 Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
 Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Object = "{55473EAC-7715-4257-B5EF-6E14EBD6A5DD}#1.0#0"; "VBALPROGBAR6.OCX"
-Begin VB.Form frmLauncher 
+Begin VB.Form frmLauncherDbz 
    BackColor       =   &H80000010&
    BorderStyle     =   0  'None
    Caption         =   "Form1"
-   ClientHeight    =   6000
+   ClientHeight    =   7680
    ClientLeft      =   6585
    ClientTop       =   3720
-   ClientWidth     =   7500
-   Icon            =   "frmLauncher.frx":0000
+   ClientWidth     =   10080
+   Icon            =   "frmLauncherDbz.frx":0000
    LinkTopic       =   "Form1"
-   ScaleHeight     =   6000
-   ScaleWidth      =   7500
+   Picture         =   "frmLauncherDbz.frx":C84A
+   ScaleHeight     =   7680
+   ScaleWidth      =   10080
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
-   Begin InetCtlsObjects.Inet InetGithubReleases 
-      Left            =   240
-      Top             =   5400
-      _ExtentX        =   1005
-      _ExtentY        =   1005
-      _Version        =   393216
-   End
-   Begin InetCtlsObjects.Inet InetGithubAutoupdate 
-      Left            =   0
-      Top             =   5160
-      _ExtentX        =   1005
-      _ExtentY        =   1005
-      _Version        =   393216
-   End
    Begin RichTextLib.RichTextBox RichTextBoxLog 
-      Height          =   1190
-      Left            =   1945
-      TabIndex        =   0
-      Top             =   2970
-      Width           =   3600
-      _ExtentX        =   6350
-      _ExtentY        =   2090
+      Height          =   2055
+      Left            =   480
+      TabIndex        =   6
+      Top             =   3000
+      Width           =   3615
+      _ExtentX        =   6376
+      _ExtentY        =   3625
       _Version        =   393217
-      BackColor       =   0
-      BorderStyle     =   0
+      BackColor       =   4210752
       Enabled         =   -1  'True
-      ReadOnly        =   -1  'True
-      Appearance      =   0
-      TextRTF         =   $"frmLauncher.frx":C84A
+      TextRTF         =   $"frmLauncherDbz.frx":23BF2
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Terminal"
-         Size            =   6
-         Charset         =   255
-         Weight          =   700
+         Name            =   "Segoe UI Symbol"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin vbalProgBarLib6.vbalProgressBar ProgressBar1 
-      Height          =   300
-      Left            =   1260
+   Begin AOLibreAutoUpdate.uAOButton BtnSalir 
+      Height          =   495
+      Left            =   9120
       TabIndex        =   2
-      Top             =   4440
-      Width           =   5025
-      _ExtentX        =   8864
-      _ExtentY        =   529
-      Picture         =   "frmLauncher.frx":C8CB
+      Top             =   480
+      Width           =   495
+      _ExtentX        =   873
+      _ExtentY        =   873
+      TX              =   "X"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmLauncherDbz.frx":23C76
+      PICF            =   "frmLauncherDbz.frx":246A0
+      PICH            =   "frmLauncherDbz.frx":25362
+      PICV            =   "frmLauncherDbz.frx":262F4
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin InetCtlsObjects.Inet InetGithubReleases 
+      Left            =   5760
+      Top             =   1200
+      _ExtentX        =   1005
+      _ExtentY        =   1005
+      _Version        =   393216
+   End
+   Begin InetCtlsObjects.Inet InetGithubAutoupdate 
+      Left            =   6720
+      Top             =   1320
+      _ExtentX        =   1005
+      _ExtentY        =   1005
+      _Version        =   393216
+   End
+   Begin vbalProgBarLib6.vbalProgressBar ProgressBar1 
+      Height          =   540
+      Left            =   480
+      TabIndex        =   1
+      Top             =   6240
+      Width           =   6705
+      _ExtentX        =   11827
+      _ExtentY        =   953
+      Picture         =   "frmLauncherDbz.frx":271F6
       BackColor       =   0
       ForeColor       =   16777152
       Appearance      =   0
       BorderStyle     =   0
       BarColor        =   16777215
       BarForeColor    =   12648384
-      BarPicture      =   "frmLauncher.frx":C8E7
+      BarPicture      =   "frmLauncherDbz.frx":27212
       BarPictureMode  =   0
       BackPictureMode =   0
       ShowText        =   -1  'True
@@ -85,53 +109,83 @@ Begin VB.Form frmLauncher
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin VB.Image BtnJugarBots 
-      Height          =   375
-      Left            =   5760
-      Top             =   3720
+   Begin AOLibreAutoUpdate.uAOButton BtnJugar 
+      Height          =   1215
+      Left            =   7920
+      TabIndex        =   3
+      Top             =   5760
       Width           =   1335
+      _ExtentX        =   2355
+      _ExtentY        =   2143
+      TX              =   "Jugar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmLauncherDbz.frx":2CBC6
+      PICF            =   "frmLauncherDbz.frx":2D5F0
+      PICH            =   "frmLauncherDbz.frx":2E2B2
+      PICV            =   "frmLauncherDbz.frx":2F244
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Lucida Console"
+         Size            =   18
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
-   Begin VB.Image BtnWorldEditor 
-      Height          =   375
-      Left            =   5160
-      Top             =   5040
-      Width           =   1335
+   Begin AOLibreAutoUpdate.uAOButton LblSpanish 
+      Height          =   735
+      Left            =   2160
+      TabIndex        =   4
+      Top             =   5280
+      Width           =   1575
+      _ExtentX        =   2778
+      _ExtentY        =   1296
+      TX              =   "Castellano"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmLauncherDbz.frx":30146
+      PICF            =   "frmLauncherDbz.frx":30B70
+      PICH            =   "frmLauncherDbz.frx":31832
+      PICV            =   "frmLauncherDbz.frx":327C4
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
-   Begin VB.Image BtnAoSetup 
-      Height          =   375
-      Left            =   5760
-      Top             =   3000
-      Width           =   1335
-   End
-   Begin VB.Image BtnClose 
-      Height          =   255
-      Left            =   6870
-      Top             =   360
-      Width           =   255
-   End
-   Begin VB.Image LblEnglish 
-      Height          =   375
-      Left            =   3950
-      Top             =   2310
-      Width           =   1335
-   End
-   Begin VB.Image LblSpanish 
-      Height          =   375
-      Left            =   2200
-      Top             =   2310
-      Width           =   1335
-   End
-   Begin VB.Image BtnGame 
-      Height          =   375
-      Left            =   3090
-      Top             =   5040
-      Width           =   1335
-   End
-   Begin VB.Image BtnServer 
-      Height          =   375
-      Left            =   980
-      Top             =   5040
-      Width           =   1330
+   Begin AOLibreAutoUpdate.uAOButton LblEnglish 
+      Height          =   735
+      Left            =   3960
+      TabIndex        =   5
+      Top             =   5280
+      Width           =   1575
+      _ExtentX        =   2778
+      _ExtentY        =   1296
+      TX              =   "English"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmLauncherDbz.frx":336C6
+      PICF            =   "frmLauncherDbz.frx":340F0
+      PICH            =   "frmLauncherDbz.frx":34DB2
+      PICV            =   "frmLauncherDbz.frx":35D44
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
    Begin VB.Label LblVersion 
       BackColor       =   &H80000013&
@@ -149,12 +203,12 @@ Begin VB.Form frmLauncher
       ForeColor       =   &H000000C0&
       Height          =   375
       Left            =   360
-      TabIndex        =   1
+      TabIndex        =   0
       Top             =   360
       Width           =   975
    End
 End
-Attribute VB_Name = "frmLauncher"
+Attribute VB_Name = "frmLauncherDbz"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
@@ -202,6 +256,14 @@ Private Sub BtnAoSetup_Click()
     Call Analizar("AOSetup")
 End Sub
 
+Private Sub BtnJugar_Click()
+    Call Analizar("Client")
+End Sub
+
+Private Sub BtnSalir_Click()
+    End
+End Sub
+
 Private Sub LblEnglish_Click()
     Call WriteVar(App.Path & "\ConfigAutoupdate.ini", "ConfigAutoupdate", "language", "english")
     Call LaunchPopUpBeforeClose
@@ -225,13 +287,9 @@ Private Sub Form_Load()
     Call CheckIfIEVersionIsCompatible
     Call CheckIfRunningLastVersionAutoupdate
 
-    BtnServer.Picture = LoadPicture(App.Path & "\Graficos\BotonServidor_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
-    BtnGame.Picture = LoadPicture(App.Path & "\Graficos\BotonJuego_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
-    'BtnWorldEditor.Picture = LoadPicture(App.Path & "\Graficos\BotonWorldeditor_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
-    BtnAoSetup.Picture = LoadPicture(App.Path & "\Graficos\BotonSetup_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
-    BtnJugarBots.Picture = LoadPicture(App.Path & "\Graficos\BotonJugarBots_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
-    
-    frmLauncher.Picture = LoadPicture(App.Path & "\Graficos\AU_Main_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
+    BtnJugar.Caption = JsonLanguage.Item("play_label")
+    LblEnglish.Caption = JsonLanguage.Item("english_label")
+    LblSpanish.Caption = JsonLanguage.Item("spanish_label")
     
     ProgressBar1.Value = 0
     ProgressBar1.Text = JsonLanguage.Item("completed")
@@ -493,3 +551,8 @@ Private Sub InetGithubAutoupdate_StateChanged(ByVal State As Integer)
             Call addConsole(JsonLanguage.Item("error_connection") & WebpageAolibre, 255, 0, 0, True, False)
     End Select
 End Sub
+
+Private Sub cmdSalir_Click()
+    Unload Me
+End Sub
+
