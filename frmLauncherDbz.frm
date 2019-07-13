@@ -17,6 +17,18 @@ Begin VB.Form frmLauncherDbz
    ScaleWidth      =   10080
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
+   Begin AOLibreAutoUpdate.uAOCheckbox CMDResolucion 
+      Height          =   345
+      Left            =   5400
+      TabIndex        =   7
+      Top             =   1080
+      Width           =   345
+      _ExtentX        =   609
+      _ExtentY        =   609
+      CHCK            =   0   'False
+      ENAB            =   -1  'True
+      PICC            =   "frmLauncherDbz.frx":23BF2
+   End
    Begin RichTextLib.RichTextBox RichTextBoxLog 
       Height          =   2055
       Left            =   480
@@ -27,8 +39,7 @@ Begin VB.Form frmLauncherDbz
       _ExtentY        =   3625
       _Version        =   393217
       BackColor       =   4210752
-      Enabled         =   -1  'True
-      TextRTF         =   $"frmLauncherDbz.frx":23BF2
+      TextRTF         =   $"frmLauncherDbz.frx":261A4
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Segoe UI Symbol"
          Size            =   8.25
@@ -51,10 +62,10 @@ Begin VB.Form frmLauncherDbz
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmLauncherDbz.frx":23C76
-      PICF            =   "frmLauncherDbz.frx":246A0
-      PICH            =   "frmLauncherDbz.frx":25362
-      PICV            =   "frmLauncherDbz.frx":262F4
+      PICE            =   "frmLauncherDbz.frx":26228
+      PICF            =   "frmLauncherDbz.frx":26C52
+      PICH            =   "frmLauncherDbz.frx":27914
+      PICV            =   "frmLauncherDbz.frx":288A6
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -66,15 +77,15 @@ Begin VB.Form frmLauncherDbz
       EndProperty
    End
    Begin InetCtlsObjects.Inet InetGithubReleases 
-      Left            =   5760
-      Top             =   1200
+      Left            =   5400
+      Top             =   3360
       _ExtentX        =   1005
       _ExtentY        =   1005
       _Version        =   393216
    End
    Begin InetCtlsObjects.Inet InetGithubAutoupdate 
-      Left            =   6720
-      Top             =   1320
+      Left            =   6480
+      Top             =   3000
       _ExtentX        =   1005
       _ExtentY        =   1005
       _Version        =   393216
@@ -87,14 +98,14 @@ Begin VB.Form frmLauncherDbz
       Width           =   6705
       _ExtentX        =   11827
       _ExtentY        =   953
-      Picture         =   "frmLauncherDbz.frx":271F6
+      Picture         =   "frmLauncherDbz.frx":297A8
       BackColor       =   0
       ForeColor       =   16777152
       Appearance      =   0
       BorderStyle     =   0
       BarColor        =   16777215
       BarForeColor    =   12648384
-      BarPicture      =   "frmLauncherDbz.frx":27212
+      BarPicture      =   "frmLauncherDbz.frx":297C4
       BarPictureMode  =   0
       BackPictureMode =   0
       ShowText        =   -1  'True
@@ -121,10 +132,10 @@ Begin VB.Form frmLauncherDbz
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmLauncherDbz.frx":2CBC6
-      PICF            =   "frmLauncherDbz.frx":2D5F0
-      PICH            =   "frmLauncherDbz.frx":2E2B2
-      PICV            =   "frmLauncherDbz.frx":2F244
+      PICE            =   "frmLauncherDbz.frx":2F178
+      PICF            =   "frmLauncherDbz.frx":2FBA2
+      PICH            =   "frmLauncherDbz.frx":30864
+      PICV            =   "frmLauncherDbz.frx":317F6
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Lucida Console"
          Size            =   18
@@ -147,10 +158,10 @@ Begin VB.Form frmLauncherDbz
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmLauncherDbz.frx":30146
-      PICF            =   "frmLauncherDbz.frx":30B70
-      PICH            =   "frmLauncherDbz.frx":31832
-      PICV            =   "frmLauncherDbz.frx":327C4
+      PICE            =   "frmLauncherDbz.frx":326F8
+      PICF            =   "frmLauncherDbz.frx":33122
+      PICH            =   "frmLauncherDbz.frx":33DE4
+      PICV            =   "frmLauncherDbz.frx":34D76
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
          Size            =   9.75
@@ -173,10 +184,10 @@ Begin VB.Form frmLauncherDbz
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmLauncherDbz.frx":336C6
-      PICF            =   "frmLauncherDbz.frx":340F0
-      PICH            =   "frmLauncherDbz.frx":34DB2
-      PICV            =   "frmLauncherDbz.frx":35D44
+      PICE            =   "frmLauncherDbz.frx":35C78
+      PICF            =   "frmLauncherDbz.frx":366A2
+      PICH            =   "frmLauncherDbz.frx":37364
+      PICV            =   "frmLauncherDbz.frx":382F6
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
          Size            =   9.75
@@ -186,6 +197,87 @@ Begin VB.Form frmLauncherDbz
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+   End
+   Begin AOLibreAutoUpdate.uAOCheckbox CMDAmbiental 
+      Height          =   345
+      Left            =   5400
+      TabIndex        =   8
+      Top             =   1680
+      Width           =   345
+      _ExtentX        =   609
+      _ExtentY        =   609
+      CHCK            =   0   'False
+      ENAB            =   -1  'True
+      PICC            =   "frmLauncherDbz.frx":391F8
+   End
+   Begin AOLibreAutoUpdate.uAOCheckbox CMDEffectSound 
+      Height          =   345
+      Left            =   5400
+      TabIndex        =   9
+      Top             =   480
+      Width           =   345
+      _ExtentX        =   609
+      _ExtentY        =   609
+      CHCK            =   0   'False
+      ENAB            =   -1  'True
+      PICC            =   "frmLauncherDbz.frx":3B7AA
+   End
+   Begin VB.Label LblAmbiente 
+      BackStyle       =   0  'Transparent
+      Caption         =   "LblAmbiente"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   11.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00000040&
+      Height          =   375
+      Left            =   5880
+      TabIndex        =   12
+      Top             =   1680
+      Width           =   3495
+   End
+   Begin VB.Label LblResolution 
+      BackStyle       =   0  'Transparent
+      Caption         =   "LblResolution"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   11.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00000040&
+      Height          =   375
+      Left            =   5880
+      TabIndex        =   11
+      Top             =   1080
+      Width           =   3495
+   End
+   Begin VB.Label LblSounds 
+      BackStyle       =   0  'Transparent
+      Caption         =   "LblSounds"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   11.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00000040&
+      Height          =   375
+      Left            =   5880
+      TabIndex        =   10
+      Top             =   480
+      Width           =   3495
    End
    Begin VB.Label LblVersion 
       BackColor       =   &H80000013&
@@ -225,39 +317,14 @@ Private JsonLanguage As Object
 Private NoInternetConnection As Boolean
 
 Private Sub BtnGame_Click()
-    BtnGame.Picture = LoadPicture(App.Path & "\Graficos\BotonJuegoClick_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
     BtnGame.Enabled = False
     
     Call Analizar("Client")
     BtnGame.Enabled = True
 End Sub
 
-Private Sub BtnJugarBots_Click()
-    Call Analizar("FronBot")
-End Sub
-
-Private Sub BtnWorldeditor_Click()
-    Call Analizar("Worldeditor")
-End Sub
-
 Private Sub BtnClose_Click()
     End
-End Sub
-
-Private Sub BtnServer_Click()
-    BtnServer.Picture = LoadPicture(App.Path & "\Graficos\BotonServidorClick_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
-    BtnServer.Enabled = False
-    
-    Call Analizar("Server")
-    BtnServer.Enabled = True
-End Sub
-
-Private Sub BtnAoSetup_Click()
-    Call Analizar("AOSetup")
-End Sub
-
-Private Sub BtnJugar_Click()
-    Call Analizar("Client")
 End Sub
 
 Private Sub BtnSalir_Click()
@@ -286,13 +353,18 @@ Private Sub Form_Load()
     Call SetLanguageApplication
     Call CheckIfIEVersionIsCompatible
     Call CheckIfRunningLastVersionAutoupdate
-
+    
     BtnJugar.Caption = JsonLanguage.Item("play_label")
     LblEnglish.Caption = JsonLanguage.Item("english_label")
     LblSpanish.Caption = JsonLanguage.Item("spanish_label")
+    LblAmbiente.Caption = JsonLanguage.Item("ambiente_label")
+    LblResolution.Caption = JsonLanguage.Item("resolution_label")
+    LblSounds.Caption = JsonLanguage.Item("sounds_label")
     
     ProgressBar1.Value = 0
     ProgressBar1.Text = JsonLanguage.Item("completed")
+    
+    LoadCheckboxesInitialStatus
 End Sub
 
 Private Sub SetLanguageApplication(Optional LanguageSelection As String)
@@ -556,3 +628,68 @@ Private Sub cmdSalir_Click()
     Unload Me
 End Sub
 
+Private Sub CMDAmbiental_Click()
+    Dim ClientPath As String
+    ClientPath = GetVar(App.Path & "\ConfigAutoupdate.ini", "Client", "folderToExtract")
+    
+    Dim Value As Boolean
+    Value = GetVar(App.Path & "\" & ClientPath & "\INIT\Config.cfg", "Sound", "Wav")
+    
+    
+    If Value = 0 Then
+        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.cfg", "Sound", "Wav", 1)
+    Else
+        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.cfg", "Sound", "Wav", 0)
+    End If
+End Sub
+
+Private Sub CMDEffectSound_Click()
+    Dim ClientPath As String
+    ClientPath = GetVar(App.Path & "\ConfigAutoupdate.ini", "Client", "folderToExtract")
+    
+    Dim Value As Boolean
+    Value = GetVar(App.Path & "\" & ClientPath & "\INIT\Config.cfg", "Sound", "MP3")
+    
+    If Value = 0 Then
+        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.cfg", "Sound", "MP3", 1)
+    Else
+        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.cfg", "Sound", "MP3", 0)
+    End If
+End Sub
+
+Private Sub CMDResolucion_Click()
+    Dim ClientPath As String
+    ClientPath = GetVar(App.Path & "\ConfigAutoupdate.ini", "Client", "folderToExtract")
+    
+    Dim Value As Boolean
+    Value = GetVar(App.Path & "\" & ClientPath & "\INIT\Config.cfg", "Video", "Res")
+    
+    If Value = 0 Then
+        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.cfg", "Video", "Res", 1)
+    Else
+        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.cfg", "Video", "Res", 0)
+    End If
+End Sub
+
+Private Sub LoadCheckboxesInitialStatus()
+    Dim ClientPath As String
+    ClientPath = GetVar(App.Path & "\ConfigAutoupdate.ini", "Client", "folderToExtract")
+    
+    Dim Value As Boolean
+    Value = GetVar(App.Path & "\" & ClientPath & "\INIT\Config.cfg", "Sound", "MP3")
+    If Value = True Then
+        CMDEffectSound.Checked = True
+    End If
+    
+    Value = GetVar(App.Path & "\" & ClientPath & "\INIT\Config.cfg", "Video", "Res")
+    
+    If Value = True Then
+        CMDResolucion.Checked = True
+    End If
+    
+    Value = GetVar(App.Path & "\" & ClientPath & "\INIT\Config.cfg", "Sound", "Wav")
+    If Value = True Then
+        CMDAmbiental.Checked = True
+    End If
+
+End Sub

@@ -16,6 +16,7 @@ Class=cStringBuilder; cStringBuilder.cls
 Form=frmLauncher.frm
 Form=frmLauncherDbz.frm
 UserControl=uAOButton\uAOButton.ctl
+UserControl=uAOCheckbox\uAOCheckbox.ctl
 IconForm="frmLauncherDbz"
 Startup="frmLauncherDbz"
 HelpFile=""
