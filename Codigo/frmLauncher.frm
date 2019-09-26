@@ -239,14 +239,16 @@ End Sub
 Private Sub SetLanguageApplication(Optional LanguageSelection As String)
     Dim JsonLanguageString As String
     
-    If LanguageSelection = "" Then
+    If LenB(LanguageSelection) = 0 Then
         Language = GetVar(App.Path & "\ConfigAutoupdate.ini", "ConfigAutoupdate", "language")
     Else
         Language = LanguageSelection
     End If
     
     JsonLanguageString = FileToString(App.Path & "\Languages\" & Language & ".json")
+    
     Set JsonLanguage = JSON.parse(JsonLanguageString)
+    
 End Sub
 
 Public Function GetIEVersion()
@@ -274,10 +276,13 @@ Public Function CheckIfIEVersionIsCompatible()
 End Function
 
 Private Function FileToString(strFilename As String) As String
-    IFile = FreeFile
-    Open strFilename For Input As #IFile
-        FileToString = StrConv(InputB(LOF(IFile), IFile), vbUnicode)
-    Close #IFile
+    
+    Dim ifile As Integer: ifile = FreeFile
+    
+    Open strFilename For Input As #ifile
+        FileToString = StrConv(InputB(LOF(ifile), ifile), vbUnicode)
+    Close #ifile
+    
 End Function
 
 Private Sub CheckIfRunningLastVersionAutoupdate()
@@ -288,9 +293,10 @@ On Error Resume Next
     githubAccount = GetVar(App.Path & "\ConfigAutoupdate.ini", "ConfigAutoupdate", "githubAccount")
 
     responseGithub = InetGithubAutoupdate.OpenURL("https://api.github.com/repos/" & githubAccount & "/ao-autoupdate/releases/latest")
+    
     Set JsonObject = JSON.parse(responseGithub)
 
-    If responseGithub = "" Then
+    If LenB(responseGithub) = 0 Then
         MsgBox "No se pudo verificar la version del autoupdater, por favor revise su conexion a internet"
         NoInternetConnection = True
         Exit Sub
@@ -309,6 +315,7 @@ End Sub
 
 Private Function CheckIfApplicationIsUpdated(ApplicationToUpdate As String) As Boolean
 On Error Resume Next
+    
     Dim versionNumberLocal As String, versionNumberMaster As String
     Dim repository As String, githubAccount As String
     Dim responseGithub As String, urlEndpointUpdate As String, fileToExecuteAfterUpdated As String
@@ -316,27 +323,32 @@ On Error Resume Next
     
     githubAccount = GetVar(App.Path & "\ConfigAutoupdate.ini", ApplicationToUpdate, "githubAccount")
     applicationName = GetVar(App.Path & "\ConfigAutoupdate.ini", ApplicationToUpdate, "application")
-    
-    Call addConsole(JsonLanguage.Item("looking_for_upgrades"), 255, 255, 255, True, False)
-    Call addConsole(JsonLanguage.Item("configured_to") & applicationName, 100, 200, 40, True, False)   '>> Informacion
-    
-    Call Reproducir_WAV(App.Path & "\Wav\Revision_" & JsonLanguage.Item("lang_abbreviation") & ".wav", SND_FILENAME)
-    
     repository = GetVar(App.Path & "\ConfigAutoupdate.ini", ApplicationToUpdate, "repository")
     urlEndpointUpdate = "https://api.github.com/repos/" & githubAccount & "/" & repository & "/releases/latest"
     
+    'Mandamos a la consola los mensajes.
+    Call addConsole(JsonLanguage.Item("looking_for_upgrades"), 255, 255, 255, True, False)
+    Call addConsole(JsonLanguage.Item("configured_to") & applicationName, 100, 200, 40, True, False)   '>> Informacion
+    
+    'Reproducimos el sonido.
+    Call Reproducir_WAV(App.Path & "\Wav\Revision_" & JsonLanguage.Item("lang_abbreviation") & ".wav", SND_FILENAME)
+    
+    'Enviamos la peticion GET
     responseGithub = InetGithubReleases.OpenURL(urlEndpointUpdate)
-
-    If responseGithub = "" Then
+    
+    'Si no recibimos nada mandamos error.
+    If LenB(responseGithub) = 0 Then
         MsgBox "No se pudo verificar la version, por favor revise su conexion a internet"
         NoInternetConnection = True
         Exit Function
     End If
-
+    
+    'Obtenemos el numero de la ultima version.
     Set JsonObject = JSON.parse(responseGithub)
     versionNumberMaster = JsonObject.Item("tag_name")
     versionNumberLocal = GetVar(App.Path & "\ConfigAutoupdate.ini", ApplicationToUpdate, "version")
-
+    
+    'Chequeamos si son iguales y devolvemos el resultado.
     If versionNumberMaster = versionNumberLocal Then
         CheckIfApplicationIsUpdated = True
     ElseIf Not versionNumberMaster = versionNumberLocal Then
@@ -347,6 +359,7 @@ End Function
 
 Private Sub Analizar(ApplicationToUpdate As String)
 On Error Resume Next
+    
     Dim SubDirectoryApp As String
     Dim IsApplicationUpdated As Boolean
     Dim CancelUpdate As Boolean
@@ -375,10 +388,14 @@ On Error Resume Next
         
     End If
     
-    If IsApplicationUpdated = True Then
+    If IsApplicationUpdated Then
+    
         Call addConsole(JsonLanguage.Item("up_to_date"), 149, 100, 210, True, False)
+    
     Else
+        
         If MsgBox(JsonLanguage.Item("download_continue"), vbYesNo) = vbYes Then
+            
             ProgressBar1.Visible = True
             
             Call addConsole(JsonLanguage.Item("starting"), 200, 200, 200, True, False)   '>> Informacion
