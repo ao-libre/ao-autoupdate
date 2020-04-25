@@ -18,9 +18,20 @@
   "download_canceled" : "Se cancelo la actualizacion",
   "download_finished" : "Descarga finalizada",
   "spanish_label" : "Castellano",
-  "english_label" : "Ingles",
+  "english_label" : "English",
   "completed" : "[0% Completado]",
   "open_app" : "Deseas ejecutar VAR_Program ?",
   "download_continue" : "Se descargara la nueva version, Continuar?",
-  "update_succesful" : " actualizado correctamente"
+  "update_succesful" : " actualizado correctamente",
+  "play_btn" : "Jugar",
+  "worldeditor_btn" : "Editor de Mapas",
+  "particles_btn" : "Editor de Particulas",
+  "fronbot_btn" : "Jugar Offline",
+  "server_btn" : "Crear Server",
+  "sounds_label" : "Musica",
+  "sounds_fx_label" : "Efectos de Sonido",
+  "shadow_label" : "Sombras",
+  "particles_label" : "Particulas Efectos",
+  "vsync_label" : "Sincronizacion vertical",
+  "github_error" : "No se pudo conectar con el servidor de Github, por favor intente mas tarde en unos minutos."
 }

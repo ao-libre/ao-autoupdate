@@ -17,10 +17,21 @@
   "download_started" : "Download started.",
   "download_canceled" : "The update was canceled",
   "download_finished" : "Download finished",
-  "spanish_label" : "Spanish",
+  "spanish_label" : "Castellano",
   "english_label" : "English",
   "completed" : "[0% Completed]",
   "open_app" : "Open application VAR_Program ?",
   "download_continue" : "Download new version, Continue?",
-  "update_succesful" : " updated succesfully"
+  "update_succesful" : " updated succesfully",
+  "play_btn" : "Play",
+  "worldeditor_btn" : "World Editor",
+  "particles_btn" : "Particles Editor",
+  "fronbot_btn" : "Play Offline",
+  "server_btn" : "Create Server",
+  "sounds_label" : "Music",
+  "sounds_fx_label" : "Music FX",
+  "shadow_label" : "Shadows",
+  "particles_label" : "Particles fx",
+  "vsync_label" : "Vsync",
+  "github_error" : "We could not finish the request with the server to get our updated (github). Please try again in a couple of minutes."
 }
