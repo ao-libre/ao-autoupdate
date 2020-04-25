@@ -676,7 +676,7 @@ On Error Resume Next
     
     'Si no recibimos nada mandamos error.
     If LenB(responseGithub) = 0 Then
-        MsgBox "No se pudo verificar la version, por favor revise su conexion a internet"
+        MsgBox JsonLanguage.Item("github_error")
         NoInternetConnection = True
         Exit Function
     End If
