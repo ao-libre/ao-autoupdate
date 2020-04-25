@@ -492,10 +492,6 @@ Private Sub BtnJugar_Click()
     BtnJugar.Enabled = True
 End Sub
 
-Private Sub BtnJugarBots_Click()
-    Call Analizar("FronBot")
-End Sub
-
 Private Sub BtnWorldeditor_Click()
     Call Analizar("Worldeditor")
 End Sub
@@ -509,6 +505,10 @@ Private Sub BtnServer_Click()
     
     Call Analizar("Server")
     BtnServer.Enabled = True
+End Sub
+
+Private Sub BtnParticleEditor_Click()
+    Call Analizar("ParticleEditor")
 End Sub
 
 Private Sub BtnFronBot_Click()
