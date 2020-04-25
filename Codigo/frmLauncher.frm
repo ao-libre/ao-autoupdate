@@ -636,7 +636,7 @@ On Error Resume Next
     Set JsonObject = JSON.parse(responseGithub)
 
     If LenB(responseGithub) = 0 Then
-        MsgBox "No se pudo verificar la version del autoupdater, por favor revise su conexion a internet"
+        MsgBox JsonLanguage.Item("github_error")
         NoInternetConnection = True
         Exit Sub
     End If
