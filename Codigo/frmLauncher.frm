@@ -486,13 +486,14 @@ Private ClientPath As String
 
 Private Sub BtnJugar_Click()
     BtnJugar.Enabled = False
-    
     Call Analizar("Client")
     BtnJugar.Enabled = True
 End Sub
 
 Private Sub BtnWorldeditor_Click()
+    BtnWorldeditor.Enabled = False
     Call Analizar("Worldeditor")
+    BtnWorldeditor.Enabled = False
 End Sub
 
 Private Sub BtnSalir_Click()
@@ -501,17 +502,20 @@ End Sub
 
 Private Sub BtnServer_Click()
     BtnServer.Enabled = False
-    
     Call Analizar("Server")
     BtnServer.Enabled = True
 End Sub
 
 Private Sub BtnParticleEditor_Click()
+    BtnParticleEditor.Enabled = False
     Call Analizar("ParticleEditor")
+    BtnParticleEditor.Enabled = False
 End Sub
 
 Private Sub BtnFronBot_Click()
+    BtnFronBot.Enabled = False
     Call Analizar("FronBot")
+    BtnFronBot.Enabled = False
 End Sub
 
 Private Sub LblEnglish_Click()
