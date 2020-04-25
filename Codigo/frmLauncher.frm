@@ -63,7 +63,6 @@ Begin VB.Form frmLauncher
       _ExtentY        =   3625
       _Version        =   393217
       BackColor       =   4210752
-      Enabled         =   -1  'True
       TextRTF         =   $"frmLauncher.frx":2AD08
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Segoe UI Symbol"
@@ -77,9 +76,9 @@ Begin VB.Form frmLauncher
    End
    Begin AOLibreAutoUpdate.uAOButton BtnSalir 
       Height          =   495
-      Left            =   9360
+      Left            =   9240
       TabIndex        =   2
-      Top             =   240
+      Top             =   360
       Width           =   495
       _ExtentX        =   873
       _ExtentY        =   873
@@ -93,9 +92,9 @@ Begin VB.Form frmLauncher
       PICV            =   "frmLauncher.frx":2D40A
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
-         Size            =   8.25
+         Size            =   12
          Charset         =   0
-         Weight          =   400
+         Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
@@ -189,9 +188,9 @@ Begin VB.Form frmLauncher
       PICV            =   "frmLauncher.frx":398DA
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
-         Size            =   9.75
+         Size            =   12
          Charset         =   0
-         Weight          =   400
+         Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
@@ -215,9 +214,9 @@ Begin VB.Form frmLauncher
       PICV            =   "frmLauncher.frx":3CE5A
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
-         Size            =   9.75
+         Size            =   12
          Charset         =   0
-         Weight          =   400
+         Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
@@ -405,7 +404,7 @@ Begin VB.Form frmLauncher
       Height          =   375
       Left            =   7680
       TabIndex        =   11
-      Top             =   600
+      Top             =   480
       Width           =   3495
    End
    Begin VB.Label lblSoundsFxs 
@@ -443,7 +442,7 @@ Begin VB.Form frmLauncher
       Height          =   375
       Left            =   5640
       TabIndex        =   10
-      Top             =   600
+      Top             =   480
       Width           =   3495
    End
    Begin VB.Label LblVersion 
@@ -516,11 +515,13 @@ Private Sub BtnFronBot_Click()
 End Sub
 
 Private Sub LblEnglish_Click()
+    Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "PARAMETERS", "LANGUAGE", "english")
     Call WriteVar(App.Path & "\ConfigAutoupdate.ini", "ConfigAutoupdate", "language", "english")
     Call LaunchPopUpBeforeClose
 End Sub
 
 Private Sub LblSpanish_Click()
+    Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "PARAMETERS", "LANGUAGE", "spanish")
     Call WriteVar(App.Path & "\ConfigAutoupdate.ini", "ConfigAutoupdate", "language", "spanish")
     Call LaunchPopUpBeforeClose
 End Sub
@@ -904,7 +905,7 @@ Private Sub CMDVSync_Click()
     End If
 End Sub
 
-Private Sub LoadCheckboxesInitialStatus()    
+Private Sub LoadCheckboxesInitialStatus()
     Dim Value As Boolean
 
     Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "SOMBRAS"))
