@@ -5,7 +5,7 @@ Object = "{55473EAC-7715-4257-B5EF-6E14EBD6A5DD}#1.0#0"; "VBALPROGBAR6.OCX"
 Begin VB.Form frmLauncher 
    BackColor       =   &H80000010&
    BorderStyle     =   0  'None
-   Caption         =   "Form1"
+   Caption         =   "Launcher - AO Libre"
    ClientHeight    =   7680
    ClientLeft      =   6585
    ClientTop       =   3720
@@ -15,7 +15,6 @@ Begin VB.Form frmLauncher
    Picture         =   "frmLauncher.frx":C84A
    ScaleHeight     =   7680
    ScaleWidth      =   10080
-   ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
    Begin AOLibreAutoUpdate.uAOCheckbox CMDSombras 
       Height          =   345
@@ -63,6 +62,7 @@ Begin VB.Form frmLauncher
       _ExtentY        =   3625
       _Version        =   393217
       BackColor       =   4210752
+      Enabled         =   -1  'True
       TextRTF         =   $"frmLauncher.frx":2AD08
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Segoe UI Symbol"
