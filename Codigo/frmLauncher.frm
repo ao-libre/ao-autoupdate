@@ -1,75 +1,136 @@
 VERSION 5.00
 Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
 Object = "{55473EAC-7715-4257-B5EF-6E14EBD6A5DD}#1.0#0"; "VBALPROGBAR6.OCX"
 Begin VB.Form frmLauncher 
    BackColor       =   &H80000010&
    BorderStyle     =   0  'None
    Caption         =   "Form1"
-   ClientHeight    =   6000
+   ClientHeight    =   7680
    ClientLeft      =   6585
    ClientTop       =   3720
-   ClientWidth     =   7500
+   ClientWidth     =   10080
    Icon            =   "frmLauncher.frx":0000
    LinkTopic       =   "Form1"
-   ScaleHeight     =   6000
-   ScaleWidth      =   7500
+   Picture         =   "frmLauncher.frx":C84A
+   ScaleHeight     =   7680
+   ScaleWidth      =   10080
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
-   Begin InetCtlsObjects.Inet InetGithubReleases 
-      Left            =   240
-      Top             =   5400
-      _ExtentX        =   1005
-      _ExtentY        =   1005
-      _Version        =   393216
+   Begin AOLibreAutoUpdate.uAOCheckbox CMDSombras 
+      Height          =   345
+      Left            =   7200
+      TabIndex        =   7
+      Top             =   480
+      Width           =   345
+      _ExtentX        =   609
+      _ExtentY        =   609
+      CHCK            =   0   'False
+      ENAB            =   -1  'True
+      PICC            =   "frmLauncher.frx":23BF2
    End
-   Begin InetCtlsObjects.Inet InetGithubAutoupdate 
-      Left            =   0
-      Top             =   5160
-      _ExtentX        =   1005
-      _ExtentY        =   1005
-      _Version        =   393216
+   Begin AOLibreAutoUpdate.uAOCheckbox CMDParticulas 
+      Height          =   345
+      Left            =   5160
+      TabIndex        =   13
+      Top             =   2280
+      Width           =   345
+      _ExtentX        =   609
+      _ExtentY        =   609
+      CHCK            =   0   'False
+      ENAB            =   -1  'True
+      PICC            =   "frmLauncher.frx":261A4
+   End
+   Begin AOLibreAutoUpdate.uAOCheckbox CMDVSync 
+      Height          =   345
+      Left            =   5160
+      TabIndex        =   15
+      Top             =   1680
+      Width           =   345
+      _ExtentX        =   609
+      _ExtentY        =   609
+      CHCK            =   0   'False
+      ENAB            =   -1  'True
+      PICC            =   "frmLauncher.frx":28756
    End
    Begin RichTextLib.RichTextBox RichTextBoxLog 
-      Height          =   1190
-      Left            =   1945
-      TabIndex        =   0
-      Top             =   2970
-      Width           =   3600
-      _ExtentX        =   6350
-      _ExtentY        =   2090
+      Height          =   2055
+      Left            =   480
+      TabIndex        =   6
+      Top             =   3480
+      Width           =   6255
+      _ExtentX        =   11033
+      _ExtentY        =   3625
       _Version        =   393217
-      BackColor       =   0
-      BorderStyle     =   0
-      ReadOnly        =   -1  'True
-      Appearance      =   0
-      TextRTF         =   $"frmLauncher.frx":C84A
+      BackColor       =   4210752
+      Enabled         =   -1  'True
+      TextRTF         =   $"frmLauncher.frx":2AD08
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Terminal"
-         Size            =   6
-         Charset         =   255
-         Weight          =   700
+         Name            =   "Segoe UI Symbol"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin vbalProgBarLib6.vbalProgressBar ProgressBar1 
-      Height          =   300
-      Left            =   1260
+   Begin AOLibreAutoUpdate.uAOButton BtnSalir 
+      Height          =   495
+      Left            =   9360
       TabIndex        =   2
-      Top             =   4440
-      Width           =   5025
-      _ExtentX        =   8864
-      _ExtentY        =   529
-      Picture         =   "frmLauncher.frx":C8CB
+      Top             =   240
+      Width           =   495
+      _ExtentX        =   873
+      _ExtentY        =   873
+      TX              =   "X"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmLauncher.frx":2AD8C
+      PICF            =   "frmLauncher.frx":2B7B6
+      PICH            =   "frmLauncher.frx":2C478
+      PICV            =   "frmLauncher.frx":2D40A
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin InetCtlsObjects.Inet InetGithubReleases 
+      Left            =   5400
+      Top             =   3360
+      _ExtentX        =   1005
+      _ExtentY        =   1005
+      _Version        =   393216
+   End
+   Begin InetCtlsObjects.Inet InetGithubAutoupdate 
+      Left            =   6480
+      Top             =   3000
+      _ExtentX        =   1005
+      _ExtentY        =   1005
+      _Version        =   393216
+   End
+   Begin vbalProgBarLib6.vbalProgressBar ProgressBar1 
+      Height          =   540
+      Left            =   360
+      TabIndex        =   1
+      Top             =   6720
+      Width           =   9345
+      _ExtentX        =   16484
+      _ExtentY        =   953
+      Picture         =   "frmLauncher.frx":2E30C
       BackColor       =   0
       ForeColor       =   16777152
       Appearance      =   0
       BorderStyle     =   0
       BarColor        =   16777215
       BarForeColor    =   12648384
-      BarPicture      =   "frmLauncher.frx":C8E7
+      BarPicture      =   "frmLauncher.frx":2E328
       BarPictureMode  =   0
       BackPictureMode =   0
       ShowText        =   -1  'True
@@ -84,53 +145,306 @@ Begin VB.Form frmLauncher
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin VB.Image BtnJugarBots 
-      Height          =   375
-      Left            =   5760
-      Top             =   3720
-      Width           =   1335
+   Begin AOLibreAutoUpdate.uAOButton BtnJugar 
+      Height          =   735
+      Left            =   720
+      TabIndex        =   3
+      Top             =   5760
+      Width           =   1575
+      _ExtentX        =   2778
+      _ExtentY        =   1296
+      TX              =   "Jugar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmLauncher.frx":33CDC
+      PICF            =   "frmLauncher.frx":34706
+      PICH            =   "frmLauncher.frx":353C8
+      PICV            =   "frmLauncher.frx":3635A
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Lucida Console"
+         Size            =   14.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
-   Begin VB.Image BtnWorldEditor 
-      Height          =   375
+   Begin AOLibreAutoUpdate.uAOButton LblSpanish 
+      Height          =   735
+      Left            =   8160
+      TabIndex        =   4
+      Top             =   1320
+      Width           =   1575
+      _ExtentX        =   2778
+      _ExtentY        =   1296
+      TX              =   "Castellano"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmLauncher.frx":3725C
+      PICF            =   "frmLauncher.frx":37C86
+      PICH            =   "frmLauncher.frx":38948
+      PICV            =   "frmLauncher.frx":398DA
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibreAutoUpdate.uAOButton LblEnglish 
+      Height          =   735
+      Left            =   8160
+      TabIndex        =   5
+      Top             =   2280
+      Width           =   1575
+      _ExtentX        =   2778
+      _ExtentY        =   1296
+      TX              =   "English"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmLauncher.frx":3A7DC
+      PICF            =   "frmLauncher.frx":3B206
+      PICH            =   "frmLauncher.frx":3BEC8
+      PICV            =   "frmLauncher.frx":3CE5A
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibreAutoUpdate.uAOCheckbox CMDSoundsFxs 
+      Height          =   345
       Left            =   5160
-      Top             =   5040
-      Width           =   1335
+      TabIndex        =   8
+      Top             =   1080
+      Width           =   345
+      _ExtentX        =   609
+      _ExtentY        =   609
+      CHCK            =   0   'False
+      ENAB            =   -1  'True
+      PICC            =   "frmLauncher.frx":3DD5C
    End
-   Begin VB.Image BtnAoSetup 
+   Begin AOLibreAutoUpdate.uAOCheckbox CMDEffectSound 
+      Height          =   345
+      Left            =   5160
+      TabIndex        =   9
+      Top             =   480
+      Width           =   345
+      _ExtentX        =   609
+      _ExtentY        =   609
+      CHCK            =   0   'False
+      ENAB            =   -1  'True
+      PICC            =   "frmLauncher.frx":4030E
+   End
+   Begin AOLibreAutoUpdate.uAOButton BtnServer 
+      Height          =   735
+      Left            =   2880
+      TabIndex        =   17
+      Top             =   5760
+      Width           =   1575
+      _ExtentX        =   2778
+      _ExtentY        =   1296
+      TX              =   "Server"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmLauncher.frx":428C0
+      PICF            =   "frmLauncher.frx":432EA
+      PICH            =   "frmLauncher.frx":43FAC
+      PICV            =   "frmLauncher.frx":44F3E
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Lucida Console"
+         Size            =   14.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibreAutoUpdate.uAOButton BtnWorldeditor 
+      Height          =   735
+      Left            =   5040
+      TabIndex        =   18
+      Top             =   5760
+      Width           =   2055
+      _ExtentX        =   3625
+      _ExtentY        =   1296
+      TX              =   "Editor de Mapas"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmLauncher.frx":45E40
+      PICF            =   "frmLauncher.frx":4686A
+      PICH            =   "frmLauncher.frx":4752C
+      PICV            =   "frmLauncher.frx":484BE
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Lucida Console"
+         Size            =   14.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibreAutoUpdate.uAOButton BtnParticleEditor 
+      Height          =   735
+      Left            =   7560
+      TabIndex        =   19
+      Top             =   5760
+      Width           =   2055
+      _ExtentX        =   3625
+      _ExtentY        =   1296
+      TX              =   "Editor de Particulas"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmLauncher.frx":493C0
+      PICF            =   "frmLauncher.frx":49DEA
+      PICH            =   "frmLauncher.frx":4AAAC
+      PICV            =   "frmLauncher.frx":4BA3E
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Lucida Console"
+         Size            =   14.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibreAutoUpdate.uAOButton btnFronBot 
+      Height          =   735
+      Left            =   7560
+      TabIndex        =   20
+      Top             =   3600
+      Width           =   2055
+      _ExtentX        =   3625
+      _ExtentY        =   1296
+      TX              =   "Jugar Offline"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmLauncher.frx":4C940
+      PICF            =   "frmLauncher.frx":4D36A
+      PICH            =   "frmLauncher.frx":4E02C
+      PICV            =   "frmLauncher.frx":4EFBE
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Lucida Console"
+         Size            =   14.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin VB.Label lblParticulas 
+      BackStyle       =   0  'Transparent
+      Caption         =   "lblParticulas"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   11.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H0000FFFF&
       Height          =   375
-      Left            =   5760
-      Top             =   3000
-      Width           =   1335
+      Left            =   5640
+      TabIndex        =   16
+      Top             =   2280
+      Width           =   3495
    End
-   Begin VB.Image BtnClose 
-      Height          =   255
-      Left            =   6870
-      Top             =   360
-      Width           =   255
-   End
-   Begin VB.Image LblEnglish 
+   Begin VB.Label LblVSync 
+      BackStyle       =   0  'Transparent
+      Caption         =   "LblVSync"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   11.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H0000FFFF&
       Height          =   375
-      Left            =   3950
-      Top             =   2310
-      Width           =   1335
+      Left            =   5640
+      TabIndex        =   12
+      Top             =   1680
+      Width           =   3495
    End
-   Begin VB.Image LblSpanish 
+   Begin VB.Label lblShadow 
+      BackStyle       =   0  'Transparent
+      Caption         =   "lblShadow"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   11.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H0000FFFF&
       Height          =   375
-      Left            =   2200
-      Top             =   2310
-      Width           =   1335
+      Left            =   7680
+      TabIndex        =   11
+      Top             =   600
+      Width           =   3495
    End
-   Begin VB.Image BtnGame 
+   Begin VB.Label lblSoundsFxs 
+      BackStyle       =   0  'Transparent
+      Caption         =   "lblSoundsFxs"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   11.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H0000FFFF&
       Height          =   375
-      Left            =   3090
-      Top             =   5040
-      Width           =   1335
+      Left            =   5640
+      TabIndex        =   14
+      Top             =   1080
+      Width           =   3495
    End
-   Begin VB.Image BtnServer 
+   Begin VB.Label LblSounds 
+      BackStyle       =   0  'Transparent
+      Caption         =   "LblSounds"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   11.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H0000FFFF&
       Height          =   375
-      Left            =   980
-      Top             =   5040
-      Width           =   1330
+      Left            =   5640
+      TabIndex        =   10
+      Top             =   600
+      Width           =   3495
    End
    Begin VB.Label LblVersion 
       BackColor       =   &H80000013&
@@ -148,7 +462,7 @@ Begin VB.Form frmLauncher
       ForeColor       =   &H000000C0&
       Height          =   375
       Left            =   360
-      TabIndex        =   1
+      TabIndex        =   0
       Top             =   360
       Width           =   975
    End
@@ -169,12 +483,13 @@ Private JsonLanguage As Object
 
 Private NoInternetConnection As Boolean
 
-Private Sub BtnGame_Click()
-    BtnGame.Picture = LoadPicture(App.Path & "\Graficos\BotonJuegoClick_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
-    BtnGame.Enabled = False
+Private ClientPath As String
+
+Private Sub BtnJugar_Click()
+    BtnJugar.Enabled = False
     
     Call Analizar("Client")
-    BtnGame.Enabled = True
+    BtnJugar.Enabled = True
 End Sub
 
 Private Sub BtnJugarBots_Click()
@@ -185,20 +500,19 @@ Private Sub BtnWorldeditor_Click()
     Call Analizar("Worldeditor")
 End Sub
 
-Private Sub BtnClose_Click()
+Private Sub BtnSalir_Click()
     End
 End Sub
 
 Private Sub BtnServer_Click()
-    BtnServer.Picture = LoadPicture(App.Path & "\Graficos\BotonServidorClick_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
     BtnServer.Enabled = False
     
     Call Analizar("Server")
     BtnServer.Enabled = True
 End Sub
 
-Private Sub BtnAoSetup_Click()
-    Call Analizar("AOSetup")
+Private Sub BtnFronBot_Click()
+    Call Analizar("FronBot")
 End Sub
 
 Private Sub LblEnglish_Click()
@@ -217,23 +531,43 @@ Private Sub LaunchPopUpBeforeClose()
     End If
 End Sub
 
+Private Function RandomNumber(ByVal LowerBound As Long, ByVal UpperBound As Long) As Long
+    'Initialize randomizer
+    Randomize Timer
+    
+    'Generate random number
+    RandomNumber = (UpperBound - LowerBound) * Rnd + LowerBound
+End Function
+
 Private Sub Form_Load()
+    ClientPath = GetVar(App.Path & "\ConfigAutoupdate.ini", "Client", "folderToExtract")
+    'Solo hay 2 imagenes de cargando, cambiar 10 por el numero maximo si se quiere cambiar
+    Me.Picture = LoadPicture(App.Path & "\Graficos\frmMain" & RandomNumber(1, 10) & ".jpg")
+
     NoInternetConnection = False
     LblVersion.Caption = GetVar(App.Path & "\ConfigAutoupdate.ini", "ConfigAutoupdate", "version")
     Call SetLanguageApplication
     Call CheckIfIEVersionIsCompatible
     Call CheckIfRunningLastVersionAutoupdate
-
-    BtnServer.Picture = LoadPicture(App.Path & "\Graficos\BotonServidor_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
-    BtnGame.Picture = LoadPicture(App.Path & "\Graficos\BotonJuego_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
-    'BtnWorldEditor.Picture = LoadPicture(App.Path & "\Graficos\BotonWorldeditor_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
-    BtnAoSetup.Picture = LoadPicture(App.Path & "\Graficos\BotonSetup_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
-    BtnJugarBots.Picture = LoadPicture(App.Path & "\Graficos\BotonJugarBots_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
     
-    frmLauncher.Picture = LoadPicture(App.Path & "\Graficos\AU_Main_" & JsonLanguage.Item("lang_abbreviation") & ".jpg")
+    BtnJugar.Caption = JsonLanguage.Item("play_btn")
+    BtnWorldeditor.Caption = JsonLanguage.Item("worldeditor_btn")
+    BtnServer.Caption = JsonLanguage.Item("server_btn")
+    BtnParticleEditor.Caption = JsonLanguage.Item("particles_btn")
+    btnFronBot.Caption = JsonLanguage.Item("fronbot_btn")
+
+    LblEnglish.Caption = JsonLanguage.Item("english_label")
+    LblSpanish.Caption = JsonLanguage.Item("spanish_label")
+    LblVSync.Caption = JsonLanguage.Item("vsync_label")
+    lblShadow.Caption = JsonLanguage.Item("shadow_label")
+    LblSounds.Caption = JsonLanguage.Item("sounds_label")
+    lblSoundsFxs.Caption = JsonLanguage.Item("sounds_fx_label")
+    lblParticulas.Caption = JsonLanguage.Item("particles_label")
     
     ProgressBar1.Value = 0
     ProgressBar1.Text = JsonLanguage.Item("completed")
+    
+    LoadCheckboxesInitialStatus
 End Sub
 
 Private Sub SetLanguageApplication(Optional LanguageSelection As String)
@@ -315,7 +649,6 @@ End Sub
 
 Private Function CheckIfApplicationIsUpdated(ApplicationToUpdate As String) As Boolean
 On Error Resume Next
-    
     Dim versionNumberLocal As String, versionNumberMaster As String
     Dim repository As String, githubAccount As String
     Dim responseGithub As String, urlEndpointUpdate As String, fileToExecuteAfterUpdated As String
@@ -359,7 +692,6 @@ End Function
 
 Private Sub Analizar(ApplicationToUpdate As String)
 On Error Resume Next
-    
     Dim SubDirectoryApp As String
     Dim IsApplicationUpdated As Boolean
     Dim CancelUpdate As Boolean
@@ -391,11 +723,8 @@ On Error Resume Next
     If IsApplicationUpdated Then
     
         Call addConsole(JsonLanguage.Item("up_to_date"), 149, 100, 210, True, False)
-    
     Else
-        
         If MsgBox(JsonLanguage.Item("download_continue"), vbYesNo) = vbYes Then
-            
             ProgressBar1.Visible = True
             
             Call addConsole(JsonLanguage.Item("starting"), 200, 200, 200, True, False)   '>> Informacion
@@ -508,4 +837,99 @@ Private Sub InetGithubAutoupdate_StateChanged(ByVal State As Integer)
             WebpageAolibre = GetVar(App.Path & "\ConfigAutoupdate.ini", "Links", "webpage")
             Call addConsole(JsonLanguage.Item("error_connection") & WebpageAolibre, 255, 0, 0, True, False)
     End Select
+End Sub
+
+Private Sub cmdSalir_Click()
+    Unload Me
+End Sub
+
+Private Sub CMDSoundsFxs_Click()
+    
+    Dim Value As Boolean
+    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "SOUND_EFFECTS"))
+    
+    
+    If Value = 0 Then
+        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "SOUND_EFFECTS", "TRUE")
+    Else
+        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "SOUND_EFFECTS", "FALSE")
+    End If
+End Sub
+
+Private Sub CMDEffectSound_Click()
+    
+    Dim Value As Boolean
+    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "MUSIC"))
+    
+    If Value = 0 Then
+        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "MUSIC", "TRUE")
+    Else
+        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "MUSIC", "FALSE")
+    End If
+End Sub
+
+Private Sub CMDSombras_Click()
+    
+    Dim Value As Boolean
+    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "SOMBRAS"))
+    
+    If Value = 0 Then
+        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "SOMBRAS", "TRUE")
+    Else
+        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "SOMBRAS", "FALSE")
+    End If
+End Sub
+
+Private Sub CMDParticulas_Click()
+    
+    Dim Value As Boolean
+    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "PARTICLE_ENGINE"))
+    
+    If Value = 0 Then
+        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "PARTICLE_ENGINE", "True")
+    Else
+        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "PARTICLE_ENGINE", "False")
+    End If
+End Sub
+
+Private Sub CMDVSync_Click()
+    
+    Dim Value As Boolean
+    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "VSYNC"))
+    
+    If Value = 0 Then
+        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "VSYNC", "True")
+    Else
+        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "VSYNC", "False")
+    End If
+End Sub
+
+Private Sub LoadCheckboxesInitialStatus()    
+    Dim Value As Boolean
+
+    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "SOMBRAS"))
+    If Value = True Then
+        CMDSombras.Checked = True
+    End If
+
+    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "VSYNC"))
+    If Value = True Then
+        CMDVSync.Checked = True
+    End If
+    
+    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "PARTICLE_ENGINE"))
+    If Value = True Then
+        CMDParticulas.Checked = True
+    End If
+
+    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "SOUND_EFFECTS"))
+    If Value = True Then
+        CMDSoundsFxs.Checked = True
+    End If
+
+    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "MUSIC"))
+    If Value = True Then
+        CMDEffectSound.Checked = True
+    End If
+
 End Sub
