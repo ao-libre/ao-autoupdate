@@ -32,6 +32,6 @@
   "sounds_fx_label" : "Efectos de Sonido",
   "shadow_label" : "Sombras",
   "particles_label" : "Particulas Efectos",
-  "vsync_label" : "Sincronizacion vertical",
+  "vsync_label" : "Limitar FPS",
   "github_error" : "No se pudo conectar con el servidor de Github, por favor intente mas tarde en unos minutos."
 }

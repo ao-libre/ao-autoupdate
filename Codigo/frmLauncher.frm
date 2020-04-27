@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Object = "{55473EAC-7715-4257-B5EF-6E14EBD6A5DD}#1.0#0"; "VBALPROGBAR6.OCX"
 Begin VB.Form frmLauncher 
    BackColor       =   &H80000010&
@@ -62,7 +62,6 @@ Begin VB.Form frmLauncher
       _ExtentY        =   3625
       _Version        =   393217
       BackColor       =   4210752
-      Enabled         =   -1  'True
       TextRTF         =   $"frmLauncher.frx":2AD08
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Segoe UI Symbol"
@@ -513,9 +512,9 @@ Private Sub BtnParticleEditor_Click()
 End Sub
 
 Private Sub BtnFronBot_Click()
-    BtnFronBot.Enabled = False
+    btnFronBot.Enabled = False
     Call Analizar("FronBot")
-    BtnFronBot.Enabled = False
+    btnFronBot.Enabled = False
 End Sub
 
 Private Sub LblEnglish_Click()
@@ -851,88 +850,93 @@ End Sub
 Private Sub CMDSoundsFxs_Click()
     
     Dim Value As Boolean
-    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "SOUND_EFFECTS"))
-    
+        Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "SoundEffects"))
     
     If Value = 0 Then
-        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "SOUND_EFFECTS", "TRUE")
+        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "SoundEffects", "TRUE")
     Else
-        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "SOUND_EFFECTS", "FALSE")
+        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "SoundEffects", "FALSE")
     End If
+    
 End Sub
 
 Private Sub CMDEffectSound_Click()
     
     Dim Value As Boolean
-    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "MUSIC"))
+        Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "MUSIC"))
     
     If Value = 0 Then
-        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "MUSIC", "TRUE")
+        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "Music", "TRUE")
     Else
-        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "MUSIC", "FALSE")
+        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "Music", "FALSE")
     End If
+    
 End Sub
 
 Private Sub CMDSombras_Click()
     
     Dim Value As Boolean
-    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "SOMBRAS"))
+        Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "Sombras"))
     
     If Value = 0 Then
-        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "SOMBRAS", "TRUE")
+        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "Sombras", "TRUE")
     Else
-        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "SOMBRAS", "FALSE")
+        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "Sombras", "FALSE")
     End If
+    
 End Sub
 
 Private Sub CMDParticulas_Click()
     
     Dim Value As Boolean
-    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "PARTICLE_ENGINE"))
+        Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "ParticleEngine"))
     
     If Value = 0 Then
-        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "PARTICLE_ENGINE", "True")
+        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "ParticleEngine", "True")
     Else
-        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "PARTICLE_ENGINE", "False")
+        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "ParticleEngine", "False")
     End If
+    
 End Sub
 
 Private Sub CMDVSync_Click()
     
     Dim Value As Boolean
-    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "VSYNC"))
+        Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "VSYNC"))
     
     If Value = 0 Then
-        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "VSYNC", "True")
+        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "LimitarFPS", "True")
     Else
-        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "VSYNC", "False")
+        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "LimitarFPS", "False")
     End If
+    
 End Sub
 
 Private Sub LoadCheckboxesInitialStatus()
+    
     Dim Value As Boolean
 
-    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "SOMBRAS"))
+    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "Sombras"))
     If Value = True Then
         CMDSombras.Checked = True
     End If
 
-    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "VSYNC"))
+    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "LimitarFPS"))
     If Value = True Then
         CMDVSync.Checked = True
     End If
     
-    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "PARTICLE_ENGINE"))
+    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "ParticleEngine"))
     If Value = True Then
         CMDParticulas.Checked = True
     End If
 
-    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "SOUND_EFFECTS"))
+    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "SoundEffects"))
     If Value = True Then
         CMDSoundsFxs.Checked = True
     End If
 
-    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "MUSIC"))
+    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "Music"))
     If Value = True Then
         CMDEffectSound.Checked = True
     End If

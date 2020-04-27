@@ -32,6 +32,6 @@
   "sounds_fx_label" : "Music FX",
   "shadow_label" : "Shadows",
   "particles_label" : "Particles fx",
-  "vsync_label" : "Vsync",
+  "vsync_label" : "Limit FPS",
   "github_error" : "We could not finish the request with the server to get our updated (github). Please try again in a couple of minutes."
 }
