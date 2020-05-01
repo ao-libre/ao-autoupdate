@@ -62,6 +62,7 @@ Begin VB.Form frmLauncher
       _ExtentY        =   3625
       _Version        =   393217
       BackColor       =   4210752
+      Enabled         =   -1  'True
       TextRTF         =   $"frmLauncher.frx":2AD08
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Segoe UI Symbol"
@@ -902,7 +903,7 @@ End Sub
 Private Sub CMDVSync_Click()
     
     Dim Value As Boolean
-        Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "VSYNC"))
+        Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "LimitarFPS"))
     
     If Value = 0 Then
         Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "LimitarFPS", "True")
