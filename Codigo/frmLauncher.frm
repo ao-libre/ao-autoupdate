@@ -484,16 +484,38 @@ Private NoInternetConnection As Boolean
 
 Private ClientPath As String
 
-Private Sub BtnJugar_Click()
+Private Sub DisableAllButtons()
     BtnJugar.Enabled = False
-    Call Analizar("Client")
+    BtnWorldeditor.Enabled = False
+    BtnSalir.Enabled = False
+    BtnServer.Enabled = False
+    BtnParticleEditor.Enabled = False
+    BtnFronBot.Enabled = False
+    LblEnglish.Enabled = False
+    LblSpanish.Enabled = False
+End Sub
+
+Private Sub EnableAllButtons()
     BtnJugar.Enabled = True
+    BtnWorldeditor.Enabled = True
+    BtnSalir.Enabled = True
+    BtnServer.Enabled = True
+    BtnParticleEditor.Enabled = True
+    BtnFronBot.Enabled = True
+    LblEnglish.Enabled = True
+    LblSpanish.Enabled = True
+End Sub
+
+Private Sub BtnJugar_Click()
+    Call DisableAllButtons
+    Call Analizar("Client")
+    Call EnableAllButtons
 End Sub
 
 Private Sub BtnWorldeditor_Click()
-    BtnWorldeditor.Enabled = False
-    Call Analizar("Worldeditor")
-    BtnWorldeditor.Enabled = False
+    Call DisableAllButtons
+    Call Analizar("WorldEditor")
+    Call EnableAllButtons
 End Sub
 
 Private Sub BtnSalir_Click()
@@ -501,21 +523,21 @@ Private Sub BtnSalir_Click()
 End Sub
 
 Private Sub BtnServer_Click()
-    BtnServer.Enabled = False
+    Call DisableAllButtons
     Call Analizar("Server")
-    BtnServer.Enabled = True
+    Call EnableAllButtons
 End Sub
 
 Private Sub BtnParticleEditor_Click()
-    BtnParticleEditor.Enabled = False
+    Call DisableAllButtons
     Call Analizar("ParticleEditor")
-    BtnParticleEditor.Enabled = False
+    Call EnableAllButtons
 End Sub
 
 Private Sub BtnFronBot_Click()
-    btnFronBot.Enabled = False
+    Call DisableAllButtons
     Call Analizar("FronBot")
-    btnFronBot.Enabled = False
+    Call EnableAllButtons
 End Sub
 
 Private Sub LblEnglish_Click()
@@ -701,8 +723,32 @@ On Error Resume Next
     Dim IsApplicationUpdated As Boolean
     Dim CancelUpdate As Boolean
     
+    'Borramos todo el texto de la consola para que no haya mucho texto.
+    frmLauncher.RichTextBoxLog.Text = ""
+    
     IsApplicationUpdated = CheckIfApplicationIsUpdated(ApplicationToUpdate)
     SubDirectoryApp = GetVar(App.Path & "\ConfigAutoupdate.ini", ApplicationToUpdate, "folderToExtract")
+
+    'Por que el server no deja modificar por el UAC cosas lo movemos de lugar.
+    Dim ApplicationPath As String
+    ApplicationPath = Left$(App.path, 2) & "\AO-Libre\"
+
+    'Hacemos un Left para poder solo obtener la letra del HD
+    'Por que por culpa del UAC no permite editar archivos del server.
+    If Dir(ApplicationPath, vbDirectory) = "" Then
+        MkDir ApplicationPath
+    End If
+
+    If ApplicationToUpdate <> "Cliente Argentum Online Libre" Then
+        'Creamos sub-carpeta de aplicacion
+        ApplicationPath = ApplicationPath & SubDirectoryApp
+        If Dir(ApplicationPath, vbDirectory) = "" Then
+            MkDir ApplicationPath
+        End If
+    Else
+        ApplicationPath = App.Path & "\" & SubDirectoryApp
+    End If
+
     
     If NoInternetConnection = True Then
         Call addConsole("No hay conexion a internet/No Internet Connection", 255, 0, 0, True, False)
@@ -752,7 +798,8 @@ On Error Resume Next
             If dError Then Exit Sub
             
             Call addConsole(JsonLanguage.Item("one_more_moment"), 50, 90, 220, True, False)
-            UnZip Directory, App.Path & "\" & SubDirectoryApp
+
+            Call UnZip(Directory, ApplicationPath)
             Kill Directory
             
             Call WriteVar(App.Path & "\ConfigAutoupdate.ini", ApplicationToUpdate, "version", CStr(JsonObject.Item("tag_name")))
@@ -773,7 +820,7 @@ On Error Resume Next
             fileToExecuteAfterUpdated = GetVar(App.Path & "\ConfigAutoupdate.ini", ApplicationToUpdate, "fileToExecuteAfterUpdated")
             
             If LenB(SubDirectoryApp) > 0 Then
-                Call ShellExecute(Me.hWnd, "open", App.Path & "\" & SubDirectoryApp & "\" & fileToExecuteAfterUpdated, "", "", 1)
+                Call ShellExecute(Me.hWnd, "open", ApplicationPath & "\" & fileToExecuteAfterUpdated, "", "", 1)
             Else
                 Call ShellExecute(Me.hWnd, "open", App.Path & "\" & fileToExecuteAfterUpdated, "", "", 1)
             End If
