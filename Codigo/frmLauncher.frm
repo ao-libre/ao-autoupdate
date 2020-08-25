@@ -730,26 +730,21 @@ On Error Resume Next
     SubDirectoryApp = GetVar(App.Path & "\ConfigAutoupdate.ini", ApplicationToUpdate, "folderToExtract")
 
     'Por que el server no deja modificar por el UAC cosas lo movemos de lugar.
+    'Hacemos un Left para poder solo obtener la letra del HD
     Dim ApplicationPath As String
     ApplicationPath = Left$(App.path, 2) & "\AO-Libre\"
 
-    'Hacemos un Left para poder solo obtener la letra del HD
     'Por que por culpa del UAC no permite editar archivos del server.
     If Dir(ApplicationPath, vbDirectory) = "" Then
         MkDir ApplicationPath
     End If
 
-    If ApplicationToUpdate <> "Cliente Argentum Online Libre" Then
-        'Creamos sub-carpeta de aplicacion
-        ApplicationPath = ApplicationPath & SubDirectoryApp
-        If Dir(ApplicationPath, vbDirectory) = "" Then
-            MkDir ApplicationPath
-        End If
-    Else
-        ApplicationPath = App.Path & "\" & SubDirectoryApp
+    'Creamos sub-carpeta de aplicacion
+    ApplicationPath = ApplicationPath & SubDirectoryApp
+    If Dir(ApplicationPath, vbDirectory) = "" Then
+        MkDir ApplicationPath
     End If
 
-    
     If NoInternetConnection = True Then
         Call addConsole("No hay conexion a internet/No Internet Connection", 255, 0, 0, True, False)
         Dim versionNumberLocal As String
