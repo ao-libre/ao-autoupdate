@@ -18,7 +18,7 @@ Begin VB.Form frmLauncher
    StartUpPosition =   2  'CenterScreen
    Begin AOLibreAutoUpdate.uAOCheckbox CMDSombras 
       Height          =   345
-      Left            =   7200
+      Left            =   7230
       TabIndex        =   7
       Top             =   480
       Width           =   345
@@ -62,7 +62,6 @@ Begin VB.Form frmLauncher
       _ExtentY        =   3625
       _Version        =   393217
       BackColor       =   4210752
-      Enabled         =   -1  'True
       TextRTF         =   $"frmLauncher.frx":2AD08
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Segoe UI Symbol"
@@ -621,15 +620,7 @@ End Sub
 Private Sub CMDFullScreen_Click()
 
 On Error Resume Next
-    Dim Value As Boolean
-        Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "FullScreen"))
-    
-    If Value = 0 Then
-        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "FullScreen", "True")
-    Else
-        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "FullScreen", "False")
-    End If
-    
+    Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "FullScreen", StrBoolean(CMDFullScreen.Checked))
 
 End Sub
 
@@ -650,6 +641,16 @@ Private Sub LaunchPopUpBeforeClose()
         End
     End If
 End Sub
+
+Private Function StrBoolean(ByVal Val As Boolean) As String
+
+    If Val = True Then
+        StrBoolean = "TRUE"
+    Else
+        StrBoolean = "FALSE"
+    End If
+
+End Function
 
 Private Function RandomNumber(ByVal LowerBound As Long, ByVal UpperBound As Long) As Long
     'Initialize randomizer
@@ -692,7 +693,7 @@ Private Sub InitApp()
     lblParticulas.Caption = JsonLanguage.Item("particles_label")
     lblFullScreen.Caption = JsonLanguage.Item("fullscreen_label")
     
-    ProgressBar1.Value = 0
+    ProgressBar1.value = 0
     ProgressBar1.Text = JsonLanguage.Item("completed")
     
     LoadCheckboxesInitialStatus
@@ -876,13 +877,13 @@ On Error Resume Next
                 
                 If LenB(SubDirectoryApp) > 0 Then
                     If SubDirectoryApp = "Cliente" Then
-                        Dim val As String
-                        val = "False"
+                        Dim Val As String
+                        Val = "False"
                         If CMDFullScreen.Checked = True Then
-                            val = "True"
+                            Val = "True"
                         End If
                         Call WriteVar(App.Path & "\" & SubDirectoryApp & "\INIT\Config.ini", _
-                                "VIDEO", "FullScreen", val)
+                                "VIDEO", "FullScreen", Val)
                     End If
                     Call ShellExecute(Me.hWnd, "open", App.Path & "\" & SubDirectoryApp & "\" & fileToExecuteAfterUpdated, "", "", 1)
                 Else
@@ -931,7 +932,10 @@ On Error Resume Next
             Call addConsole(ApplicationToUpdate & JsonLanguage.Item("update_succesful"), 66, 255, 30, True, False)
             Call addConsole(JsonLanguage.Item("comments_update") & JsonObject.Item("body") & ".", 200, 200, 200, True, False)
             Call Reproducir_WAV(App.Path & "\Wav\Actualizado_" & JsonLanguage.Item("lang_abbreviation") & ".wav", SND_FILENAME)
-            ProgressBar1.Value = 0
+            ProgressBar1.value = 0
+            If ApplicationToUpdate = "Client" Then
+                SaveConfig ' Fix de configuraciones
+            End If
             
         ElseIf vbNo Then
             Call addConsole(JsonLanguage.Item("download_canceled"), 255, 0, 0, True, False)
@@ -978,9 +982,9 @@ Private Sub InetGithubAutoupdate_StateChanged(ByVal State As Integer)
                     
                     vtData = InetGithubAutoupdate.GetChunk(1024, icByteArray)
 
-                    ProgressBar1.Value = ProgressBar1.Value + Len(vtData) * 2
+                    ProgressBar1.value = ProgressBar1.value + Len(vtData) * 2
                     
-                    Percentage = (ProgressBar1.Value / ProgressBar1.Max) * 100
+                    Percentage = (ProgressBar1.value / ProgressBar1.Max) * 100
                     ProgressBar1.Text = "[" & Percentage & "% de " & SizeInMb & " MBs.]"
                     
                     DoEvents
@@ -989,7 +993,7 @@ Private Sub InetGithubAutoupdate_StateChanged(ByVal State As Integer)
             
             Call addConsole(JsonLanguage.Item("download_finished"), 0, 255, 0, True, False)
 
-            ProgressBar1.Value = 0
+            ProgressBar1.value = 0
             
             bDone = True
         Case icRequesting
@@ -1022,79 +1026,44 @@ End Sub
 Private Sub CMDSoundsFxs_Click()
     
 On Error Resume Next
-    Dim Value As Boolean
-        Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "SoundEffects"))
-    
-    If Value = 0 Then
-        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "SoundEffects", "TRUE")
-    Else
-        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "SoundEffects", "FALSE")
-    End If
+    Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "SoundEffects", StrBoolean(CMDSoundsFxs.Checked))
     
 End Sub
 
 Private Sub CMDEffectSound_Click()
     
 On Error Resume Next
-    Dim Value As Boolean
-        Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "MUSIC"))
-    
-    If Value = 0 Then
-        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "Music", "TRUE")
-    Else
-        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "Music", "FALSE")
-    End If
-    
+    Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "Music", StrBoolean(CMDEffectSound.Checked))
+
 End Sub
 
 Private Sub CMDSombras_Click()
     
 On Error Resume Next
-    Dim Value As Boolean
-        Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "Sombras"))
-    
-    If Value = 0 Then
-        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "Sombras", "TRUE")
-    Else
-        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "Sombras", "FALSE")
-    End If
+    Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "Sombras", StrBoolean(CMDSombras.Checked))
     
 End Sub
 
 Private Sub CMDParticulas_Click()
     
 On Error Resume Next
-    Dim Value As Boolean
-        Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "ParticleEngine"))
-    
-    If Value = 0 Then
-        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "ParticleEngine", "True")
-    Else
-        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "ParticleEngine", "False")
-    End If
+    Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "ParticleEngine", StrBoolean(CMDParticulas.Checked))
     
 End Sub
 
 Private Sub CMDVSync_Click()
     
 On Error Resume Next
-    Dim Value As Boolean
-        Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "LimitarFPS"))
-    
-    If Value = 0 Then
-        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "LimitarFPS", "True")
-    Else
-        Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "LimitarFPS", "False")
-    End If
+    Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "LimitarFPS", StrBoolean(CMDVSync.Checked))
     
 End Sub
 
 Private Function DirExists(Path As String) As Boolean
 On Error GoTo error
 
-    Dim val As Integer
-    val = GetAttr(Path) And vbDirectory
-    If val <> 0 Then
+    Dim Val As Integer
+    Val = GetAttr(Path) And vbDirectory
+    If Val <> 0 Then
         DirExists = True
      Else
         DirExists = False
@@ -1112,7 +1081,7 @@ End Function
 
 Private Sub LoadCheckboxesInitialStatus()
     
-    Dim Value As Boolean
+    Dim value As Boolean
     Dim fileConfig As String
     
     If DirExists(App.Path & "\" & ClientPath & "\") = False Then
@@ -1137,34 +1106,71 @@ Private Sub LoadCheckboxesInitialStatus()
     End If
     
 On Error Resume Next
-    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\" & fileConfig, "VIDEO", "Sombras"))
-    If Value = True Then
+    value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\" & fileConfig, "VIDEO", "Sombras"))
+    If value = True Then
         CMDSombras.Checked = True
     End If
 
-    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\" & fileConfig, "VIDEO", "LimitarFPS"))
-    If Value = True Then
+    value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\" & fileConfig, "VIDEO", "LimitarFPS"))
+    If value = True Then
         CMDVSync.Checked = True
     End If
     
-    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\" & fileConfig, "VIDEO", "ParticleEngine"))
-    If Value = True Then
+    value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\" & fileConfig, "VIDEO", "ParticleEngine"))
+    If value = True Then
         CMDParticulas.Checked = True
     End If
 
-    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\" & fileConfig, "VIDEO", "FullScreen"))
-    If Value = True Then
+    value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\" & fileConfig, "VIDEO", "FullScreen"))
+    If value = True Then
         CMDFullScreen.Checked = True
     End If
 
-    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\" & fileConfig, "AUDIO", "SoundEffects"))
-    If Value = True Then
+    value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\" & fileConfig, "AUDIO", "SoundEffects"))
+    If value = True Then
         CMDSoundsFxs.Checked = True
     End If
 
-    Value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\" & fileConfig, "AUDIO", "Music"))
-    If Value = True Then
+    value = CBool(GetVar(App.Path & "\" & ClientPath & "\INIT\" & fileConfig, "AUDIO", "Music"))
+    If value = True Then
         CMDEffectSound.Checked = True
     End If
+
+End Sub
+
+Private Sub SaveConfig()
+
+    Dim value As Boolean
+    Dim fileConfig As String
+    
+    If DirExists(App.Path & "\" & ClientPath & "\") = False Then
+        Call MkDir(App.Path & "\" & ClientPath)
+        Call MkDir(App.Path & "\" & ClientPath & "\INIT\")
+    ElseIf DirExists(App.Path & "\" & ClientPath & "\INIT\") = False Then
+        Call MkDir(App.Path & "\" & ClientPath & "\INIT\")
+    End If
+    
+    fileConfig = "Config.ini"
+    If Dir(App.Path & "\" & ClientPath & "\INIT\" & fileConfig) = "" Then
+        fileConfig = "Config.ini.original"
+        If Dir(App.Path & "\" & ClientPath & "\INIT\" & fileConfig) = "" Then
+            CMDSombras.Checked = True
+            CMDVSync.Checked = True
+            CMDParticulas.Checked = True
+            CMDFullScreen.Checked = False
+            CMDSoundsFxs.Checked = True
+            CMDEffectSound.Checked = True
+        End If
+    End If
+    
+On Error Resume Next
+
+    Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "SoundEffects", StrBoolean(CMDSoundsFxs.Checked))
+    Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "AUDIO", "Music", StrBoolean(CMDEffectSound.Checked))
+    Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "FullScreen", StrBoolean(CMDFullScreen.Checked))
+    Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "Sombras", StrBoolean(CMDSombras.Checked))
+    Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "ParticleEngine", StrBoolean(CMDParticulas.Checked))
+    Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "VIDEO", "LimitarFPS", StrBoolean(CMDVSync.Checked))
+    Call WriteVar(App.Path & "\" & ClientPath & "\INIT\Config.ini", "PARAMETERS", "LANGUAGE", Language)
 
 End Sub
