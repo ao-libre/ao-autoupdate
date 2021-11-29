@@ -1089,15 +1089,36 @@ On Error Resume Next
     
 End Sub
 
+Private Function DirExists(Path As String) As Boolean
+On Error GoTo error
+
+    Dim val As Integer
+    val = GetAttr(Path) And vbDirectory
+    If val <> 0 Then
+        DirExists = True
+     Else
+        DirExists = False
+    End If
+
+Exit Function
+
+error:
+
+    If Err.Number = 53 Then
+        DirExists = False
+    End If
+
+End Function
+
 Private Sub LoadCheckboxesInitialStatus()
     
     Dim Value As Boolean
     Dim fileConfig As String
     
-    If 16 <> (GetAttr(App.Path & "\" & ClientPath & "\") And vbDirectory) Then
+    If DirExists(App.Path & "\" & ClientPath & "\") = False Then
         Call MkDir(App.Path & "\" & ClientPath)
         Call MkDir(App.Path & "\" & ClientPath & "\INIT\")
-    ElseIf 16 <> (GetAttr(App.Path & "\" & ClientPath & "\INIT\") And vbDirectory) Then
+    ElseIf DirExists(App.Path & "\" & ClientPath & "\INIT\") = False Then
         Call MkDir(App.Path & "\" & ClientPath & "\INIT\")
     End If
     
