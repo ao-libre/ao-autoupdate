@@ -62,6 +62,7 @@ Begin VB.Form frmLauncher
       _ExtentY        =   3625
       _Version        =   393217
       BackColor       =   4210752
+      Enabled         =   -1  'True
       TextRTF         =   $"frmLauncher.frx":2AD08
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Segoe UI Symbol"
@@ -1093,6 +1094,12 @@ Private Sub LoadCheckboxesInitialStatus()
     Dim Value As Boolean
     Dim fileConfig As String
     
+    If 16 <> (GetAttr(App.Path & "\" & ClientPath & "\") And vbDirectory) Then
+        Call MkDir(App.Path & "\" & ClientPath)
+        Call MkDir(App.Path & "\" & ClientPath & "\INIT\")
+    ElseIf 16 <> (GetAttr(App.Path & "\" & ClientPath & "\INIT\") And vbDirectory) Then
+        Call MkDir(App.Path & "\" & ClientPath & "\INIT\")
+    End If
     
     fileConfig = "Config.ini"
     If Dir(App.Path & "\" & ClientPath & "\INIT\" & fileConfig) = "" Then
